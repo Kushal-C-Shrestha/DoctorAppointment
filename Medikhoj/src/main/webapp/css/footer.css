@@ -1,1 +1,75 @@
 @charset "UTF-8";
+
+@charset "UTF-8";
+
+*{
+    margin:0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.footer {
+	background-color: #122229; /* Replace with your desired color */
+	color: #fff; /* Replace with your desired text color */
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.back-to-top{
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+}
+
+.back-to-top p{
+    padding:.5em 0 .5em 0;
+    margin:0;
+    width:100%;
+    background-color: #243C47;
+}
+
+.footer-title{
+    font-size: 1.5em;
+    padding-bottom: .1em;
+}
+
+.Intro{
+    width: 20%;
+}
+
+.footer-main{
+    display:flex;
+    justify-content: space-between;
+    padding: 0 8em 0 8em;
+}
+
+.footer-content{
+    display:flex;
+    flex-direction: column;
+}
+
+.footer ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.footer li {
+	display: inline-block;
+    padding-bottom: .5em;
+}
+
+.footer a {
+	text-decoration: none;
+	color: inherit; /* Inherit font color from footer */
+}
+
+.copyright{
+    text-align: center;
+    height:12%;
+}
+
+.footer a:hover {
+	color: #fff; /* Change to your desired hover color */
+}
