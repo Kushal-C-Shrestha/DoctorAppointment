@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/doctors.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/doctors.css">
 </head>
 <body>
-<%@ include file="header.jsp" %>
+	<%@ include file="header.jsp" %>
     <main>
-    
         <div class="filter">
             <div class="filter-heading">
                 <p>Filter</p>
@@ -89,7 +89,7 @@
             <div class="main-top">
                 <div class="search-bar">
                     <input type="text" placeholder="Search for doctors"/>
-                    <img src="Search icon.png" alt="">
+                    <!--<img src="Search icon.png" alt="">-->
                 </div>
                 <div class="sort-section">
                     <p>Sort by:</p>
@@ -100,95 +100,49 @@
                     </select>
                 </div>
             </div>
-            <div class="main-content__container">
-                <div class="doctors-list">
-                    <div class="doctor">
-                        <div class="doctor-image">
-                            <img src="image 935.png" alt="">
-                        </div>
-                        <div class="doctor-content__container">
-                            <div class="doctor-info">
-                                <p>Dr. Ram bahadur Shrestha</p>
-                                <p>Caridologist</p>
-                                <p>Available dates: Monday-Friday </p>
-                                <p>Available time: 1:00 P.M - 3:00 P.M</p>
-                                <p>Reviews : 4.5/5</p>
-                            </div>
-    
-                            <div class="action-buttons">
-                                <button>Book appointment</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="doctor">
-                        <div class="doctor-image">
-                            <img src="image 935.png" alt="">
-                        </div>
-                        <div class="doctor-content__container">
-                            <div class="doctor-info">
-                                <p>Dr. Ram bahadur Shrestha</p>
-                                <p>Caridologist</p>
-                                <p>Available dates: Monday-Friday Available time: 1:00 P.M - 3:00 P.M</p>
-                                <p>Reviews : 4.5/5</p>
-                            </div>
-    
-                            <div class="action-buttons">
-                                <button>Book appointment</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="doctor">
-                        <div class="doctor-image">
-                            <img src="image 935.png" alt="">
-                        </div>
-                        <div class="doctor-content__container">
-                            <div class="doctor-info">
-                                <p>Dr. Ram bahadur Shrestha</p>
-                                <p>Caridologist</p>
-                                <p>Available dates: Monday-Friday Available time: 1:00 P.M - 3:00 P.M</p>
-                                <p>Reviews : 4.5/5</p>
-                            </div>
-    
-                            <div class="action-buttons">
-                                <button>Book appointment</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="doctor">
-                        <div class="doctor-image">
-                            <img src="image 935.png" alt="">
-                        </div>
-                        <div class="doctor-content__container">
-                            <div class="doctor-info">
-                                <p>Dr. Ram bahadur Shrestha</p>
-                                <p>Caridologist</p>
-                                <p>Available dates: Monday-Friday Available time: 1:00 P.M - 3:00 P.M</p>
-                                <p>Reviews : 4.5/5</p>
-                            </div>
-    
-                            <div class="action-buttons">
-                                <button>Book appointment</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="doctor">
-                        <div class="doctor-image">
-                            <img src="image 935.png" alt="">
-                        </div>
-                        <div class="doctor-content__container">
-                            <div class="doctor-info">
-                                <p>Dr. Ram bahadur Shrestha</p>
-                                <p>Caridologist</p>
-                                <p>Available dates: Monday-Friday Available time: 1:00 P.M - 3:00 P.M</p>
-                                <p>Reviews : 4.5/5</p>
-                            </div>
-    
-                            <div class="action-buttons">
-                                <button>Book appointment</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="doctors-list">
+            	<c:forEach var="doctor" items="${doctorList}">
+            		<div class="doctor-card__container">
+	                    <form action="${pageContext.request.contextPath}/doctorProfile" class="doctor-card">
+	                    	<input type="hidden" name="doctorId" value="${doctor.doctor_id}">
+	                        <button class="doctor">
+	                            <div class="doctor-image">
+	                                <img src="image 935.png" alt="">
+	                            </div>
+	                            <div class="doctor-info">
+	                                <p>${doctor.doctor_name}</p>
+	                                <p>${doctor.doctor_specialization}</p>
+	                                <div class="doctor-availability">
+	                                    <div class="available-date availability-info">
+	                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" 
+	                                        stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-icon 
+	                                        lucide-calendar"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/>
+	                                        </svg>
+	
+	                                        <p>Available dates: Monday-Friday </p>
+	                                    </div>
+	                                    <div class="available-time availability-info" >
+	                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" 
+	                                        stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" 
+	                                        class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/>
+	                                        <polyline points="12 6 12 12 16 14"/>
+	                                        </svg>
+	                                        <p>Available time: 1:00 P.M - 3:00 P.M</p>
+	                                    </div>
+	                                </div>
+	                                <p>Reviews : 4.5/5</p>
+	                            </div>
+	                        </button>
+	                    </form> 
+	                    <form action="">
+	                        <div class="action-buttons">
+	                            <button>Book appointment</button>
+	                        </div>
+	                    </form>
+                	</div>
+            	</c:forEach>
+                
+            </div>
         </div>
     </main>
     <%@ include file="footer.jsp" %>

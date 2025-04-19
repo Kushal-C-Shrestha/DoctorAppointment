@@ -17,16 +17,16 @@
 
                 </div>
                 <div class="profile-texts">
-                    <p class="dname">Dr. Ram Lal Maharjan</p>
-                    <p class="dspecialization">Cardiologist</p>
-                    <p class="dqualificaiton">MBBS, MD</p>
+                    <p class="dname">${doctor.doctor_name}</p>
+                    <p class="dspecialization">${doctor.doctor_specialization}</p>
+                    <p class="dqualificaiton">${doctor.doctor_qualification}</p>
                     <p class="drating">Rating: 4.5/5</p>
                 </div>
             </div>
             <div class="profile-contents">
                 <section class="profile-section">
                     <p class="profile-section__header">About</p>
-                    <p>Dr. Suman Sharma is a dedicated and compassionate general physician with over 8 years of clinical experience. She specializes in diagnosing and treating a wide range of health conditions, with a strong focus on preventive care and patient education. Known for her patient-centric approach, Dr. Sharma believes in building trust and providing personalized treatment plans to promote long-term health and well-being. Her calm demeanor and thorough consultations have earned her the confidence of countless patients over the years.</p>
+                    <p>${doctor.doctor_about}</p>
                 </section>
                 <div class="main-action__buttons action-buttons">
                     <button class="action-btn" id="mark-favorite">Mark as favorite</button>

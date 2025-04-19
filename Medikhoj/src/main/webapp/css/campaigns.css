@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.container{
+    width: 840px;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    gap: 24px;
+
+    .campaign-header{
+        font-size: 24px;
+        font-weight: 600;
+    }
+}
+
+.campaign-list{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: scroll;
+    scrollbar-width: none;      /* Firefox */
+    -ms-overflow-style: none; 
+}
+
+.campaign{
+    display: flex;
+    padding:16px 24px;
+    gap: 12px;
+    background-color: #F4F4F4;
+    border-radius: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.campaign-texts{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .campaign-title{
+        font-size: 20px;
+        font-weight: 600;
+    }
+}
+
+.campaign-info{
+    display: flex;
+    gap: 16px;
+}
+
+.campaign-info__item{
+    display: flex;
+    gap: 6px;
+}
+
+.campaign-enroll{
+    padding: 12px 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: #00A0AC;
+    color: #fff;
+    font-weight:400 ;
+}

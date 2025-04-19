@@ -6,19 +6,14 @@
     box-sizing: border-box;
 }
 
-body{
-	display:flex;
-	flex-direction:column;
-}
-
 main{
     display: flex;
     height: 100vh;
-    width: 100vw;
+    overflow: hidden;
 }
 
 .filter{
-    width: 360px;
+    width: 300px;
     height: 100vh;
     display: flex;
     padding: 24px 32px;
@@ -65,6 +60,7 @@ main{
     display: flex;
     flex-direction: column;
     gap: 24px;
+    overflow-y: scroll;
 }
 
 .main-top{
@@ -101,16 +97,12 @@ main{
     }
 }
 
-.main-content__container{
-    display: flex;
-}
 
 .doctors-list{
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
     height: 100%;
-    width:100%;
     scrollbar-width: none;      /* Firefox */
     -ms-overflow-style: none; 
 }
@@ -119,52 +111,81 @@ main{
     display: none;              /* Chrome, Safari, Edge */
 }
 
+
+.doctor-card__container{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    border-bottom: 1px solid black;
+    padding: 24px 0px;
+}
+
+
+
+.doctor-card{
+    flex: 1;
+}
+
+
+
 .doctor{
+    width: 100%;
     display: flex;
     align-items: center;
-    padding: 24px 0px;
-    border-bottom: 1px solid black;
-    width:100%;
+    border: none;
+    background-color: transparent;
+	cursor:pointer;
 
     .doctor-image{
         height: 80px;
         width: 80px;
         border-radius: 50%;
+        border: 1px solid black;
     }
 
-    .doctor-content__container{
-        padding: 0px 12px;
+    .doctor-info{
+        padding:0px 12px;
         display: flex;
-        width: 100%;
+        flex-direction: column;
+        gap: 8px;
+        flex:1 ;
+        align-items: flex-start;
 
-        .doctor-info{
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            flex:1;
-        }
-
-        .action-buttons{
+        .doctor-availability{
             display: flex;
             align-items: center;
-            gap:24px;
+            gap: 16px;
 
-            button{
-                padding: 12px 20px;
-                border-radius: 5px;
-                background-color: #009D8D;
-                color: #FFF;
-                border: none;
-                transition: all 0.3s ease-in-out;
+            .availability-info{
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
             }
-
-            button:hover{
-                cursor: pointer;
-                background-color: #007065;
-                transition: all 0.3s ease-in-out;
-            }
-
         }
     }
+    
 }
 
+.action-buttons{
+    display: flex;
+    align-items: center;
+    gap:24px;
+
+    button{
+        padding:12px 20px;
+        border-radius: 5px;
+        background-color: #009D8D;
+        color: #FFF;
+        border: none;
+        transition: all 0.3s ease-in-out;
+    }
+
+    button:hover{
+        cursor: pointer;
+        background-color: #007065;
+        transition: all 0.3s ease-in-out;
+    }
+
+
+}
