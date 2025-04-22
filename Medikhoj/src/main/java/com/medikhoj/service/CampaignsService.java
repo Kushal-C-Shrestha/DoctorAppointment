@@ -8,13 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.medikhoj.config.DbConfig;
-import com.medikhoj.model.DoctorModel;
+import com.medikhoj.model.CampaignModel;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-public class DoctorProfileService {
+
+public class CampaignsService {
 	private Connection dbConn;
 	private boolean isConnectionError=false;
 	
-	public DoctorProfileService() {
+	public CampaignsService() {
 		try {
 			//Getting the connection from config file.
 			
@@ -27,7 +31,7 @@ public class DoctorProfileService {
 		}
 	}
 	
-	public DoctorModel getDoctorById(int id){
+	public List<CampaignModel> getAllCampaigns(){
 		if (isConnectionError) {
 			//Checking if there is connection with database . if not this section is triggered
 			System.out.println("Database connection error");
@@ -36,30 +40,41 @@ public class DoctorProfileService {
 		
 		//Creating an array list of DoctorModel. This will be passed to the jsp files.
 		
-		DoctorModel doctor=new DoctorModel();
-		String query="SELECT * FROM doctors WHERE Doctor_id=?"; //Creating the required query to fetch from the database.
+		List<CampaignModel> campaigns=new ArrayList();
+		String query="SELECT * FROM campaigns"; //Creating the required query to fetch from the database.
 		
 		//Preparing the statement 
 		try(PreparedStatement stmt=dbConn.prepareStatement(query)){
-			stmt.setInt(1,id);
 			ResultSet rs=stmt.executeQuery(); //Executing the statement and storing it in ResultSet object
 			
+			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy"); 
+			DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a"); 
 			
 			while (rs.next()) { //Iterating over each data row received from database.
+				
+				CampaignModel campaign=new CampaignModel(); //Creating object of the model class.
+				
 				//Setting the attributes as received from the database row.
-				doctor.setDoctor_id(rs.getInt("doctor_id"));
-				doctor.setDoctor_name(rs.getString("doctor_name"));
-				doctor.setDoctor_email(rs.getString("doctor_email"));
-				doctor.setDoctor_phone(rs.getString("doctor_phone"));
-				doctor.setDoctor_specialization(rs.getString("doctor_specialization"));
-				doctor.setDoctor_qualification(rs.getString("doctor_qualification"));
-				doctor.setDoctor_about(rs.getString("doctor_about"));
+				campaign.setCampaign_id(rs.getInt("campaign_id"));
+				campaign.setCampaign_name(rs.getString("campaign_name"));
+				campaign.setCampaign_desc(rs.getString("campaign_desc"));
+				
+				LocalDate campaign_date=rs.getDate("campaign_date").toLocalDate();
+				LocalTime campaign_time=rs.getTime("campaign_time").toLocalTime();
+						
+				campaign.setFormatted_date(campaign_date.format(dateFormatter));
+				campaign.setFormatted_time(campaign_time.format(timeFormatter));
+				
+				
+				
+				//Adding the object to the array list.
+				campaigns.add(campaign);
 			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 		}
 		
-		return doctor;
+		return campaigns;
 	}
 }

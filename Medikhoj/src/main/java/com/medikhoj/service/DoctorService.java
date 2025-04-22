@@ -48,13 +48,13 @@ public class DoctorService {
 				DoctorModel doctor=new DoctorModel(); //Creating object of the model class.
 				
 				//Setting the attributes as received from the database row.
-				doctor.setDoctor_id(rs.getInt("Doctor_id"));
-				doctor.setDoctor_name(rs.getString("Doctor_name"));
-				doctor.setDoctor_email(rs.getString("Doctor_email"));
-				doctor.setDoctor_phone(rs.getString("Doctor_phone"));
-				doctor.setDoctor_specialization(rs.getString("Doctor_specialization"));
-				doctor.setDoctor_qualification(rs.getString("Doctor_qualification"));
-				doctor.setDoctor_about(rs.getString("Doctor_about"));
+				doctor.setDoctor_id(rs.getInt("doctor_id"));
+				doctor.setDoctor_name(rs.getString("doctor_name"));
+				doctor.setDoctor_email(rs.getString("doctor_email"));
+				doctor.setDoctor_phone(rs.getString("doctor_phone"));
+				doctor.setDoctor_specialization(rs.getString("doctor_specialization"));
+				doctor.setDoctor_qualification(rs.getString("doctor_qualification"));
+				doctor.setDoctor_about(rs.getString("doctor_about"));
 				
 				
 				//Adding the object to the array list.

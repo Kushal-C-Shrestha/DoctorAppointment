@@ -54,9 +54,7 @@
     gap: 10px;
   }
   
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
+  input{
     padding: 12px 16px;
     border: 1px solid #ccc;
     border-radius: 25px;

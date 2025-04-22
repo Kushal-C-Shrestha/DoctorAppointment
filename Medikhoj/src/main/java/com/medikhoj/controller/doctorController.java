@@ -33,6 +33,7 @@ public class doctorController extends HttpServlet {
 		DoctorService doctorService=new DoctorService();
 		
 		List<DoctorModel> doctors=doctorService.getAllDoctors();
+		System.out.println(doctors);
 		
 		request.setAttribute("doctorList", doctors);
 		request.getRequestDispatcher("WEB-INF/pages/doctors.jsp").forward(request, response);
