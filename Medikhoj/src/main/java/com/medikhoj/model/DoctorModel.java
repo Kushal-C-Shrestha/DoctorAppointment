@@ -9,8 +9,16 @@ public class DoctorModel {
 	private String doctor_qualification;
 	private String doctor_about;
 	private String doctor_profile_path;
+	private String hashed_password;
 	
-	
+	public String getHashed_password() {
+		return hashed_password;
+	}
+
+	public void setHashed_password(String hashed_password) {
+		this.hashed_password = hashed_password;
+	}
+
 	public DoctorModel() {};
 	
 	public DoctorModel(int doctor_id, String doctor_name, String doctor_specialization, String doctor_email,

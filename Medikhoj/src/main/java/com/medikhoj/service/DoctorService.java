@@ -67,4 +67,91 @@ public class DoctorService {
 		
 		return doctors;
 	}
+	
+	
+	public DoctorModel getDoctorProfile(int id){
+		if (isConnectionError) {
+			//Checking if there is connection with database . if not this section is triggered
+			System.out.println("Database connection error");
+			return null;
+		}
+		
+		//Creating an array list of DoctorModel. This will be passed to the jsp files.
+		
+		DoctorModel doctor=new DoctorModel();
+		String query="SELECT * FROM doctors WHERE Doctor_id=?"; //Creating the required query to fetch from the database.
+		
+		//Preparing the statement 
+		try(PreparedStatement stmt=dbConn.prepareStatement(query)){
+			stmt.setInt(1,id);
+			ResultSet rs=stmt.executeQuery(); //Executing the statement and storing it in ResultSet object
+			
+			
+			while (rs.next()) { //Iterating over each data row received from database.
+				//Setting the attributes as received from the database row.
+				doctor.setDoctor_id(rs.getInt("doctor_id"));
+				doctor.setDoctor_name(rs.getString("doctor_name"));
+				doctor.setDoctor_email(rs.getString("doctor_email"));
+				doctor.setDoctor_phone(rs.getString("doctor_phone"));
+				doctor.setDoctor_specialization(rs.getString("doctor_specialization"));
+				doctor.setDoctor_qualification(rs.getString("doctor_qualification"));
+				doctor.setDoctor_about(rs.getString("doctor_about"));
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return doctor;
+	}
+	
+	public boolean addDoctor(DoctorModel doctor) {
+		if (isConnectionError) {
+			//Checking if there is connection with database . if not this section is triggered
+			System.out.println("Database connection error");
+			return false;
+		}
+		
+		String query="SELECT * FROM doctors WHERE Doctor_id=?"; //Creating the required query to fetch from the database.
+		
+		//Preparing the statement 
+		try(PreparedStatement stmt=dbConn.prepareStatement(query)){
+			stmt.setInt(1,doctor.getDoctor_id());
+			ResultSet rs=stmt.executeQuery(); //Executing the statement and storing it in ResultSet object
+			
+			
+			if (rs.next()) { //Iterating over each data row received from database.
+				//Setting the attributes as received from the database row.
+				doctor.setDoctor_id(rs.getInt("doctor_id"));
+				doctor.setDoctor_name(rs.getString("doctor_name"));
+				doctor.setDoctor_email(rs.getString("doctor_email"));
+				doctor.setDoctor_phone(rs.getString("doctor_phone"));
+				doctor.setDoctor_specialization(rs.getString("doctor_specialization"));
+				doctor.setDoctor_qualification(rs.getString("doctor_qualification"));
+				doctor.setDoctor_about(rs.getString("doctor_about"));
+				return false;
+			}
+			
+			String insertQuery="INSERT into Doctors (doctor_name,doctor_specialization,doctor_email,doctor_phone,doctor_qualification,doctor_description,"
+					+ "doctor_password doctor_experience) "
+					+ "VALUES (?,?,?,?,?,?,?,?,?)";
+			
+			try(PreparedStatement insertStmt = dbConn.prepareStatement(insertQuery)){
+				insertStmt.setString(1, doctor.getDoctor_name());
+				insertStmt.setString(2, doctor.getDoctor_specialization());
+				insertStmt.setString(3, doctor.getDoctor_email());
+				insertStmt.setString(4, doctor.getDoctor_phone());
+				insertStmt.setString(5, doctor.getDoctor_qualification());
+				insertStmt.setString(6, doctor.getDoctor_about());
+				insertStmt.setString(8, doctor.getDoctor_name());
+				
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+		return true;
+	}
 }

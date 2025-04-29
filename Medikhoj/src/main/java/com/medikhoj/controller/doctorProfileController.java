@@ -7,8 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import com.medikhoj.service.DoctorProfileService;
 import com.medikhoj.model.DoctorModel;
+import com.medikhoj.service.DoctorService;
 /**
  * Servlet implementation class doctorProfileController
  */
@@ -31,8 +31,8 @@ public class doctorProfileController extends HttpServlet {
 		String idParam=request.getParameter("doctorId");
 		int id=Integer.parseInt(idParam);
 		
-		DoctorProfileService doctorProfileService=new DoctorProfileService();
-		DoctorModel doctor=doctorProfileService.getDoctorById(id);
+		DoctorService doctorProfileService=new DoctorService();
+		DoctorModel doctor=doctorProfileService.getDoctorProfile(id);
 		// TODO Auto-generated method stub
 		request.setAttribute("doctor", doctor);
 		request.getRequestDispatcher("WEB-INF/pages/doctorProfile.jsp").forward(request, response);
