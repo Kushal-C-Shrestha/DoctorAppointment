@@ -5,18 +5,20 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import jakarta.servlet.annotation.MultipartConfig;
+
 import java.io.IOException;
-import java.time.LocalDate;
 
 import com.medikhoj.model.UserModel;
 import com.medikhoj.service.RegisterService;
-import com.medikhoj.util.PasswordUtil;
-import com.medikhoj.util.ValidationUtil;
+import com.medikhoj.util.ImageUtil;
 
 /**
  * Servlet implementation class loginController
  */
 @WebServlet(asyncSupported = true, urlPatterns={"/register"})
+@MultipartConfig
 public class RegisterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -41,47 +43,44 @@ public class RegisterController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("Entered post ");
 		RegisterService registerService=new RegisterService();
-		try {
-			// Validate and extract student model
-			String validationMessage = registerService.validateRegistrationForm(request);
-			if (validationMessage != null) {
-				//handleError(request, response, validationMessage);
-				System.out.println(validationMessage);
-				return;
-			}
-			
-			System.out.println("Detials are valid.");
-			
-			if (registerService.isUserExists(request)) {
-				//handleError(request,response,"User already exists");
-				System.out.println("User already exists");
-				return;
-			}
-			
-			System.out.println("User doesnt exist");
-			
-			//Creating the user model from the data
-			UserModel user=registerService.createUser(request);
-			
-			//Passing the usermodel to insert into database.
-			Boolean isAdded = registerService.addUser(user);
-
-			if (isAdded) {
-				response.sendRedirect(request.getContextPath() + "/login");  // or login.html or login route
-
-			}
-		} catch (Exception e) {
-			//handleError(request, response, "An unexpected error occurred. Please try again later!");
-			e.printStackTrace(); // Log the exception
+		ImageUtil imageUtil=new ImageUtil();
+		
+		//Validate the form. If something is wrong display the message accordingly
+		String validationMessage=registerService.validateRegistrationForm(request);
+		if (validationMessage!=null) {
+			System.out.println(validationMessage);
+			return;
 		}
+		
+		//Checking if the user already exists in the system.
+		Boolean isExists=registerService.isUserExists(request);
+		if (isExists) {
+			System.out.print("User already exists");
+			return;
+		}
+		
+		//Uploading the users image into the server
+		Part userProfile=request.getPart("profile-pic");
+		String rootPath=getServletContext().getRealPath("resources/images");
+		String imageUrl=imageUtil.uploadImage(userProfile, rootPath, "uploads");
+		
+		if (imageUrl==null) {
+			return;
+		}
+		
+		//Creating the model after all validations are checked.
+		UserModel user=registerService.createUserModel(request,imageUrl);
+		
+		//Adding the user to the database.
+		Boolean userAdded=registerService.addUser(user);
+		
+		if (!userAdded) {
+			return;
+		}
+		
+		//Redirect to the login page after user is added successfully.
+		request.getRequestDispatcher("WEB-INF/pages/login.jsp").forward(request, response);
 	}
-	
-	
-	
-
-	
-
-
-
 }

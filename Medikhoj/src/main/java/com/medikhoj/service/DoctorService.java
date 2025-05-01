@@ -49,9 +49,6 @@ public class DoctorService {
 				
 				//Setting the attributes as received from the database row.
 				doctor.setDoctor_id(rs.getInt("doctor_id"));
-				doctor.setDoctor_name(rs.getString("doctor_name"));
-				doctor.setDoctor_email(rs.getString("doctor_email"));
-				doctor.setDoctor_phone(rs.getString("doctor_phone"));
 				doctor.setDoctor_specialization(rs.getString("doctor_specialization"));
 				doctor.setDoctor_qualification(rs.getString("doctor_qualification"));
 				doctor.setDoctor_about(rs.getString("doctor_about"));
@@ -90,9 +87,6 @@ public class DoctorService {
 			while (rs.next()) { //Iterating over each data row received from database.
 				//Setting the attributes as received from the database row.
 				doctor.setDoctor_id(rs.getInt("doctor_id"));
-				doctor.setDoctor_name(rs.getString("doctor_name"));
-				doctor.setDoctor_email(rs.getString("doctor_email"));
-				doctor.setDoctor_phone(rs.getString("doctor_phone"));
 				doctor.setDoctor_specialization(rs.getString("doctor_specialization"));
 				doctor.setDoctor_qualification(rs.getString("doctor_qualification"));
 				doctor.setDoctor_about(rs.getString("doctor_about"));
@@ -123,9 +117,6 @@ public class DoctorService {
 			if (rs.next()) { //Iterating over each data row received from database.
 				//Setting the attributes as received from the database row.
 				doctor.setDoctor_id(rs.getInt("doctor_id"));
-				doctor.setDoctor_name(rs.getString("doctor_name"));
-				doctor.setDoctor_email(rs.getString("doctor_email"));
-				doctor.setDoctor_phone(rs.getString("doctor_phone"));
 				doctor.setDoctor_specialization(rs.getString("doctor_specialization"));
 				doctor.setDoctor_qualification(rs.getString("doctor_qualification"));
 				doctor.setDoctor_about(rs.getString("doctor_about"));
@@ -137,13 +128,9 @@ public class DoctorService {
 					+ "VALUES (?,?,?,?,?,?,?,?,?)";
 			
 			try(PreparedStatement insertStmt = dbConn.prepareStatement(insertQuery)){
-				insertStmt.setString(1, doctor.getDoctor_name());
 				insertStmt.setString(2, doctor.getDoctor_specialization());
-				insertStmt.setString(3, doctor.getDoctor_email());
-				insertStmt.setString(4, doctor.getDoctor_phone());
 				insertStmt.setString(5, doctor.getDoctor_qualification());
 				insertStmt.setString(6, doctor.getDoctor_about());
-				insertStmt.setString(8, doctor.getDoctor_name());
 				
 			}
 		}

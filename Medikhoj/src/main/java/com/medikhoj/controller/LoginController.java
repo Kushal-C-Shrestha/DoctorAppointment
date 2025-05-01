@@ -39,7 +39,7 @@ public class LoginController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	/*protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    String email = request.getParameter("email");
 	    String password = request.getParameter("password");
 
@@ -53,7 +53,7 @@ public class LoginController extends HttpServlet {
 	            SessionUtil.setAttribute(request, "loggedInUser", user);
 
 	            // Add a cookie valid for 30 minutes (1800 seconds)
-	            CookieUtil.addCookie(response, "user_role", String.valueOf(user.getRole_id()), 1800);
+	            //CookieUtil.addCookie(response, "user_role", String.valueOf(user.getRole_id()), 1800);
 
 	            // Role-based redirect
 	            int roleId = user.getRole_id();
@@ -81,6 +81,6 @@ public class LoginController extends HttpServlet {
 	        request.setAttribute("error", "Something went wrong.");
 	        request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
 	    }
-	}
+	}*/
 
 }
