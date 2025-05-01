@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.MultipartConfig;
 
 import java.io.IOException;
 
+import com.medikhoj.model.DoctorModel;
 import com.medikhoj.model.UserModel;
 import com.medikhoj.service.RegisterService;
 import com.medikhoj.util.ImageUtil;
@@ -79,6 +80,10 @@ public class RegisterController extends HttpServlet {
 		if (!userAdded) {
 			return;
 		}
+		
+		
+		
+		
 		
 		//Redirect to the login page after user is added successfully.
 		request.getRequestDispatcher("WEB-INF/pages/login.jsp").forward(request, response);

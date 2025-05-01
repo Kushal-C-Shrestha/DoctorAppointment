@@ -45,6 +45,7 @@ public class DoctorService {
 			
 			while (rs.next()) { //Iterating over each data row received from database.
 				
+				System.out.println("Doctors exist");
 				DoctorModel doctor=new DoctorModel(); //Creating object of the model class.
 				
 				//Setting the attributes as received from the database row.

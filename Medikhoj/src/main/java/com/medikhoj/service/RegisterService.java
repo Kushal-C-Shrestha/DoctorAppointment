@@ -1,7 +1,7 @@
 package com.medikhoj.service;
 
-import java.awt.Image;
 import java.io.IOException;
+import java.net.Authenticator.RequestorType;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -9,16 +9,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-import org.apache.catalina.User;
 
 import jakarta.servlet.http.Part;
 
 
 import com.medikhoj.config.DbConfig;
+import com.medikhoj.model.DoctorModel;
 import com.medikhoj.model.UserModel;
 import com.medikhoj.util.ImageUtil;
 import com.medikhoj.util.PasswordUtil;
 import com.medikhoj.util.ValidationUtil;
+import com.mysql.cj.protocol.Resultset;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -200,4 +201,7 @@ public class RegisterService {
 			return false;
 		}
 	}
+	
+	
+	
 }
