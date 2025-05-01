@@ -5,14 +5,14 @@ public class DoctorModel {
 	private String doctor_specialization;
 	private String doctor_qualification;
 	private String doctor_about;
-	private String doctor_experience;
+	private int doctor_experience;
 	
 	
 	
 	public DoctorModel() {}
 	
 	public DoctorModel(int doctor_id, String doctor_specialization, String doctor_qualification, String doctor_about,
-			String doctor_experience) {
+			int doctor_experience) {
 		super();
 		this.doctor_id = doctor_id;
 		this.doctor_specialization = doctor_specialization;
@@ -47,10 +47,10 @@ public class DoctorModel {
 	public void setDoctor_about(String doctor_about) {
 		this.doctor_about = doctor_about;
 	}
-	public String getDoctor_experience() {
+	public int getDoctor_experience() {
 		return doctor_experience;
 	}
-	public void setDoctor_experience(String doctor_experience) {
+	public void setDoctor_experience(int doctor_experience) {
 		this.doctor_experience = doctor_experience;
 	}
 	

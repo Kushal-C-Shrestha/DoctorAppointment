@@ -15,6 +15,7 @@ import jakarta.servlet.http.Part;
 
 
 import com.medikhoj.config.DbConfig;
+import com.medikhoj.model.DoctorModel;
 import com.medikhoj.model.UserModel;
 import com.medikhoj.util.ImageUtil;
 import com.medikhoj.util.PasswordUtil;
@@ -200,4 +201,61 @@ public class RegisterService {
 			return false;
 		}
 	}
+	
+	
+	public DoctorModel createDoctorModel(HttpServletRequest request, UserModel user ) {
+		String doctorSpecialization = request.getParameter("specialization");             // Doctors specialization
+		String doctorQualification = request.getParameter("qualification");               // Doctors qualification
+		int doctorExperience = Integer.parseInt(request.getParameter("experience"));      // Doctors experience
+		String doctorAbout=request.getParameter("about");
+		
+		DoctorModel doctor=new DoctorModel();
+		doctor.setDoctor_specialization(doctorSpecialization);
+		doctor.setDoctor_qualification(doctorQualification);
+		doctor.setDoctor_experience(doctorExperience);
+		doctor.setDoctor_about(doctorAbout);
+		
+		if (dbConn == null) {
+			System.err.println("Database connection is not available.");
+			return null;
+		}
+		
+		String selectQuery = "SELECT user_id FROM users WHERE user_email = ?" ;
+
+		try (PreparedStatement stmt = dbConn.prepareStatement(selectQuery)) {
+			stmt.setInt(1, user.getUser_id()); 
+			ResultSet rs=stmt.executeQuery();
+			
+			while(rs.next()){				
+				int doctorId=rs.getInt("user_id");
+				doctor.setDoctor_id(doctorId);
+			}
+			return doctor;
+		} catch (SQLException e) {
+			System.err.println("Error during doctor registration: " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Boolean addDoctor(DoctorModel doctor) {
+		if (dbConn == null) {
+			System.err.println("Database connection is not available.");
+			return false;
+		}
+		
+		String insertQuery = "INSERT INTO doctors (doctor_id, doctor_specialization, doctor_qualification, doctor_experience ,doctor_desc) "
+				+ "VALUES (?, ?, ?, ?, ?)"; ;
+
+		try (PreparedStatement stmt = dbConn.prepareStatement(insertQuery)) {
+			stmt.setInt(1, doctor.getDoctor_id());
+			stmt.setString(2, doctor.getDoctor_specialization());
+			return stmt.executeUpdate() > 0;
+		} catch (SQLException e) {
+			System.err.println("Error during user registration: " + e.getMessage());
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }
