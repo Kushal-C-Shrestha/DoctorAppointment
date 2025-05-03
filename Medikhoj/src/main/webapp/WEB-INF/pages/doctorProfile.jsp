@@ -17,7 +17,7 @@
 
                 </div>
                 <div class="profile-texts">
-                    <p class="dname">${doctor.doctor_name}</p>
+                    <p class="dname">${doctor.user_name}</p>
                     <p class="dspecialization">${doctor.doctor_specialization}</p>
                     <p class="dqualificaiton">${doctor.doctor_qualification}</p>
                     <p class="drating">Rating: 4.5/5</p>
