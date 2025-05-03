@@ -53,7 +53,7 @@ public class DoctorService {
 				doctor.setDoctor_specialization(rs.getString("doctor_specialization"));
 				doctor.setDoctor_qualification(rs.getString("doctor_qualification"));
 				doctor.setDoctor_about(rs.getString("doctor_about"));
-				
+				doctor.setDoctor_experience(rs.getInt("doctor_experience"));
 				
 				//Adding the object to the array list.
 				doctors.add(doctor);
@@ -90,7 +90,8 @@ public class DoctorService {
 				doctor.setDoctor_id(rs.getInt("doctor_id"));
 				doctor.setDoctor_specialization(rs.getString("doctor_specialization"));
 				doctor.setDoctor_qualification(rs.getString("doctor_qualification"));
-				doctor.setDoctor_about(rs.getString("doctor_about"));
+				doctor.setDoctor_about(rs.getString("doctor_desc"));
+				doctor.setDoctor_experience(rs.getInt("doctor_experience"));
 			}
 		}
 		catch (Exception e) {

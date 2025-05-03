@@ -1,0 +1,165 @@
+package com.medikhoj.service;
+
+import com.medikhoj.model.SlotModel;
+import com.medikhoj.model.UserModel;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.medikhoj.config.DbConfig;
+import com.medikhoj.controller.campaignsController;
+import com.medikhoj.model.AppointmentModel;
+import com.medikhoj.model.DoctorModel;
+
+public class AppointmentService {
+	private Connection dbConn;
+	private boolean isConnectionError=false;
+	
+	
+	public AppointmentService() {
+		try {
+			this.dbConn = DbConfig.getDbConnection();
+		} catch (SQLException | ClassNotFoundException ex) {
+			System.err.println("Database connection error: " + ex.getMessage());
+			ex.printStackTrace();
+		}
+	}
+	
+	public List<SlotModel> getAllSlots(){	
+		if (isConnectionError) {
+			//Checking if there is connection with database . if not this section is triggered
+			System.out.println("Database connection error");
+			return null;
+		}
+		
+		List<SlotModel> allSlots=new ArrayList<SlotModel>();
+		
+		String query="SELECT * FROM slots";
+		
+		try(PreparedStatement stmt=dbConn.prepareStatement(query)){
+			ResultSet rs=stmt.executeQuery();
+			
+			while(rs.next()) {
+				SlotModel slot=new SlotModel();
+				slot.setSlot_id(rs.getInt("slot_id"));
+				slot.setSlot_time(rs.getTime("slot_time").toLocalTime());
+				allSlots.add(slot);
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return allSlots;
+	}
+	
+	
+	public Set<Integer> getBookedSlots(int doctor_id, LocalDate appointment_date){
+		if (isConnectionError) {
+			//Checking if there is connection with database . if not this section is triggered
+			System.out.println("Database connection error");
+			return null;
+		}
+		
+		Set<Integer> bookedSlots=new HashSet<Integer>();
+		
+		String query="SELECT a.appointment_time FROM "
+				+ "user_doctor_appointment uda JOIN "
+				+ "appointments a ON a.appointment_id = uda.appointment_id "
+				+ "WHERE uda.doctor_id=? AND a.appointment_date=? ";
+		
+		try(PreparedStatement stmt=dbConn.prepareStatement(query)){
+			stmt.setInt(1, doctor_id);
+			stmt.setDate(2, java.sql.Date.valueOf(appointment_date));
+			
+			ResultSet rs=stmt.executeQuery();
+			while (rs.next()) {
+				bookedSlots.add(rs.getInt("appointment_time"));
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
+		
+		return bookedSlots;
+	}
+	
+	
+	public AppointmentModel createAppointment(HttpServletRequest request) {
+		AppointmentModel appointment=new AppointmentModel();
+		LocalDate appointment_date=LocalDate.parse(request.getParameter("appointment_date"));
+		int appointment_time=Integer.parseInt(request.getParameter("appointment_time"));
+		String appointment_remarks=request.getParameter("appointment_remarks");
+		String appointment_type=request.getParameter("appointment_type");
+		
+		appointment.setAppointment_date(appointment_date);
+		appointment.setAppointment_time(appointment_time);
+		appointment.setAppointment_type(appointment_type);
+		appointment.setAppointment_remarks(appointment_remarks);
+		
+		return appointment;
+	}
+	
+	
+	public Boolean bookAppointment(DoctorModel doctor, UserModel user, AppointmentModel appointment) {
+		if (dbConn == null) {
+			System.err.println("Database connection is not available.");
+			return false;
+		}
+		System.out.println(appointment.getAppointment_type());
+		
+		String insertQuery = "INSERT INTO appointments (appointment_date, appointment_time, appointment_type, appointment_remarks)"
+				+ "VALUES (?, ?, ? , ?)";
+		
+		try(PreparedStatement stmt=dbConn.prepareStatement(insertQuery,Statement.RETURN_GENERATED_KEYS)){
+			stmt.setDate(1, java.sql.Date.valueOf(appointment.getAppointment_date()));
+			stmt.setInt(2, appointment.getAppointment_time());
+			stmt.setString(3, appointment.getAppointment_type());
+			stmt.setString(4,null);
+			
+			int affectedRows=stmt.executeUpdate();
+			
+			if (affectedRows>0) {
+				 ResultSet generatedKey=stmt.getGeneratedKeys();
+				 
+				 if (generatedKey.next()) {
+					 int appointment_id=generatedKey.getInt(1);
+					 appointment.setAppointment_id(appointment_id);
+					 
+					 String newInsertQuery="INSERT into user_doctor_appointment VALUES(?,?,?)";
+					 
+					 try(PreparedStatement newStmt=dbConn.prepareStatement(newInsertQuery)){
+						 newStmt.setInt(1, user.getUser_id());
+						 newStmt.setInt(2, doctor.getDoctor_id());
+						 newStmt.setInt(3, appointment.getAppointment_id());
+						 
+						 return newStmt.executeUpdate()>0;
+
+					 }catch (Exception e) {
+							System.out.println("Exception during bridge insertion"  + e.getMessage());
+						 return false;
+						// TODO: handle exception
+					}
+				 }
+				System.out.println("Appointment not created in bridge table");
+				 return false;
+			}
+			System.out.println("Appointment not created");
+			return false;
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Exception during main insertionn" + e.getMessage());
+			return false;
+		}
+	}
+}
