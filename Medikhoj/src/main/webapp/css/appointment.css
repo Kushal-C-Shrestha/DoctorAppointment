@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+.slot-option {
+    display: none;
+}
+
+.slot-label {
+    display: inline-block;
+    margin: 6px;
+    padding: 6px 12px;
+    border: 2px solid #07b9c4;
+    color:#07b9c4;
+    font-weight:600;
+    border-radius: 8px;
+    font-family: sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.slot-option:checked + .slot-label {
+    background-color: #07b9c4;
+    color: white;
+    border-color: #07b9c4;
+}
+
+.slot-option:disabled + .slot-label {
+    background-color: #ddd;
+    color: #888;
+    cursor: not-allowed;
+    border-color: #ccc;
+}

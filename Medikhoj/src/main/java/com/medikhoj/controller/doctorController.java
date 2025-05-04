@@ -10,6 +10,7 @@ import com.medikhoj.service.DoctorService;
 import java.util.List;
 
 import com.medikhoj.model.DoctorModel;
+import com.medikhoj.model.DoctorUserModel;
 /**
  * Servlet implementation class doctorController
  */
@@ -32,8 +33,7 @@ public class doctorController extends HttpServlet {
 		// TODO Auto-generated method stub
 		DoctorService doctorService=new DoctorService();
 		
-		List<DoctorModel> doctors=doctorService.getAllDoctors();
-		System.out.println(doctors);
+		List<DoctorUserModel> doctors=doctorService.getAllDoctors();
 		
 		request.setAttribute("doctorList", doctors);
 		request.getRequestDispatcher("WEB-INF/pages/doctors.jsp").forward(request, response);

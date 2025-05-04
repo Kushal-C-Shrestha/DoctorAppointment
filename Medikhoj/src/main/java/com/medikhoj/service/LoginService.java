@@ -24,7 +24,7 @@ public class LoginService {
 		}
 	}
 	
-	public UserModel authenticateUser(String email, String password) {
+	/*public UserModel authenticateUser(String email, String password) {
 		
 		String query = "SELECT * FROM users WHERE user_email = ?";
 		
@@ -64,4 +64,5 @@ public class LoginService {
             return null;
         }
     }
+    */
 }

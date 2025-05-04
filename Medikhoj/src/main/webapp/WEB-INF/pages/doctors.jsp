@@ -110,7 +110,7 @@
 	                                <img src="image 935.png" alt="">
 	                            </div>
 	                            <div class="doctor-info">
-	                                <p>${doctor.doctor_name}</p>
+	                                <p>${doctor.user_name}</p>
 	                                <p>${doctor.doctor_specialization}</p>
 	                                <div class="doctor-availability">
 	                                    <div class="available-date availability-info">

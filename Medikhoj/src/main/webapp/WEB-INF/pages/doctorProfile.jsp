@@ -17,7 +17,7 @@
 
                 </div>
                 <div class="profile-texts">
-                    <p class="dname">${doctor.doctor_name}</p>
+                    <p class="dname">${doctor.user_name}</p>
                     <p class="dspecialization">${doctor.doctor_specialization}</p>
                     <p class="dqualificaiton">${doctor.doctor_qualification}</p>
                     <p class="drating">Rating: 4.5/5</p>
@@ -28,10 +28,10 @@
                     <p class="profile-section__header">About</p>
                     <p>${doctor.doctor_about}</p>
                 </section>
-                <div class="main-action__buttons action-buttons">
+                <form class="main-action__buttons action-buttons">
                     <button class="action-btn" id="mark-favorite">Mark as favorite</button>
                     <button class="action-btn" id="book-appointment">Book appointment</button>
-                </div>
+                </form>
                 <section class="profile-section">
                     <div class="profile-section__header">
                         <p>Reviews</p>
@@ -76,10 +76,11 @@
                         
                     </div>
                 </section>
-                <div class="review-action__buttons action-buttons">
+                <form class="review-action__buttons action-buttons" action="/reviews">
+                	<input type="hidden" value="${doctor.doctor_id}">
                     <button class="action-btn" id="see-reviews">See all reviews</button>
                     <button class="action-btn" id="give-review">Leave your review</button>
-                </div>
+                </form>
             </div>
         </div>
     </main>

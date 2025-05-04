@@ -20,7 +20,12 @@
       <p class="main-description">
         <span class="teal-text">Skip the long queues,</span> book your appointment in seconds, and get the care <br>you deserve! Ready to take control of your health? <span class="teal-text">Go ahead</span> or book an <br>appointment today.
       </p>
-      <button class="btn btn-appoint">BOOK AN APPOINTMENT</button>
+      <form action="appointment" method="get">
+      	<input type="hidden" name="user_id" value=1>
+      	<input type="hidden" name="doctor_id" value=2>
+      	<button class="btn btn-appoint" type="submit">BOOK AN APPOINTMENT</button>
+      </form>
+      
     </div>
     <div class="main-image">
         <img src="./resources/image 914.png" alt="Doctor with clipboard" width="380px" height="340px">

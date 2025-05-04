@@ -16,12 +16,15 @@
             <h2>Welcome back!</h2>
             <p>Skip the long queues, book your appointment in seconds,<br> and get the care you deserve!</p>
 
-            <form action="${pageContext.request.contextPath}/login" method="post">
+            <form action=#>
                 <div class="textfield">
-                    <input type="email" name="email" placeholder="  Email address" required>
+                    <input type="email" name="email" placeholder="Email address" required>
+                    <img src="${pageContext.request.contextPath}/resources/mail.png" class="input-icon" alt="Email Icon">
                 </div>
                 <div class="textfield">
-                    <input type="password" name="password" placeholder="  Password" required>
+                	<img src="${pageContext.request.contextPath}/resources/padlock.png" class="input-icon" alt="Lock Icon">
+                    <input type="password" name="password" placeholder="Password" id ="password" required>
+                    <img src ="${pageContext.request.contextPath}/resources/eye.png" id = "eyeicon">
                 </div>
                 <div class="forgotpassword">
                     <a href="#">Forgot Password?</a>
@@ -30,13 +33,25 @@
             </form>
 
             <div class="register">
-                Not a member? <a href="${pageContext.request.contextPath}/register">Register Now</a>
+                Not a member? <a href="register.jsp">Register Now</a>
             </div>
         </div>
 
         <div class="right">
-
         </div>
     </div>
+    <script>
+    	let eyeicon = document.getElementById("eyeicon");
+		let password = document.getElementById("password");
+		eyeicon.onclick = function(){
+			if(password.type == "password"){
+				password.type = "text";
+				eyeicon.src = "${pageContext.request.contextPath}/resources/eyeopen.png"
+			}else {
+				password.type = "password";
+				eyeicon.src = "${pageContext.request.contextPath}/resources/eye.png";
+			}
+		};
+  </script>
 </body>
 </html>
