@@ -16,9 +16,9 @@
             <h2>Welcome back!</h2>
             <p>Skip the long queues, book your appointment in seconds,<br> and get the care you deserve!</p>
 
-            <form action=#>
+            <form action="login" method="post">
                 <div class="textfield">
-                    <input type="email" name="email" placeholder="Email address" required>
+                    <input name="email" placeholder="Email address" required>
                     <img src="${pageContext.request.contextPath}/resources/mail.png" class="input-icon" alt="Email Icon">
                 </div>
                 <div class="textfield">
