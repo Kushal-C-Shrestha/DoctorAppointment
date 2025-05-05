@@ -6,18 +6,23 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
+
+import com.medikhoj.model.UserReviewModel;
+import com.medikhoj.model.UserDoctorReview;
+import com.medikhoj.service.ReviewService;
 
 /**
- * Servlet implementation class profileController
+ * Servlet implementation class reviewsController
  */
-@WebServlet(asyncSupported = true, urlPatterns = { "/profile" })
-public class profileController extends HttpServlet {
+@WebServlet(asyncSupported = true, urlPatterns = { "/reviews"})
+public class reviewsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public profileController() {
+    public reviewsController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,11 +32,13 @@ public class profileController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String section=request.getParameter("section");
-		section=section==null? "appointments" : section;
-		System.out.println(section);
-		request.setAttribute("section", section);
-		request.getRequestDispatcher("WEB-INF/pages/myProfile.jsp").forward(request, response);
+		int doctor_id=Integer.parseInt(request.getParameter("doctor_id"));
+		ReviewService reviewService=new ReviewService();
+		
+		List<UserReviewModel> userReviews=reviewService.getReviewsByDoctor(doctor_id);
+		
+		request.setAttribute("reviewList",userReviews);
+		request.getRequestDispatcher("WEB-INF/pages/reviews.jsp").forward(request, response);
 	}
 
 	/**

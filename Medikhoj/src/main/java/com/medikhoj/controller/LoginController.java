@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 import com.medikhoj.model.UserModel;
@@ -50,10 +52,14 @@ public class LoginController extends HttpServlet {
 
 	        if (user != null) {
 	            // Set session attribute
-	            SessionUtil.setAttribute(request, "loggedInUser", user);
+	        	HttpSession session = request.getSession();
+	            session.setMaxInactiveInterval(1800); // 30 minutes
+	            session.setAttribute("loggedInUser", user);
+	            System.out.println("Session ID: " + session.getId());
+	        	System.out.println("User in session: " + session.getAttribute("loggedInUser"));
 
 	            // Add a cookie valid for 30 minutes (1800 seconds)
-	            //CookieUtil.addCookie(response, "user_role", String.valueOf(user.getRole_id()), 1800);
+	            CookieUtil.addCookie(response, "user_role", String.valueOf(user.getUser_role()), 1800);
  
 	            // Role-based redirect
 	            String user_role = user.getUser_role();

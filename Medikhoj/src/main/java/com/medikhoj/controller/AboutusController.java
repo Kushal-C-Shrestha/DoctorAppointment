@@ -8,16 +8,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet implementation class profileController
+ * Servlet implementation class AboutusController
  */
-@WebServlet(asyncSupported = true, urlPatterns = { "/profile" })
-public class profileController extends HttpServlet {
+@WebServlet("/aboutus")
+public class AboutusController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public profileController() {
+    public AboutusController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,11 +27,7 @@ public class profileController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String section=request.getParameter("section");
-		section=section==null? "appointments" : section;
-		System.out.println(section);
-		request.setAttribute("section", section);
-		request.getRequestDispatcher("WEB-INF/pages/myProfile.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/pages/aboutus.jsp").forward(request, response);
 	}
 
 	/**

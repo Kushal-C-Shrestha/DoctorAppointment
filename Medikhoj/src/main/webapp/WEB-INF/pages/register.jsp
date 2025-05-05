@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!--  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/register.css">-->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/register.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/register.css">
@@ -17,6 +17,8 @@
     <div class="form-container" >
       <div class="logo">LOGO</div>
       <h1 class="title">Create Account</h1>
+      <p class="sub-text">Skip the long queues, book your appointment in seconds, and get the care you deserve!</p>
+      
       <form action="register" method="post" enctype="multipart/form-data">
       <input type="hidden" name="role" value="user">
         <!-- Full Name (full width) -->
@@ -24,6 +26,7 @@
           <input type="text" placeholder="Full Name" name="fullname"/>
           <i class="fas fa-user"></i>
         </div>
+	  
 
         <!-- Email and Phone -->
         <div class="input-row">
