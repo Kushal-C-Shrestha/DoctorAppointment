@@ -5,7 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<<<<<<< HEAD
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/register.css">
+=======
+ <link rel="stylesheet" href="${pageContext.request.contextPath}/css/register.css">
+>>>>>>> branch 'main' of https://github.com/Kushal-C-Shrestha/DoctorAppointment.git
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
