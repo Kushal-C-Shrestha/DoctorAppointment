@@ -59,7 +59,7 @@ public class LoginController extends HttpServlet {
 	        	System.out.println("User in session: " + session.getAttribute("loggedInUser"));
 
 	            // Add a cookie valid for 30 minutes (1800 seconds)
-	            CookieUtil.addCookie(response, "user_role", String.valueOf(user.getUser_role()), 1800);
+	            CookieUtil.addCookie(response, "user_role", String.valueOf(user.getUser_role()),-1);
  
 	            // Role-based redirect
 	            String user_role = user.getUser_role();
@@ -67,10 +67,13 @@ public class LoginController extends HttpServlet {
 	            if (user_role.equals("admin")) {
 	                // Admin
 	                //response.sendRedirect(request.getContextPath() + "/dashboard");
-	            	request.getRequestDispatcher("/WEB-INF/pages/dashboard.jsp").forward(request, response);
+	            	response.sendRedirect(request.getContextPath() + "/dashboard");
 	            } else if (user_role.equals("user")) {
 	                // User
 	                response.sendRedirect(request.getContextPath() + "/home");
+	            } else if (user_role.equals("doctor")) {
+	                // User
+	                response.sendRedirect(request.getContextPath() + "/doctorDashboard");
 	            } else {
 	                // Unknown role, redirect to login with error
 	                request.setAttribute("error", "Unauthorized role.");
