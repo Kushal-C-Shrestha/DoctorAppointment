@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,20 +21,25 @@
                         <p class="rating-text">Rating: 4.5/5</p>
                     </div>
                     <div class="review-list">
-                        <div class="review">
-                            <div class="review-img">
-    
-                            </div>
-                            <div class="review-text__container">
-                                <div class="review-text__header">
-                                    <p class="reviewer-name">
-                                        John Doe
-                                    </p>
-                                    <p class="review-rating">4.5</p>
-                                </div>
-                                <p class="review-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed magni placeat vel culpa molestiae dolores neque reiciendis saepe totam accusamus ipsum, eum maiores aliquam fugit, dignissimos in dolorum, optio iusto?</p>
-                            </div>
-                        </div>
+                    <c:forEach var="review" items="${reviewList}">
+	                    <div class="review">
+	                            <div class="review-img">
+	    							
+	                            </div>
+	                            <div class="review-text__container">
+	                                <div class="review-text__header">
+	                                    <p class="reviewer-name">
+	                                        ${review.user_name}
+	                                    </p>
+	                                    <p class="review-rating">${review.review_rating}</p>
+	                                </div>
+	                                <p class="review-text">
+	                                	${review.review_desc}
+	                                </p>
+	                            </div>
+	                        </div>
+                    </c:forEach>
+                        
                     </div>
                 </section>
 

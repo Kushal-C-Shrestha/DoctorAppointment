@@ -47,10 +47,14 @@ public class appointmentContoller extends HttpServlet {
 		
 		int doctorId=Integer.parseInt(request.getParameter("doctor_id"));
 		int userId=Integer.parseInt(request.getParameter("user_id"));
+		System.out.println(doctorId);
 		
 		DoctorModel doctor=doctorService.getDoctorProfile(doctorId);
+		System.out.println(doctor==null?"Null" :"not null");
+
 		UserModel user=userService.getUser(userId);
 		UserModel doctorDetails=userService.getUser(doctorId);
+
 		
 		List <SlotModel> allSlots=appointmentService.getAllSlots();
 		request.setAttribute("doctor", doctor);

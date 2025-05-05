@@ -46,7 +46,6 @@ public class DoctorService {
 			
 			while (rs.next()) { //Iterating over each data row received from database.
 				
-				System.out.println("Doctors exist");
 				DoctorUserModel doctor=new DoctorUserModel(); //Creating object of the model class.
 				
 				//Setting the attributes as received from the database row.
@@ -93,7 +92,7 @@ public class DoctorService {
 		//Creating an array list of DoctorModel. This will be passed to the jsp files.
 		
 		DoctorModel doctor=new DoctorModel();
-		String query="SELECT * FROM doctors doctor_id=?"; //Creating the required query to fetch from the database.
+		String query="SELECT * FROM doctors WHERE doctor_id=?"; //Creating the required query to fetch from the database.
 		
 		//Preparing the statement 
 		try(PreparedStatement stmt=dbConn.prepareStatement(query)){
@@ -103,6 +102,7 @@ public class DoctorService {
 			
 			while (rs.next()) { //Iterating over each data row received from database.
 				//Setting the attributes as received from the database row.
+				
 				doctor.setDoctor_id(rs.getInt("doctor_id"));
 				doctor.setDoctor_specialization(rs.getString("doctor_specialization"));
 				doctor.setDoctor_qualification(rs.getString("doctor_qualification"));

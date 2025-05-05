@@ -28,10 +28,16 @@
                     <p class="profile-section__header">About</p>
                     <p>${doctor.doctor_about}</p>
                 </section>
-                <form class="main-action__buttons action-buttons">
-                    <button class="action-btn" id="mark-favorite">Mark as favorite</button>
-                    <button class="action-btn" id="book-appointment">Book appointment</button>
-                </form>
+                <div class="main-action__buttons action-buttons">
+	                <form>
+	                	<button class="action-btn" id="mark-favorite">Mark as favorite</button>
+	                </form>
+	                <form action="appointment" method="get">
+	                	<input type="hidden" name="doctor_id" value="${doctor.doctor_id}">
+	                	<input type="hidden" name="user_id" value="1">
+	                	<button class="action-btn" id="book-appointment">Book appointment</button>
+	                </form>
+                </div>
                 <section class="profile-section">
                     <div class="profile-section__header">
                         <p>Reviews</p>
@@ -76,8 +82,8 @@
                         
                     </div>
                 </section>
-                <form class="review-action__buttons action-buttons" action="/reviews">
-                	<input type="hidden" value="${doctor.doctor_id}">
+                <form class="review-action__buttons action-buttons" action="reviews">
+                	<input type="hidden" value="${doctor.doctor_id}" name="doctor_id">
                     <button class="action-btn" id="see-reviews">See all reviews</button>
                     <button class="action-btn" id="give-review">Leave your review</button>
                 </form>

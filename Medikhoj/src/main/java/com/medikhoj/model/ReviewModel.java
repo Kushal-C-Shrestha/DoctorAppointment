@@ -3,14 +3,14 @@ package com.medikhoj.model;
 import java.time.LocalDate;
 
 public class ReviewModel {
-	private String review_id;
+	private int review_id;
 	private String review_desc;
-	private String review_rating;
+	private float review_rating;
 	private LocalDate review_date;
 	
 	public ReviewModel() {}
 	
-	public ReviewModel(String review_id, String review_desc, String review_rating, LocalDate review_date) {
+	public ReviewModel(int review_id, String review_desc, float review_rating, LocalDate review_date) {
 		super();
 		this.review_id = review_id;
 		this.review_desc = review_desc;
@@ -18,11 +18,11 @@ public class ReviewModel {
 		this.review_date = review_date;
 	}
 
-	public String getReview_id() {
+	public int getReview_id() {
 		return review_id;
 	}
 
-	public void setReview_id(String review_id) {
+	public void setReview_id(int review_id) {
 		this.review_id = review_id;
 	}
 
@@ -34,11 +34,11 @@ public class ReviewModel {
 		this.review_desc = review_desc;
 	}
 
-	public String getReview_rating() {
+	public float getReview_rating() {
 		return review_rating;
 	}
 
-	public void setReview_rating(String review_rating) {
+	public void setReview_rating(float review_rating) {
 		this.review_rating = review_rating;
 	}
 

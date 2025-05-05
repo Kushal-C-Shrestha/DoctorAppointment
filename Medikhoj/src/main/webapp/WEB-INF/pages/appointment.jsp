@@ -18,7 +18,13 @@
         <input type="hidden" name="user_id" value="${user.user_id}">
         <input type="hidden" name="action" value="" id="form-action">
 
-
+		<c:if test="${not empty doctor}">
+			<p>Not empty</p>
+			<p>"${doctor.doctor_id}"</p>
+			<p>"${doctor.doctor_specialization}"</p>
+			<p>"${doctor.doctor_qualification }"</p>
+		</c:if>
+		
 		<label for="doctorName">Patient's Name:</label>
         <input type="text" id="username" name="user_name" value="${user.user_name}" readonly>
         <br>
@@ -28,11 +34,11 @@
         <br>
 
         <label for="doctorSpecialization">Doctor Specialization:</label>
-        <input type="text" id="doctorSpecialization" name="doctor_specialization" value="${doctor.doctor_specialization }" readonly>
+        <input type="text" id="doctorSpecialization" name="doctor_specialization" value="${doctor.doctor_specialization}" readonly>
         <br>
 
         <label for="doctorExperience">Doctor Experience (in years):</label>
-        <input type="number" id="doctorExperience" name="doctor_experience" value=${doctor.doctor_experience } readonly>
+        <input type="number" id="doctorExperience" name="doctor_experience" value="${doctor.doctor_experience}" readonly>
         <br>
 
         <label for="appointmentDate">Appointment Date:</label>
