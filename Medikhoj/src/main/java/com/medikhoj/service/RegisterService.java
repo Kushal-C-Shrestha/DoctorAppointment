@@ -19,7 +19,7 @@ import com.medikhoj.model.UserModel;
 import com.medikhoj.util.ImageUtil;
 import com.medikhoj.util.PasswordUtil;
 import com.medikhoj.util.ValidationUtil;
-import com.mysql.cj.protocol.Resultset;
+
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

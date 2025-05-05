@@ -1,61 +1,164 @@
-*{
-    margin:0;
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-}
-
-.aboutus_title{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+  
+  body {
+    line-height: 1.5;
+    color: #333;
+    background-color: #fff;
+  }
+  
+  .container {
+    max-width: 1700px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    margin-bottom: 3rem;
+  }
+  
+  /* Hero Banner */
+  .hero-banner {
+    position: relative;
+    height: 350px;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/resources/doctor.png') center/cover no-repeat;
+    display: flex;
+    color: #fff;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    margin-top:2em;
-    margin-bottom:3em;
-    font-size: 3em;
-}
-
-.welcome_cont{
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
-    margin:0 auto;
-    width:80%;
-    height:65vh;
-    display:flex;
-    justify-content: space-between;
-    padding:4em 6em;
-}
-
-.welcome_message{
-    Width:50%;
-}
-
-.welcome_message h2{
-    padding-bottom:1.5em;
-    font-size: 2em;
-}
-
-.welcome_message p{
-    line-height: 1.5em;
-    font-size: 1.2em;
-}
-
-.meet_team{
-    margin-top:10em;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .hero-banner h1 {
+    font-size: 3.5rem;
+    font-weight: normal;
+    margin-bottom: 0.5rem;
+    font-family: Poppins bold;
+  }
+  
+  .hero-banner p {
+    font-size: 1rem;
+    max-width: 600px;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    background-color: #10b981;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  /* Our Story Section */
+  .content-section {
+    padding: 30px 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .section-label {
+    color: #b3b3b3;
+    font-weight: 600;
+    margin-bottom: 1rem                                                                                                        0px;
+    text-transform: uppercase;
+    font-size: 1rem;
+  }
+  
+  .section-heading {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  .story-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .story-content {
+    flex: 1 1 500px;
+    max-width: 600px;
+  }
+  
+  .story-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  .story-image {
+    flex: 1 1 400px;
     text-align: center;
-}
-
-.meet_team h1{
-margin-bottom:2em;
-}
-
-.team_members{
-    width:60%;
-    margin:0 auto;
-}
-
-.team_cont{
-    display:flex;
+  }
+  
+  .story-image img {
     width: 100%;
-    justify-content: space-between;
-    margin-bottom: 3em;
-}
-
-.team_subcont{
-    display:flex;
-    width:45%;
-}
+    max-width: 500px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Doctors Section */
+  .doctors-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .doctor-card {
+    display: flex;
+    align-items: flex-start;
+    /* width: 550px; */
+    gap: 15px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .doctor-image img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .doctor-info {
+    flex: 1;
+  }
+  
+  .doctor-name {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #007bff;
+  }
+  
+  .doctor-specialty {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+  }
+  
+  @media (max-width: 768px) {
+    .story-container,
+    .doctors-container {
+      flex-direction: column;
+    }
+    
+    .hero-banner h1 {
+      font-size: 2rem;
+    }
+  }
