@@ -8,6 +8,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import com.medikhoj.model.UserReviewModel;
+import com.medikhoj.model.UserDoctorReview;
+import com.medikhoj.service.ReviewService;
+
 /**
  * Servlet implementation class reviewsController
  */
@@ -28,7 +32,12 @@ public class reviewsController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		int doctor_id=Integer.parseInt(request.getParameter("doctor_id"));
+		ReviewService reviewService=new ReviewService();
 		
+		List<UserReviewModel> userReviews=reviewService.getReviewsByDoctor(doctor_id);
+		
+		request.setAttribute("reviewList",userReviews);
 		request.getRequestDispatcher("WEB-INF/pages/reviews.jsp").forward(request, response);
 	}
 

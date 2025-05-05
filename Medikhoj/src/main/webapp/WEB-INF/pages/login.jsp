@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
 <%@ include file="header.jsp" %>
@@ -24,7 +25,7 @@
                 <div class="textfield">
                 	<img src="${pageContext.request.contextPath}/resources/padlock.png" class="input-icon" alt="Lock Icon">
                     <input type="password" name="password" placeholder="Password" id ="password" required>
-                    <img src ="${pageContext.request.contextPath}/resources/eye.png" id = "eyeicon">
+                    <i id="toggleLoginPassword" class="fas fa-eye" style="cursor: pointer;" ></i>
                 </div>
                 <div class="forgotpassword">
                     <a href="#">Forgot Password?</a>
@@ -40,18 +41,17 @@
         <div class="right">
         </div>
     </div>
-    <script>
-    	let eyeicon = document.getElementById("eyeicon");
-		let password = document.getElementById("password");
-		eyeicon.onclick = function(){
-			if(password.type == "password"){
-				password.type = "text";
-				eyeicon.src = "${pageContext.request.contextPath}/resources/eyeopen.png"
-			}else {
-				password.type = "password";
-				eyeicon.src = "${pageContext.request.contextPath}/resources/eye.png";
-			}
-		};
-  </script>
+   <script>
+  		document.addEventListener('DOMContentLoaded', function() {
+    	const pwd = document.getElementById('loginPassword');
+   		const icon = document.getElementById('toggleLoginPassword');
+   		icon.addEventListener('click', function() {
+      	const hidden = pwd.type === 'password';
+     	pwd.type = hidden ? 'text' : 'password';
+     	this.classList.toggle('fa-eye');
+      	this.classList.toggle('fa-eye-slash');
+    });
+  });
+</script>
 </body>
 </html>

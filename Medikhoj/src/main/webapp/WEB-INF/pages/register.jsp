@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!--  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/register.css">-->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/register.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
@@ -21,7 +21,7 @@
         <div class="input-group full-width">
           <input type="text" placeholder="Full Name" required />
           <i class="fas fa-user"></i>
-=======
+
       <h1>Create Account</h1>
       <p class="sub-text">Skip the long queues, book your appointment in seconds, and get the care you deserve!</p>
 	  <form action="${pageContext.request.contextPath}/register" enctype="multipart/form-data" method="POST">
@@ -70,16 +70,7 @@
 
         <button type="submit">Register</button>
     </form>
-      <!-- <form action="${pageContext.request.contextPath}/register" method="post">
-         <input type="text" placeholder="Full Name" name="fullname" required />
-          
-        <input type="email" placeholder="Email address" name="email" required />
-        <div class="name-group">
-          <input type="text" placeholder="Phone No." name="phone" required />
-          <input type="text" placeholder="Gender" name="gender"  required />
->>>>>>> branch 'main' of https://github.com/Kushal-C-Shrestha/DoctorAppointment.git
-        </div>
-<<<<<<< HEAD
+     
 
         <!-- Email and Phone -->
         <div class="input-row">
