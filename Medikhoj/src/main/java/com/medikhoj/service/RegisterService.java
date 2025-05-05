@@ -19,7 +19,10 @@ import com.medikhoj.model.UserModel;
 import com.medikhoj.util.ImageUtil;
 import com.medikhoj.util.PasswordUtil;
 import com.medikhoj.util.ValidationUtil;
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'main' of https://github.com/Kushal-C-Shrestha/DoctorAppointment.git
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

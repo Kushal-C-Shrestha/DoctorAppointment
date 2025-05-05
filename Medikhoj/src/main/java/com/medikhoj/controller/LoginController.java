@@ -39,7 +39,7 @@ public class LoginController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	/*protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    String email = request.getParameter("email");
 	    String password = request.getParameter("password");
 
@@ -54,14 +54,15 @@ public class LoginController extends HttpServlet {
 
 	            // Add a cookie valid for 30 minutes (1800 seconds)
 	            //CookieUtil.addCookie(response, "user_role", String.valueOf(user.getRole_id()), 1800);
-
+ 
 	            // Role-based redirect
-	            int roleId = user.getRole_id();
-	            System.out.println(roleId);
-	            if (roleId == 3) {
+	            String user_role = user.getUser_role();
+	            System.out.println(user_role);
+	            if (user_role.equals("admin")) {
 	                // Admin
-	                response.sendRedirect(request.getContextPath() + "/dashboard");
-	            } else if (roleId == 1) {
+	                //response.sendRedirect(request.getContextPath() + "/dashboard");
+	            	request.getRequestDispatcher("/WEB-INF/pages/dashboard.jsp").forward(request, response);
+	            } else if (user_role.equals("user")) {
 	                // User
 	                response.sendRedirect(request.getContextPath() + "/home");
 	            } else {
@@ -81,6 +82,6 @@ public class LoginController extends HttpServlet {
 	        request.setAttribute("error", "Something went wrong.");
 	        request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
 	    }
-	}*/
+	}
 
 }

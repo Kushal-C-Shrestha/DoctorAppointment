@@ -24,9 +24,8 @@ public class LoginService {
 		}
 	}
 	
-	/*public UserModel authenticateUser(String email, String password) {
-		
-		String query = "SELECT * FROM users WHERE user_email = ?";
+	public UserModel authenticateUser(String email, String password) {
+		String query = "SELECT * FROM users WHERE user_email = ? OR user_phone= ?";
 		
         if (isConnectionError) {
 			//Checking if there is connection with database . if not this section is triggered
@@ -36,6 +35,7 @@ public class LoginService {
         
         try (PreparedStatement statement = dbConn.prepareStatement(query)) {
             statement.setString(1, email);
+            statement.setString(2, email);
             ResultSet rs = statement.executeQuery();
             System.out.println(password);
 
@@ -43,7 +43,21 @@ public class LoginService {
                 // User exists , now check password.
             	String storedPassword = rs.getString("user_password");
             	
-            	if (PasswordUtil.verifyPassword(password, storedPassword)) {
+            	if (!email.contains("@")) {
+            		String mailQuery = "SELECT user_email FROM users WHERE user_phone= ?";
+            		try(PreparedStatement stmt = dbConn.prepareStatement(mailQuery)){
+            			stmt.setString(1, email);
+            			ResultSet ms = stmt.executeQuery();
+            			if (ms.next()) {
+            				email = ms.getString("user_email");
+            			}
+            		}catch (SQLException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+            		
+            	}
+            	if (password.equals(PasswordUtil.decrypt(storedPassword, email))) {
             		 UserModel user = new UserModel();
                      user.setUser_id(rs.getInt("user_id"));
                      user.setUser_name(rs.getString("user_name"));
@@ -52,7 +66,7 @@ public class LoginService {
                      user.setUser_dob(rs.getDate("user_dob").toLocalDate());
                      user.setUser_gender(rs.getString("user_gender"));
                      user.setUser_bloodgroup(rs.getString("user_bloodgroup"));
-                     user.setRole_id(rs.getInt("role_id"));
+                     user.setUser_role(rs.getString("user_role"));
                      return user; 
             	}
             }
@@ -64,5 +78,5 @@ public class LoginService {
             return null;
         }
     }
-    */
+    
 }
