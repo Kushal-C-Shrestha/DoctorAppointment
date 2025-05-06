@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 /**
+ * @author Anugraha Maharjan
  * Utility class for managing HTTP sessions in a web application.
  * Provides methods to set, get, remove session attributes and invalidate sessions.
  */
