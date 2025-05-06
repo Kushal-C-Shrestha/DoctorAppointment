@@ -9,17 +9,22 @@ public class AppointmentModel {
 	private int appointment_time;
 	private String appointment_remarks;
 	private String appointment_type;
+	private String appointment_title;
+	private String appointment_status;
+	
 	
 	public AppointmentModel() {}
 	
 	public AppointmentModel(int appointment_id, LocalDate appointment_date, int appointment_time,
-			String appointment_remarks, String appointment_type) {
+			String appointment_remarks, String appointment_type,String appointment_title, String appointment_status) {
 		super();
 		this.appointment_id = appointment_id;
 		this.appointment_date = appointment_date;
 		this.appointment_time = appointment_time;
 		this.appointment_remarks = appointment_remarks;
 		this.appointment_type = appointment_type;
+		this.appointment_title=appointment_title;
+		this.appointment_status=appointment_status;
 	}
 
 	public int getAppointment_id() {
@@ -52,6 +57,22 @@ public class AppointmentModel {
 	public void setAppointment_type(String appointment_type) {
 		this.appointment_type = appointment_type;
 	}
+	public String getAppointment_title() {
+		return appointment_title;
+	}
+
+	public void setAppointment_title(String appointment_title) {
+		this.appointment_title = appointment_title;
+	}
+
+	public String getAppointment_status() {
+		return appointment_status;
+	}
+
+	public void setAppointment_status(String appointment_status) {
+		this.appointment_status = appointment_status;
+	}
+
 	
 	
 }

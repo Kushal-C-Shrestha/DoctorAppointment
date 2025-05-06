@@ -20,15 +20,13 @@
       <p class="main-description">
         <span class="teal-text">Skip the long queues,</span> book your appointment in seconds, and get the care <br>you deserve! Ready to take control of your health? <span class="teal-text">Go ahead</span> or book an <br>appointment today.
       </p>
-      <form action="appointment" method="get">
-      	<input type="hidden" name="user_id" value=1>
-      	<input type="hidden" name="doctor_id" value=2>
+      <form action="doctors" method="get">
       	<button class="btn btn-appoint" type="submit">BOOK AN APPOINTMENT</button>
       </form>
       
     </div>
     <div class="main-image">
-        <img src="./resources/image 914.png" alt="Doctor with clipboard" width="380px" height="340px">
+        <img src="${pageContext.request.contextPath}/resources/images/assets/image 914.png" alt="Doctor with clipboard" width="380px" height="340px">
     </div>
   </section>
 
@@ -37,7 +35,7 @@
     <!-- Feature 1 -->
     <div class="feature-card">
       <div class="feature-icon">
-        <img src="./resources/book.png" width="60px" height="70px"/>
+        <img src="${pageContext.request.contextPath}/resources/images/assets//book.png" width="60px" height="70px"/>
       </div>
       <div class="feature-content">
         <h3>Book an Appointment</h3>
@@ -48,7 +46,7 @@
     <!-- Feature 2 -->
     <div class="feature-card">
       <div class="feature-icon">
-        <img src="./resources/campaign.png" width="60px" height="70px"/>
+        <img src="${pageContext.request.contextPath}/resources/images/assets/campaign.png" width="60px" height="70px"/>
       </div>
       <div class="feature-content">
         <h3>Health Campaigns</h3>
@@ -59,7 +57,7 @@
     <!-- Feature 3 -->
     <div class="feature-card">
       <div class="feature-icon">
-        <img src="./resources/online.png" width="60px" height="70px"/>
+        <img src="${pageContext.request.contextPath}/resources/images/assets/online.png" width="60px" height="70px"/>
       </div>
       <div class="feature-content">
         <h3>Online Consultation</h3>
@@ -70,7 +68,7 @@
     <!-- Feature 4 -->
     <div class="feature-card">
       <div class="feature-icon">
-        <img src="./resources/24hour.png" width="60px" height="70px"/>
+        <img src="${pageContext.request.contextPath}/resources/images/assets/24hour.png" width="60px" height="70px"/>
       </div>
       <div class="feature-content">
         <h3>24 hour service</h3>
@@ -89,7 +87,7 @@
       <!-- General Services Card -->
       <div class="service-card">
         <div class="service-icon">
-          <img src="./resources/general.png" width="70px" height="75px">
+          <img src="${pageContext.request.contextPath}/resources/images/assets/general.png" width="70px" height="75px">
         </div>
         <h3 class="service-title">General Services</h3>
         <p class="service-description">We provide essential healthcare services including routine check-ups and primary care.</p>
@@ -98,7 +96,7 @@
       <!-- Diagnostic Services Card -->
       <div class="service-card">  
         <div class="service-icon">
-          <img src="./resources/diagnostic.png" width="75px" height="80px">
+          <img src="${pageContext.request.contextPath}/resources/images/assets/diagnostic.png" width="75px" height="80px">
         </div>
         <h3 class="service-title">Diagnostic Services</h3>
         <p class="service-description">Our clinic offers reliable lab tests and screenings for accurate health assessment.</p>
@@ -107,7 +105,7 @@
       <!-- Specialist Consultation Card -->
       <div class="service-card">
         <div class="service-icon">
-          <img src="./resources/specialist.png" width="75px" height="90px">
+          <img src="${pageContext.request.contextPath}/resources/images/assets/specialist.png" width="75px" height="90px">
         </div>
         <h3 class="service-title">Specialist Consultation</h3>
         <p class="service-description">Consult with experienced specialists for personalized care and expert medical advice.</p>
@@ -156,7 +154,7 @@
       </div>  
       
       <div class="steps-image">
-        <img src="./resources/doc_work.png" alt="Doctor with tablet" width="360px" height="420px">
+        <img src="${pageContext.request.contextPath}/resources/images/assets/doc_work.png" alt="Doctor with tablet" width="360px" height="420px">
       </div>
     </div>
   </section>
@@ -182,7 +180,7 @@
         <p class="testimonial-text">The doctors were so attentive and took the time to really understand my concerns. I felt heard and cared for throughout my visit.</p>
         <div class="testimonial-header">
           <div class="testimonial-image">
-            <img src="./resources/rev1.png" alt="Patient Avatar">
+            <img src="${pageContext.request.contextPath}/resources/images/assets/rev1.png" alt="Patient Avatar">
           </div>
           <div class="testimonial-info">
             <h4>Sarah Reed</h4>
@@ -204,7 +202,7 @@
         <p class="testimonial-text">The online consultation saved me so much time. The doctor was professional and the follow-up was excellent. Highly recommend!</p>
         <div class="testimonial-header">
           <div class="testimonial-image">
-            <img src="./resources/rev2.png" alt="Patient Avatar">
+            <img src="${pageContext.request.contextPath}/resources/images/assets//rev2.png" alt="Patient Avatar">
           </div>
           <div class="testimonial-info">
             <h4>Maria Reed</h4>
@@ -226,7 +224,7 @@
         <p class="testimonial-text">The appointment booking process was seamless, and the staff was friendly and efficient. I'm very pleased with the care I received.</p>
         <div class="testimonial-header">
           <div class="testimonial-image">
-            <img src="./resources/rev3.png" alt="Patient Avatar">
+            <img src="${pageContext.request.contextPath}/resources/images/assets/rev3.png" alt="Patient Avatar">
           </div>
           <div class="testimonial-info">
             <h4>David Reed</h4>

@@ -20,6 +20,7 @@ import java.util.Set;
 import com.medikhoj.config.DbConfig;
 import com.medikhoj.controller.campaignsController;
 import com.medikhoj.model.AppointmentModel;
+import com.medikhoj.model.DoctorAppointmentModel;
 import com.medikhoj.model.DoctorModel;
 
 public class AppointmentService {
@@ -101,11 +102,14 @@ public class AppointmentService {
 		int appointment_time=Integer.parseInt(request.getParameter("appointment_time"));
 		String appointment_remarks=request.getParameter("appointment_remarks");
 		String appointment_type=request.getParameter("appointment_type");
+		String appointment_title=request.getParameter("appointment_title");
 		
 		appointment.setAppointment_date(appointment_date);
 		appointment.setAppointment_time(appointment_time);
 		appointment.setAppointment_type(appointment_type);
 		appointment.setAppointment_remarks(appointment_remarks);
+		appointment.setAppointment_title(appointment_title);
+		appointment.setAppointment_status("pending");
 		
 		return appointment;
 	}
@@ -118,14 +122,16 @@ public class AppointmentService {
 		}
 		System.out.println(appointment.getAppointment_type());
 		
-		String insertQuery = "INSERT INTO appointments (appointment_date, appointment_time, appointment_type, appointment_remarks)"
-				+ "VALUES (?, ?, ? , ?)";
+		String insertQuery = "INSERT INTO appointments (appointment_date, appointment_time, appointment_type, appointment_remarks, appointment_title, appointment_status)"
+				+ "VALUES (?, ?, ? , ?,?,?)";
 		
 		try(PreparedStatement stmt=dbConn.prepareStatement(insertQuery,Statement.RETURN_GENERATED_KEYS)){
 			stmt.setDate(1, java.sql.Date.valueOf(appointment.getAppointment_date()));
 			stmt.setInt(2, appointment.getAppointment_time());
 			stmt.setString(3, appointment.getAppointment_type());
 			stmt.setString(4,null);
+			stmt.setString(5, appointment.getAppointment_title());
+			stmt.setString(6, appointment.getAppointment_status());
 			
 			int affectedRows=stmt.executeUpdate();
 			
@@ -160,6 +166,48 @@ public class AppointmentService {
 			// TODO: handle exception
 			System.out.println("Exception during main insertionn" + e.getMessage());
 			return false;
+		}
+	}
+	
+	public List<DoctorAppointmentModel> getAppointmentByUser(int user_id){
+		if (dbConn == null) {
+			System.err.println("Database connection is not available.");
+			return null;
+		}
+		
+		List<DoctorAppointmentModel> appointmentList=new ArrayList<DoctorAppointmentModel>();
+		
+		String query="SELECT * FROM appointments a "
+				+ "JOIN user_doctor_appointment uda ON a.appointment_id=uda.appointment_id "
+				+ "JOIN doctors d ON d.doctor_id=uda.doctor_id "
+				+ "JOIN users u ON u.user_id=d.doctor_id "
+				+ "JOIN slots s on a.appointment_time=s.slot_id "
+				+ "WHERE uda.user_id=?";
+		
+		try(PreparedStatement stmt=dbConn.prepareStatement(query)){
+			stmt.setInt(1, user_id);
+			
+			ResultSet rs=stmt.executeQuery();
+			
+			while(rs.next()) {
+				DoctorAppointmentModel dam=new DoctorAppointmentModel();
+				
+				dam.setUser_name(rs.getString("user_name"));
+				dam.setAppointment_title(rs.getString("appointment_title"));
+				dam.setAppointment_date(rs.getDate("appointment_date").toLocalDate());
+				dam.setSlot_time(rs.getTime("slot_time").toLocalTime());
+				dam.setAppointment_status(rs.getString("appointment_status"));
+				dam.setAppointment_remarks(rs.getString("appointment_remarks"));
+				dam.setAppointment_type(rs.getString("appointment_type"));
+				
+				appointmentList.add(dam);
+			}
+			
+			return appointmentList;
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			return null;
 		}
 	}
 }

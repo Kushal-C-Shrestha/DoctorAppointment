@@ -10,12 +10,12 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
 </head>
 <body>
+	<%@ include file="header.jsp" %>
+
 	<main>
         <div class="container">
             <div class="profile-top">
-                <div class="profile-photo">
-
-                </div>
+				<img src="${pageContext.request.contextPath}/resources/images/uploads/${doctor.user_profile}" alt="doctor-profile" class="profile-photo">
                 <div class="profile-texts">
                     <p class="dname">${doctor.user_name}</p>
                     <p class="dspecialization">${doctor.doctor_specialization}</p>

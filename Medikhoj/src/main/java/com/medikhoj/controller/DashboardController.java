@@ -27,7 +27,7 @@ public class DashboardController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("WEB-INF/pages/dashboard.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/pages/admin/dashboard.jsp").forward(request, response);
 	}
 
 	/**

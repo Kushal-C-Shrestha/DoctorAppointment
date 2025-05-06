@@ -20,6 +20,12 @@
             <div class="campaign-header">
                 <p>Campaigns</p>
             </div>
+            <c:choose>
+            <c:when test="${not empty error}">
+            	<p>${error }</p>
+            </c:when>
+            <c:otherwise>
+            
             <div class="campaign-list" >
             <c:forEach var="campaign" items="${campaigns}">
 	            <div class="campaign">
@@ -50,6 +56,8 @@
             </c:forEach>
                 
             </div>
+            </c:otherwise>
+            </c:choose>
         </div>
     </main>
 </body>

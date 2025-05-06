@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +15,7 @@
     <header class="header">
         <h1 class="logo">
             <a href="${contextPath}/home.jsp">
-                <img src="${contextPath}/resources/images/system/logo.png"></a>
+                <img src="${pageContext.request.contextPath}/resources/images/assets/logo.png"></a>
         </h1>
         <ul class="main-nav">
             <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
@@ -21,8 +24,11 @@
             <li><a href="${pageContext.request.contextPath}/aboutus">About Us</a></li>
         </ul>
         <ul class="user-nav">
-            <li><a href="${pageContext.request.contextPath}/register" class="btn-signup">SignUp</a></li>
-            <li><a href="${pageContext.request.contextPath}/login" class="btn-login">LogIn</a></li>
+        	<c:if test="${empty sessionScope.loggedInUser}">
+        	 	<li><a href="${pageContext.request.contextPath}/register" class="btn-signup">SignUp</a></li>
+            	<li><a href="${pageContext.request.contextPath}/login" class="btn-login">LogIn</a></li>
+			</c:if>
+           
             <li><a href="${pageContext.request.contextPath}/profile" class="btn-login">Profile</a></li>
         </ul>
     </header>

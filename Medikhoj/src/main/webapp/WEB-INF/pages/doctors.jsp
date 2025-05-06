@@ -100,15 +100,20 @@
                     </select>
                 </div>
             </div>
+            <c:choose>
+            	<c:when test="${not empty error}">
+            		<p>${error}</p>
+            	</c:when>
+            	<c:otherwise>
+            	
+            	
             <div class="doctors-list">
             	<c:forEach var="doctor" items="${doctorList}">
             		<div class="doctor-card__container">
 	                    <form action="${pageContext.request.contextPath}/doctorProfile" class="doctor-card">
 	                    	<input type="hidden" name="doctorId" value="${doctor.doctor_id}">
 	                        <button class="doctor">
-	                            <div class="doctor-image">
-	                                <img src="image 935.png" alt="">
-	                            </div>
+	                            <img src="${pageContext.request.contextPath}/resources/images/uploads/${doctor.user_profile}" alt="" class="doctor-image">
 	                            <div class="doctor-info">
 	                                <p>${doctor.user_name}</p>
 	                                <p>${doctor.doctor_specialization}</p>
@@ -143,6 +148,8 @@
             	</c:forEach>
                 
             </div>
+            </c:otherwise>
+            </c:choose>
         </div>
     </main>
     <%@ include file="footer.jsp" %>
