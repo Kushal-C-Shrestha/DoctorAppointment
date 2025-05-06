@@ -33,6 +33,10 @@ public class campaignsController extends HttpServlet {
 		CampaignsService campaignService=new CampaignsService();
 		List <CampaignModel> campaigns=campaignService.getAllCampaigns();
 		
+		if (campaigns==null) {
+			request.setAttribute("error", "Database is down. Please try again in a few minutes.");
+		}
+		
 		request.setAttribute("campaigns", campaigns);
 		request.getRequestDispatcher("WEB-INF/pages/campaigns.jsp").forward(request, response);
 	}

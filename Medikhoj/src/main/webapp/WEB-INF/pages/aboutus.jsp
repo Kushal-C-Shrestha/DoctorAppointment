@@ -27,7 +27,7 @@
               <p>Equipped with state-of-the-art medical technology and modern facilities, [Clinic Name] offers a wide range of diagnostic and therapeutic services under one roof. Whether you're seeking routine check-ups, specialized treatment, or long-term health management, our clinic is here to support you at every stage of your wellness journey.</p>
             </div>
             <div class="story-image">
-              <img src="/resources/bed.png" alt="Hospital room with medical equipment">
+              <img src="${pageContext.request.contextPath}/resources/images/assets/bed.png" alt="Hospital room with medical equipment">
             </div>
           </div>
         </section>
@@ -39,14 +39,14 @@
             <div class="story-container">
               <!-- Left Side: Image -->
               <div class="story-image">
-                <img src="/resources/check.png" alt="Doctor examining patient's hand">
+                <img src="${pageContext.request.contextPath}/resources/images/assets/check.png" alt="Doctor examining patient's hand">
               </div>
           
               <!-- Right Side: Doctor Cards -->
               <div class="story-content doctors-list">
                 <div class="doctor-card">
                   <div class="doctor-image">
-                    <img src="/resources/slesha.png" alt="Dr. Samyukta Rai">
+                    <img src="${pageContext.request.contextPath}/resources/images/assets/slesha.png" alt="Dr. Samyukta Rai">
                   </div>
                   <div class="doctor-info">
                     <h3 class="doctor-name">Dr. Samyukta Rai</h3>
@@ -56,7 +56,7 @@
           
                 <div class="doctor-card">
                   <div class="doctor-image">
-                    <img src="/resources/doc2.png" alt="Dr. Suyesh Rimal">
+                    <img src="${pageContext.request.contextPath}/resources/images/assets/doc2.png" alt="Dr. Suyesh Rimal">
                   </div>
                   <div class="doctor-info">
                     <h3 class="doctor-name">Dr. Suyesh Rimal</h3>

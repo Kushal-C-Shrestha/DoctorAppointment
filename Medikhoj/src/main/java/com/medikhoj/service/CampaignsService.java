@@ -9,6 +9,9 @@ import java.util.List;
 
 import com.medikhoj.config.DbConfig;
 import com.medikhoj.model.CampaignModel;
+import com.medikhoj.model.CampaignUserModel;
+import com.medikhoj.model.DoctorUserModel;
+
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -26,7 +29,6 @@ public class CampaignsService {
 		} catch (SQLException | ClassNotFoundException ex) {
 			// TODO: handle exception
 			System.err.println("Database connection error: " + ex.getMessage());
-			ex.printStackTrace();
 			isConnectionError=true;
 		}
 	}
@@ -76,5 +78,41 @@ public class CampaignsService {
 		}
 		
 		return campaigns;
+	}
+	
+	
+	public List<CampaignUserModel> getEnrollmentsByUser(int user_id){
+		if (isConnectionError) {
+			//Checking if there is connection with database . if not this section is triggered
+			System.out.println("Database connection error");
+			return null;
+		}
+		
+		List<CampaignUserModel> enrollmentsByUser=new ArrayList();
+		String query="SELECT * FROM favorite f JOIN users u ON f.user_id = u.user_id  "
+				+ "WHERE u.user_id=?";
+		
+		try(PreparedStatement stmt=dbConn.prepareStatement(query)){
+			
+			stmt.setInt(1, user_id);			
+			ResultSet rs=stmt.executeQuery();
+					
+			
+			while (rs.next()) {
+				CampaignUserModel cu=new CampaignUserModel();
+				
+				cu.setUser_id(rs.getInt("user_id"));
+				cu.setCampaign_date(rs.getDate("campaign_date").toLocalDate());
+				cu.setCampaign_name(rs.getString("campaign_name"));
+				cu.setCampaign_desc(rs.getString("campaign_desc"));
+				cu.setCampaign_time(rs.getTime("campaign_time").toLocalTime());
+
+				enrollmentsByUser.add(cu);
+			}
+			return enrollmentsByUser;
+		}catch (Exception e) {
+			return null;
+			// TODO: handle exception
+		}
 	}
 }

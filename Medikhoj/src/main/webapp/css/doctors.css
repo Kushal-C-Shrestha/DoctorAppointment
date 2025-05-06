@@ -138,10 +138,12 @@ main{
 	cursor:pointer;
 
     .doctor-image{
-        height: 80px;
-        width: 80px;
-        border-radius: 50%;
-        border: 1px solid black;
+        img{
+        	height: 80px;
+	        width: 80px;
+	        border-radius: 50%;
+	        border: 1px solid black;
+        }
     }
 
     .doctor-info{

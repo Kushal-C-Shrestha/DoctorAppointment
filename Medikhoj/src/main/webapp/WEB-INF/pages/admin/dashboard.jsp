@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dashboard.css"/></head>
 <body>
+	<%@ include file="adminNav.jsp" %>
+
 	 <div class="container">
         <h1>Admin Dashboard</h1>
         <h2>List of Doctors</h2>

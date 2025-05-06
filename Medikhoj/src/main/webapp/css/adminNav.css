@@ -1,0 +1,112 @@
+@charset "UTF-8";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  body {
+    display: flex;
+    background-color: #f8f9fa;
+    overflow: hidden; /* Prevent body scrolling */
+    height: 100vh; /* Full viewport height */
+  }
+
+  /* Sidebar styles from your existing CSS */
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 300px;
+    border-right: 1px solid #E0E0E0;
+    transition: .5s ease;
+    height: 100vh;
+    background-color: white;
+    position: fixed; 
+    left: 0;
+    top: 0;
+    overflow-y: auto; 
+  }
+
+  .nav.close {
+    width: 52px;
+  }
+
+  .nav.close .navbar-top h1 {
+    display: none;
+  }
+
+  .navbar-top {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    padding: 0px 16px;
+    align-items: center;
+  }
+
+  .navbar-top svg {
+    cursor: pointer;
+  }
+
+  .nav-links__container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: .5s ease;
+  }
+
+  .nav-links__container.close h3 {
+    opacity: 0;
+  }
+
+  .nav-links__container.close .nav-section__link {
+    display: none;
+  }
+
+  .nav-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .nav-section__heading {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 0px 16px;
+    color: #666;
+  }
+
+  .nav-section ul {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .nav-section ul li {
+    list-style: none;
+  }
+
+  .nav-section ul li a {
+    text-decoration: none;
+    color: #308C65;
+    padding: 12px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-section ul li a.active {
+    background-color: #99E9CC;
+    font-weight: bold;
+  }
+
+  .nav-section ul li a:hover {
+    background-color: #C9F7EB;
+  }
+
+  .nav-section ul li a.active:hover {
+    background-color: #99E9CC;
+  }

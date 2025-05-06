@@ -51,13 +51,22 @@ public class RegisterController extends HttpServlet {
 		//Validate the form. If something is wrong display the message accordingly
 		String validationMessage=registerService.validateRegistrationForm(request);
 		if (validationMessage!=null) {
+			request.setAttribute("error", validationMessage);
+			request.getRequestDispatcher("WEB-INF/pages/register.jsp").forward(request, response);
 			System.out.println(validationMessage);
 			return;
 		}
 		
 		//Checking if the user already exists in the system.
 		Boolean isExists=registerService.isUserExists(request);
+		if (isExists==null) {
+			request.setAttribute("error", "Database is down. Please try again in a few minutes.");
+			request.getRequestDispatcher("WEB-INF/pages/register.jsp").forward(request, response);
+		}
+		
 		if (isExists) {
+			request.setAttribute("error", "The user already exists. Enter a new email or phone number.");
+			request.getRequestDispatcher("WEB-INF/pages/register.jsp").forward(request, response);
 			System.out.print("User already exists");
 			return;
 		}

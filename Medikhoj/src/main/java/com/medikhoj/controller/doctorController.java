@@ -35,6 +35,9 @@ public class doctorController extends HttpServlet {
 		
 		List<DoctorUserModel> doctors=doctorService.getAllDoctors();
 		
+		if (doctors==null) {
+			request.setAttribute("error", "Database is down. Please try again in a few minutes.");
+		}
 		request.setAttribute("doctorList", doctors);
 		request.getRequestDispatcher("WEB-INF/pages/doctors.jsp").forward(request, response);
 	}

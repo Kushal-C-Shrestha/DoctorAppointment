@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +17,9 @@
 <body>
 <div class="container">
     <div class="form-container" >
+    <c:if test="${not empty error }">
+      <p>${error}</p>
+      </c:if>
       <div class="logo">LOGO</div>
       <h1 class="title">Create Account</h1>
       <p class="sub-text">Skip the long queues, book your appointment in seconds, and get the care you deserve!</p>

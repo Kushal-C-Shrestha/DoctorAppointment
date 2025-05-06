@@ -22,7 +22,7 @@ public class DoctorService {
 		} catch (SQLException | ClassNotFoundException ex) {
 			// TODO: handle exception
 			System.err.println("Database connection error: " + ex.getMessage());
-			ex.printStackTrace();
+			
 			isConnectionError=true;
 		}
 	}

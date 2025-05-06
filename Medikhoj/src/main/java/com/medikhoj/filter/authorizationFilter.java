@@ -47,10 +47,11 @@ public class authorizationFilter extends HttpFilter implements Filter {
 		 String uri = req.getRequestURI();
 
 	        // Allow static resources
-		 if (uri.endsWith(".css") || uri.endsWith(".js") || uri.endsWith(".png") || uri.endsWith(".jpg")) {
-			 chain.doFilter(request, response);
-			 return;
-		 }
+		 if (uri.startsWith(req.getContextPath() + "/resources/") || uri.startsWith(req.getContextPath() + "/css/") || uri.matches(".*\\.(jpg|jpeg|png|gif|css|js)$")) {
+			    chain.doFilter(request, response);
+			    return;
+			}
+
 		 
 		 boolean isLoggedIn = SessionUtil.getAttribute(req, "loggedInUser") != null;
 	        String userRole = CookieUtil.getCookie(req, "user_role");
@@ -75,7 +76,7 @@ public class authorizationFilter extends HttpFilter implements Filter {
 	        }
 
 	        // User-only pages
-	        if (uri.endsWith("/profile") || uri.endsWith("/appointment")) {
+	        if (uri.endsWith("/profile") || uri.endsWith("/appointment") ||uri.endsWith("/updateProfile")) {
 	            if (isLoggedIn && "user".equals(userRole)) {
 	                chain.doFilter(request, response);
 	            } else {
