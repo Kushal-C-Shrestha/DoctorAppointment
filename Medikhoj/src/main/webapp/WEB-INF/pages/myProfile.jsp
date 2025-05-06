@@ -17,7 +17,6 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-logo">
-                <div class="logo">M</div>
                 <div class="logo-text">MedCare</div>
             </div>
             
@@ -90,7 +89,7 @@
             <div class="user-section">
                 <div class="user-avatar">RP</div>
                 <div class="user-info">
-                    <div class="user-name">Raj Patel</div>
+                    <div class="user-name">Anugraha Maharjan</div>
                     <div class="user-role">Patient</div>
                 </div>
             </div>

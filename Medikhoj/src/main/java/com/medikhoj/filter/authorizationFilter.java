@@ -47,26 +47,25 @@ public class authorizationFilter extends HttpFilter implements Filter {
 		 String uri = req.getRequestURI();
 
 	        // Allow static resources
-		 if (uri.startsWith(req.getContextPath() + "/resources/") || uri.startsWith(req.getContextPath() + "/css/") || uri.matches(".*\\.(jpg|jpeg|png|gif|css|js)$")) {
-			    chain.doFilter(request, response);
-			    return;
-			}
-
+		 if (uri.endsWith(".css") || uri.endsWith(".js") || uri.endsWith(".png") || uri.endsWith(".jpg")) {
+			 chain.doFilter(request, response);
+			 return;
+		 }
 		 
 		 boolean isLoggedIn = SessionUtil.getAttribute(req, "loggedInUser") != null;
 	        String userRole = CookieUtil.getCookie(req, "user_role");
 
 	        // Public pages
 	        if (uri.endsWith("/login") || uri.endsWith("/register") || uri.endsWith("/home") ||
-	            uri.endsWith("/aboutus") || uri.endsWith("/contactus") || uri.endsWith("/reviews") ||
-	            uri.endsWith("/doctors") || uri.endsWith("/doctorProfile") || uri.endsWith("/campaigns") ||
+	            uri.endsWith("/aboutus") || uri.endsWith("/contactus") ||
+	            uri.endsWith("/doctors") || uri.endsWith("/doctorProfile") || uri.endsWith("/campaigns") || uri.endsWith("/logout")||
 	            uri.endsWith("/unauthorized.jsp")) {
 	            chain.doFilter(request, response);
 	            return;
 	        }
 
 	        // Admin access
-	        if (uri.endsWith("/dashboard")) {
+	        if (uri.endsWith("/dashboard") || uri.endsWith("/addCampaign")) {
 	            if ("admin".equals(userRole)) {
 	                chain.doFilter(request, response);
 	            } else {
@@ -76,17 +75,17 @@ public class authorizationFilter extends HttpFilter implements Filter {
 	        }
 
 	        // User-only pages
-	        if (uri.endsWith("/profile") || uri.endsWith("/appointment") ||uri.endsWith("/updateProfile")) {
+	        if (uri.endsWith("/profile") || uri.endsWith("/appointment") || uri.endsWith("/reviews")){
 	            if (isLoggedIn && "user".equals(userRole)) {
 	                chain.doFilter(request, response);
 	            } else {
-	            	res.sendRedirect(req.getContextPath() + "/unauthorized.jsp");
+	            	res.sendRedirect(req.getContextPath() + "/login");
 	            }
 	            return;
 	        }
 	        
 	        //doctors only
-	        if (uri.endsWith("/doctorDashboard") || uri.endsWith("/addCampaign")){	
+	        if (uri.endsWith("/doctorDashboard")){	
 	            if (isLoggedIn && "doctor".equals(userRole)) {
 	                chain.doFilter(request, response);
 	            } else {
