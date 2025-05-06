@@ -26,12 +26,7 @@ public class LoginService {
 	
 	public UserModel authenticateUser(String email, String password) {
 		String query;
-	    if (email.contains("@")) {
-	        query = "SELECT * FROM users WHERE user_email = ?";
-	    } else {
-	        query = "SELECT * FROM users WHERE user_phone = ?";
-	    }
-	    
+		query = "SELECT * FROM users WHERE user_email = ? or user_phone = ?";
         if (isConnectionError) {
 			//Checking if there is connection with database . if not this section is triggered
 			System.out.println("Database connection error");
@@ -40,6 +35,7 @@ public class LoginService {
         
         try (PreparedStatement statement = dbConn.prepareStatement(query)) {
             statement.setString(1, email);
+            statement.setString(2, email);
             ResultSet rs = statement.executeQuery();
             System.out.println(password);
 
@@ -47,21 +43,21 @@ public class LoginService {
                 // User exists , now check password.
             	String storedPassword = rs.getString("user_password");
             	
-//            	if (!email.contains("@")) {
-//            		String mailQuery = "SELECT user_email FROM users WHERE user_phone= ?";
-//            		try(PreparedStatement stmt = dbConn.prepareStatement(mailQuery)){
-//            			stmt.setString(1, email);
-//            			ResultSet ms = stmt.executeQuery();
-//            			if (ms.next()) {
-//            				email = ms.getString("user_email");
-//            			}
-//            		}catch (SQLException e) {
-//            			
-//                        e.printStackTrace();
-//                        return null;
-//                    }
+            	if (!email.contains("@")) {
+            		String mailQuery = "SELECT user_email FROM users WHERE user_phone= ?";
+            		try(PreparedStatement stmt = dbConn.prepareStatement(mailQuery)){
+            			stmt.setString(1, email);
+            			ResultSet ms = stmt.executeQuery();
+            			if (ms.next()) {
+            				email = ms.getString("user_email");
+            			}
+            		}catch (SQLException e) {
+            			
+                        e.printStackTrace();
+                        return null;
+                    }
             		
-            	//}
+            	}
             	if (password.equals(PasswordUtil.decrypt(storedPassword, email))) {
             		 UserModel user = new UserModel();
                      user.setUser_id(rs.getInt("user_id"));

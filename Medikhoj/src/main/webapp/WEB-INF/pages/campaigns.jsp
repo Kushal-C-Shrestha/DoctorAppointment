@@ -44,9 +44,14 @@
 	                            </div>
 	                        </div>
 	                    </div>
-	                    <button class="campaign-enroll">
-	                        Enroll
-	                    </button>
+	                    <c:set var="user" value="${sessionScope.loggedInUser}" />
+	                    <form action="campaigns" method="post">
+	                    	<input type="hidden" name="campaign_id" value="${campaign.campaign_id}">
+	                    	<input type="hidden" name="user_id" value="${user.user_id}">
+		                    <button class="campaign-enroll">
+		                        Enroll
+		                    </button>
+	                    </form>
 	                </div>
             </c:forEach>
                 

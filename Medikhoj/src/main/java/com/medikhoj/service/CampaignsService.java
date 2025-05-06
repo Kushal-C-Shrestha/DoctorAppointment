@@ -81,6 +81,7 @@ public class CampaignsService {
 	}
 	
 	
+<<<<<<< HEAD
 	public List<CampaignUserModel> getEnrollmentsByUser(int user_id){
 		if (isConnectionError) {
 			//Checking if there is connection with database . if not this section is triggered
@@ -115,4 +116,41 @@ public class CampaignsService {
 			// TODO: handle exception
 		}
 	}
+=======
+	
+	public boolean enrollUserInCampaign(int userId, int campaignId) {
+	    String sql = "INSERT INTO campaign_enrollment (campaign_id,user_id) VALUES (?, ?)";
+
+	    try (PreparedStatement stmt = dbConn.prepareStatement(sql)) {
+	        stmt.setInt(1, campaignId );
+	        stmt.setInt(2, userId);
+	        int rowsInserted = stmt.executeUpdate();
+	        return rowsInserted > 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+	
+	
+	public boolean isUserEnrolledInCampaign(int userId, int campaignId) {
+	    boolean isEnrolled = false;
+	    String campaignquery = "SELECT COUNT(*) FROM campaign_enrollment WHERE user_id = ? AND campaign_id = ?";
+
+	    try (PreparedStatement stmt = dbConn.prepareStatement(campaignquery)) {
+	        stmt.setInt(1, userId);
+	        stmt.setInt(2, campaignId);
+	        ResultSet rs = stmt.executeQuery();
+
+	        if (rs.next()) {
+	            isEnrolled = rs.getInt(1) > 0; // If count > 0, the user is enrolled
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return isEnrolled;
+	}
+
+
+>>>>>>> branch 'main' of https://github.com/Kushal-C-Shrestha/DoctorAppointment.git
 }

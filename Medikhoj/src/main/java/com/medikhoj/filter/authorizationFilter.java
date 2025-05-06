@@ -86,7 +86,7 @@ public class authorizationFilter extends HttpFilter implements Filter {
 	        }
 	        
 	        //doctors only
-	        if (uri.endsWith("/doctorDashboard")){	
+	        if (uri.endsWith("/doctorDashboard") || uri.endsWith("/addCampaign")){	
 	            if (isLoggedIn && "doctor".equals(userRole)) {
 	                chain.doFilter(request, response);
 	            } else {
