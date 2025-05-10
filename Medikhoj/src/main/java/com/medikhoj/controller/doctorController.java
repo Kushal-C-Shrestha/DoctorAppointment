@@ -1,4 +1,4 @@
-package com.medikhoj.controller;
+		package com.medikhoj.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import com.medikhoj.model.UserModel;
 import com.medikhoj.util.CookieUtil;
 import com.medikhoj.util.SessionUtil;
 
@@ -51,10 +52,6 @@ public class authorizationFilter extends HttpFilter implements Filter {
 			 chain.doFilter(request, response);
 			 return;
 		 }
-		 
-		 boolean isLoggedIn = SessionUtil.getAttribute(req, "loggedInUser") != null;
-	        String userRole = CookieUtil.getCookie(req, "user_role");
-
 	        // Public pages
 	        if (uri.endsWith("/login") || uri.endsWith("/register") || uri.endsWith("/home") ||
 	            uri.endsWith("/aboutus") || uri.endsWith("/contactus") ||
@@ -63,42 +60,51 @@ public class authorizationFilter extends HttpFilter implements Filter {
 	            chain.doFilter(request, response);
 	            return;
 	        }
+	        UserModel user = (UserModel) SessionUtil.getAttribute(req, "loggedInUser");
 
+	        if (user != null) {
+	            // If the user is logged in, retrieve the user role
+	            String userRole = user.getUser_role();
+//		    String userRole = CookieUtil.getCookie(req, "user_role");
 	        // Admin access
-	        if (uri.endsWith("/dashboard") || uri.endsWith("/addCampaign")) {
-	            if ("admin".equals(userRole)) {
-	                chain.doFilter(request, response);
-	            } else {
-	                res.sendRedirect(req.getContextPath() + "/unauthorized.jsp");
-	            }
-	            return;
-	        }
-
-	        // User-only pages
-	        if (uri.endsWith("/profile") || uri.endsWith("/appointment") || uri.endsWith("/reviews")){
-	            if (isLoggedIn && "user".equals(userRole)) {
-	                chain.doFilter(request, response);
-	            } else {
-	            	res.sendRedirect(req.getContextPath() + "/login");
-	            }
-	            return;
-	        }
-	        
-	        //doctors only
-	        if (uri.endsWith("/doctorDashboard")){	
-	            if (isLoggedIn && "doctor".equals(userRole)) {
-	                chain.doFilter(request, response);
-	            } else {
-	            	res.sendRedirect(req.getContextPath() + "/unauthorized.jsp");
-	            }
-	            return;
-	        }
-	        
-	        // Block access to any unknown or restricted page
-	        if (!isLoggedIn) {
-	            res.sendRedirect(req.getContextPath() + "/home");
+		        if (uri.endsWith("/dashboard") || uri.endsWith("/addCampaign") || uri.endsWith("adminUser")){
+		            if ("admin".equals(userRole)) {
+		                chain.doFilter(request, response);
+		            } else {
+		                res.sendRedirect(req.getContextPath() + "/unauthorized.jsp");
+		            }
+		            return;
+		        }
+	
+		        // User-only pages
+		        if (uri.endsWith("/profile") || uri.endsWith("/appointment") || uri.endsWith("/reviews")){
+		            if ("user".equals(userRole)) {
+		                chain.doFilter(request, response);
+		            } else {
+		            	res.sendRedirect(req.getContextPath() + "/login");
+		            }
+		            return;
+		        }
+		        
+		        //doctors only
+		        if (uri.endsWith("/doctorDashboard")){	
+		            if ("doctor".equals(userRole)) {
+		                chain.doFilter(request, response);
+		            } else {
+		            	res.sendRedirect(req.getContextPath() + "/unauthorized.jsp");
+		            }
+		            return;
+		        }
+		        
+		        // Block access to any unknown or restricted page
+		            
 	        } else {
-	            chain.doFilter(request, response);
+	        	if (uri.endsWith("/dashboard") || uri.endsWith("/addCampaign") || uri.endsWith("/profile") || 
+	        		uri.endsWith("/appointment") || uri.endsWith("/reviews") || uri.endsWith("/doctorDashboard")) {
+	        		res.sendRedirect(req.getContextPath() + "/unauthorized.jsp");
+	        	}else {
+	        		chain.doFilter(request, response);
+	        	}
 	        }
 	    }
 

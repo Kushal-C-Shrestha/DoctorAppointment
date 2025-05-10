@@ -8,7 +8,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import com.medikhoj.service.CampaignsService;
 import com.medikhoj.util.CookieUtil;
+import com.medikhoj.util.SessionUtil;
 import com.medikhoj.model.CampaignModel;
+import com.medikhoj.model.UserModel;
+
 import java.util.List;
 
 /**
@@ -47,46 +50,48 @@ public class campaignsController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		String userRole = CookieUtil.getCookie(request, "user_role");
+		UserModel user = (UserModel) SessionUtil.getAttribute(request, "loggedInUser");
+		if (user != null) {
+			String userRole = user.getUser_role();
 
 	    // Allow only users to enroll
-	    if (userRole == null || !userRole.equals("user")) {
-	        response.sendRedirect("unauthorized.jsp");
-	        return;
-	    }
-	    String userIdParam = request.getParameter("user_id");
-	    String campaignIdParam = request.getParameter("campaign_id");
-
-	    // Validate input parameters
-	    if (userIdParam==null || campaignIdParam==null) {
-	        response.sendRedirect("campaigns?error=missingParameters");
-	        return;
-	    }
-
-	    try {
-	        int userId = Integer.parseInt(userIdParam);
-	        int campaignId = Integer.parseInt(campaignIdParam);
-
-	        CampaignsService service = new CampaignsService();
-	        boolean alreadyEnrolled = service.isUserEnrolledInCampaign(userId, campaignId);
-	        if (alreadyEnrolled) {
-	            // If user is already enrolled, redirect to campaigns page with a message
-	            response.sendRedirect("campaigns?error=alreadyEnrolled");
-	            return;
-	        }
-	        boolean enrolled = service.enrollUserInCampaign(userId, campaignId);
-
-	        if (enrolled) {
-	            response.sendRedirect("campaigns?success=true");
-	        } else {
-	            response.sendRedirect("campaigns?error=enrollmentFailed");
-	        }
-	    } catch (NumberFormatException e) {
-	        System.err.println("[ERROR] Invalid ID format:");
-	        e.printStackTrace();
-	        response.sendRedirect("campaigns?error=invalidData");
-	    }
+		    if (userRole == null || !userRole.equals("user")) {
+		        response.sendRedirect("unauthorized.jsp");
+		        return;
+		    }
+		    String userIdParam = request.getParameter("user_id");
+		    String campaignIdParam = request.getParameter("campaign_id");
+	
+		    // Validate input parameters
+		    if (userIdParam==null || campaignIdParam==null) {
+		        response.sendRedirect("campaigns?error=missingParameters");
+		        return;
+		    }
+	
+		    try {
+		        int userId = Integer.parseInt(userIdParam);
+		        int campaignId = Integer.parseInt(campaignIdParam);
+	
+		        CampaignsService service = new CampaignsService();
+		        boolean alreadyEnrolled = service.isUserEnrolledInCampaign(userId, campaignId);
+		        if (alreadyEnrolled) {
+		            // If user is already enrolled, redirect to campaigns page with a message
+		            response.sendRedirect("campaigns?error=alreadyEnrolled");
+		            return;
+		        }
+		        boolean enrolled = service.enrollUserInCampaign(userId, campaignId);
+	
+		        if (enrolled) {
+		            response.sendRedirect("campaigns?success=true");
+		        } else {
+		            response.sendRedirect("campaigns?error=enrollmentFailed");
+		        }
+		    } catch (NumberFormatException e) {
+		        System.err.println("[ERROR] Invalid ID format:");
+		        e.printStackTrace();
+		        response.sendRedirect("campaigns?error=invalidData");
+		    }
+		}
 	}
 }
 
