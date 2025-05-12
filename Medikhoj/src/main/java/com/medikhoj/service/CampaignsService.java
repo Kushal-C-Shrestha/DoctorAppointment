@@ -80,8 +80,6 @@ public class CampaignsService {
 		return campaigns;
 	}
 	
-	
-<<<<<<< HEAD
 	public List<CampaignUserModel> getEnrollmentsByUser(int user_id){
 		if (isConnectionError) {
 			//Checking if there is connection with database . if not this section is triggered
@@ -116,7 +114,6 @@ public class CampaignsService {
 			// TODO: handle exception
 		}
 	}
-=======
 	
 	public boolean enrollUserInCampaign(int userId, int campaignId) {
 	    String sql = "INSERT INTO campaign_enrollment (campaign_id,user_id) VALUES (?, ?)";
@@ -151,6 +148,4 @@ public class CampaignsService {
 	    return isEnrolled;
 	}
 
-
->>>>>>> branch 'main' of https://github.com/Kushal-C-Shrestha/DoctorAppointment.git
 }

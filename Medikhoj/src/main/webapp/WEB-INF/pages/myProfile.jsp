@@ -17,7 +17,6 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-logo">
-                <div class="logo">M</div>
                 <div class="logo-text">MedCare</div>
             </div>
             
@@ -75,7 +74,7 @@
                     </div>
                     Profile
                 </a>
-                <a href="#" class="menu-item">
+                <a href="logout" class="menu-item">
                     <div class="menu-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
@@ -90,7 +89,7 @@
             <div class="user-section">
                 <div class="user-avatar">RP</div>
                 <div class="user-info">
-                    <div class="user-name">Raj Patel</div>
+                    <div class="user-name">Anugraha Maharjan</div>
                     <div class="user-role">Patient</div>
                 </div>
             </div>

@@ -44,9 +44,20 @@
                 </section>
 
             </div>
-            <div class="review-action__buttons action-buttons">
-                <button class="action-btn" id="give-review">Leave your review</button>
-            </div>
+            <!-- Review form (initially hidden) -->
+			<div class="review-action__form action-buttons" style="margin-top: 30px;">
+			    <form action="reviews" method="post" class="review-form">
+			        <label for="rating">Rating (1 to 5):</label>
+			        <input type="number" name="rating" id="rating" min="1" max="5" required>
+			
+			        <label for="reviewText">Your Review:</label>
+			        <textarea name="reviewText" id="reviewText" rows="4" required></textarea>
+			
+			        <button type="submit" class="action-btn">Leave your review</button>
+			    </form>
+			</div>
+
+
         </div>
     </main>
 </body>

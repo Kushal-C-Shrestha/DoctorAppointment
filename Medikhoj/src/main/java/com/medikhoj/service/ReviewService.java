@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import com.medikhoj.config.DbConfig;
 import com.medikhoj.controller.campaignsController;
@@ -141,6 +142,24 @@ public class ReviewService {
 			return null;
 			// TODO: handle exception
 		}
+	}
+	
+	public boolean submitReview(int rating, String reviewText) {
+        if (isConnectionError) {
+            System.out.println("Database connection issue.");
+            return false;
+        }
+
+        String sql = "INSERT INTO reviews (review_desc, review_rating, review_date) VALUES (?, ?, ?)";
+        try (PreparedStatement ps = dbConn.prepareStatement(sql)) {
+            ps.setString(1, reviewText);
+            ps.setInt(2, rating);
+            ps.setDate(3, java.sql.Date.valueOf(LocalDate.now())); // today's date
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
 	}
 	
 }

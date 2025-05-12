@@ -46,7 +46,44 @@ public class reviewsController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		String ratingParam = request.getParameter("rating");
+        String reviewText = request.getParameter("reviewText");
+		System.out.print("Rating"+ratingParam);
+		System.out.print("Text"+reviewText);
+        if (ratingParam == null || reviewText == null || ratingParam.isEmpty() || reviewText.isEmpty()) {
+            response.sendRedirect("reviews.jsp?error=Missing+fields");
+            return;
+        }
+
+        try {
+            int rating = Integer.parseInt(ratingParam);
+            ReviewService service = new ReviewService();
+
+            boolean success = service.submitReview(rating, reviewText);
+
+            if (success) {
+                response.sendRedirect("reviews?success=true");
+            } else {
+                response.sendRedirect("reviews?error=Could+not+submit+review");
+            }
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            response.sendRedirect("reviews?error=Invalid+rating");
+        }
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
