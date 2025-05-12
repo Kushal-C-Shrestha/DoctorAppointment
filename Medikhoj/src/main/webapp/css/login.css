@@ -1,95 +1,162 @@
+
+ /* login.css */
 @charset "UTF-8";
- body {
-            font-family: sans-serif;
-        }
-        
-        .container {
-            display: flex;
-        }
-        
-        .left {
-            width: 50%;
-            background-color: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align:center;
-            padding: 100px
-        }
-        .left h2 {
-           
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        .left p {
-            font-size: 14px;
-            color: #444;
-            margin-bottom: 45px;
-        }
-        .textfield {
-            position: relative;
-            margin-bottom: 20px;
-          }
-          
-          .input-icon {
-            position: absolute;
-            top: 50%;
-            left: 95px;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            pointer-events: none;
-          }
-          
-          .textfield input {
-            width: 70%;
-            padding: 10px 12px 10px 42px; /* left padding for icon */
-            border-radius: 25px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-            box-sizing: border-box;
-          }
-         #eyeicon{
-          	position: absolute;
-            top: 50%;
-            left: 420px;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-          }
-        
-        .forgotpassword {
-            font-size: 12px;
-            margin-bottom: 45px;
-            color: black;
-        }
-        .forgotpassword a {
-   			color: black;
-   			text-decoration: none;
-		}
-        
-        .login {
-            background-color: #07B9C4;
-            color: white;
-            padding: 13px;
-            width: 387px;
-            border-radius: 30px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .register {
-            margin-top: 60px;
-            font-size: 17px;
-            text-align: center;
-        }
-        .register a {
-            color: green;
-        }
-        
-        .right {
-            width: 50%;
-			background-image: url("../resources/BGlogin.jpg");
-            background-size: cover;
-        }
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: #f5f5f5;
+  overflow: hidden;
+}
+/* —— Layout —— */
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+.form-container {
+  flex: 1;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+.image-container {
+  flex: 1;
+  background: #e0f5f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-container img {
+  max-width: 80%;
+  height: auto;
+  object-fit: cover;
+}
+
+
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.subtext {
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+  max-width: 360px;
+  line-height: 1.4;
+  margin-bottom: 24px;
+}
+
+/* —— Form —— */
+form {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* full-width input group */
+.input-group.full-width {
+  position: relative;
+  width: 100%;
+}
+
+/* inputs */
+.input-group input {
+  width: 100%;
+  height: 48px;
+  padding: 12px 48px;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+/* icons inside inputs */
+.input-group i {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 18px;
+  pointer-events: none;
+}
+
+/* left-side icon */
+.input-group i.fas:not(.toggle-password) {
+  left: 16px;
+}
+
+/* right-side eye toggle */
+.input-group .toggle-password {
+  pointer-events: auto;
+  cursor: pointer;
+  left: auto;
+  right: 16px;
+}
+
+/* —— Links & Button —— */
+.forgot-link {
+  width: 100%;
+  text-align: right;
+  font-size: 13px;
+}
+
+.forgot-link a {
+  color: black;
+  text-decoration: none
+}
+
+.register-btn {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 14px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .register-btn:hover {
+    background-color: #333;
+  }
+.login-link {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 16px;
+  }
+
+  .login-link a {
+    color:   #07B9C4;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .login-link a:hover {
+    text-decoration: underline;
+  }

@@ -2,56 +2,61 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css">
 </head>
 <body>
-<%@ include file="header.jsp" %>
-    <div class="container">
-        <div class="left">
-            <h2>Welcome back!</h2>
-            <p>Skip the long queues, book your appointment in seconds,<br> and get the care you deserve!</p>
+	<div class="container">
+        <!-- LEFT: Login Form -->
+        <div class="form-container">
+          <h1 class="title">Welcome Back!</h1>
+          <p class="subtext">
+            Skip the long queues, book your appointment in seconds,and get the care you deserve!
+          </p>
 
-            <form action="login" method="post">
-                <div class="textfield">
-                    <input name="email" placeholder="Email address" required>
-                    <img src="${pageContext.request.contextPath}/resources/mail.png" class="input-icon" alt="Email Icon">
+          <form action="#" method="post">
+            <!-- Email -->
+                <div class="input-group full-width">
+                  <input type="email" name="email" placeholder="Email address" required />
+                   <i class="fas fa-envelope"></i>
                 </div>
-                <div class="textfield">
-                	<img src="${pageContext.request.contextPath}/resources/padlock.png" class="input-icon" alt="Lock Icon">
-                    <input type="password" name="password" placeholder="Password" id ="password" required>
-                    <i id="toggleLoginPassword" class="fas fa-eye" style="cursor: pointer;" ></i>
-                </div>
-                <div class="forgotpassword">
-                    <a href="#">Forgot Password?</a>
-                </div>
-                <button type="submit" class="login">Login</button>
-            </form>
 
-            <div class="register">
-                Not a member? <a href="register.jsp">Register Now</a>
+            <!-- Password -->
+             <div class="input-group full-width">
+                <input type="password" id="password" placeholder="Password" required />
+                <i class="fas fa-lock"></i>
+                <i class="fas fa-eye-slash toggle-password" onclick="togglePassword(this, 'password')"></i>
+              </div> 
+
+             <div class="forgot-link">
+               <a href="#">Forgot Password?</a>
+             </div>
+
+            <button type="submit" class="register-btn">Login</button>
+
+            <div class="login-link">
+              Not a member? <a href="register.html">Register Now</a>
             </div>
+          </form>
         </div>
 
-        <div class="right">
-        </div>
-    </div>
-   <script>
-  		document.addEventListener('DOMContentLoaded', function() {
-    	const pwd = document.getElementById('loginPassword');
-   		const icon = document.getElementById('toggleLoginPassword');
-   		icon.addEventListener('click', function() {
-      	const hidden = pwd.type === 'password';
-     	pwd.type = hidden ? 'text' : 'password';
-     	this.classList.toggle('fa-eye');
-      	this.classList.toggle('fa-eye-slash');
-    });
-  });
-</script>
+        <!-- RIGHT: Illustration / Background -->
+         <div class="image-container">
+           <img src="image-6.png" alt="Medical professionals illustration" />
+         </div>
+  </div>
+    <script>
+    function togglePassword(iconElement, inputId) {
+      const input = document.getElementById(inputId);
+      const isPassword = input.type === "password";
+      input.type = isPassword ? "text" : "password";
+      iconElement.classList.toggle("fa-eye");
+      iconElement.classList.toggle("fa-eye-slash");
+    }
+  </script>
 </body>
 </html>
