@@ -7,9 +7,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
 </head>
 <body>
+	<%@ include file="header.jsp" %>
 	<div class="container">
         <!-- LEFT: Login Form -->
         <div class="form-container">
@@ -27,7 +28,7 @@
 
             <!-- Password -->
              <div class="input-group full-width">
-                <input type="password" id="password" placeholder="Password" required />
+                <input type="password" id="password" name="password" placeholder="Password" required />
                 <i class="fas fa-lock"></i>
                 <i class="fas fa-eye-slash toggle-password" onclick="togglePassword(this, 'password')"></i>
               </div> 

@@ -41,7 +41,7 @@
         <h3 class="nav-section__heading">MANAGEMENT</h3>
         <ul>
           <li class="nav-link">
-            <a href="/adminDoctors" class="active">
+            <a href="adminDoctor" class="active">
               <svg height="25px" width="25px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 63.287 63.287" xml:space="preserve" fill="currentColor" stroke="currentColor">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -134,7 +134,7 @@
         <h3 class="nav-section__heading">ACCOUNT</h3>
         <ul>
           <li class="nav-link">
-            <a href="/logout">
+            <a href="logout">
               <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>

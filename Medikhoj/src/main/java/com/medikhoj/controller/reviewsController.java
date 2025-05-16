@@ -33,12 +33,19 @@ public class reviewsController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		int doctor_id=Integer.parseInt(request.getParameter("doctor_id"));
-		ReviewService reviewService=new ReviewService();
+		String action= request.getParameter("action");
+		if(action.equals("seeReview")) {
+			ReviewService reviewService=new ReviewService();
+			
+			List<UserReviewModel> userReviews=reviewService.getReviewsByDoctor(doctor_id);
+			
+			request.setAttribute("reviewList",userReviews);
+			request.getRequestDispatcher("WEB-INF/pages/reviews.jsp").forward(request, response);
+			return;
+		}else {
+			request.getRequestDispatcher("WEB-INF/pages/leaveReviews.jsp").forward(request, response);
+		}
 		
-		List<UserReviewModel> userReviews=reviewService.getReviewsByDoctor(doctor_id);
-		
-		request.setAttribute("reviewList",userReviews);
-		request.getRequestDispatcher("WEB-INF/pages/reviews.jsp").forward(request, response);
 	}
 
 	/**

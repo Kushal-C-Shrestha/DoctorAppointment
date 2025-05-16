@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Servlet implementation class adminAppointments
  */
-@WebServlet("/adminAppointments")
+@WebServlet(asyncSupported = true,urlPatterns = "/adminAppointments")
 public class adminAppointments extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -27,7 +27,7 @@ public class adminAppointments extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.getRequestDispatcher("WEB-INF/pages/admin/adminAppointments.jsp").forward(request, response);
 	}
 
 	/**
