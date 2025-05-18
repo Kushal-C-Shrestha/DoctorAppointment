@@ -6,6 +6,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.medikhoj.config.DbConfig;
 import com.medikhoj.model.UserModel;
@@ -14,6 +16,7 @@ import com.medikhoj.util.ValidationUtil;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
 public class UpdateService {
@@ -33,99 +36,106 @@ public class UpdateService {
 		}
 	}
 	
-public String validateUpdateForm(HttpServletRequest request) {
-		
-		String userName = request.getParameter("user_name");             // User's name
-		String userEmail = request.getParameter("user_email");               // User's email
-		String userPhone = request.getParameter("user_phone");               // User's phone number
-		String userDobString=request.getParameter("user_dob");
-		String userGender = request.getParameter("user_gender");             // User's gender
-		String userBloodGroup = request.getParameter("user_bloodgroup");     // User's blood group
+public Map<String,String> validateUpdateForm(HttpServletRequest request) {
+		String userName = request.getParameter("fullName");             // User's name
+		String userEmail = request.getParameter("email");               // User's email
+		String userPhone = request.getParameter("phone");               // User's phone number
+		String userDobString=request.getParameter("dob");
+		String userGender = request.getParameter("gender");             // User's gender
+		String userBloodGroup = request.getParameter("bloodGroup");     // User's blood group
 		Part userProfile=null;
+		
+		Map<String,String> errorMap=new HashMap<String, String>();
 		
 		try {
 	        // Retrieve the uploaded image file from the request
-	        userProfile = request.getPart("user_profile");  // This could throw IOException or ServletException
+	        userProfile = request.getPart("profile-pic");  // This could throw IOException or ServletException
 	    } catch (IOException e) {
-	        return "Error reading the image file: " + e.getMessage();  // Handle IOException
+	    	System.out.println("Error in image fetching.");
+	    	e.printStackTrace();
+	        return errorMap ; // Handle IOException
 	    } catch (ServletException e) {
-	        return "Error with the uploaded file: " + e.getMessage();  // Handle ServletException
+	    	e.printStackTrace();
+	    	return errorMap;
 	    }
 		
 		// You can handle profile picture later (e.g., save file
 
 		
 		if (ValidationUtil.isNullOrEmpty(userName)) {
-			return "Please enter your full name.";
+			errorMap.put("fullname", "Please enter your full name.");
+			return errorMap;
 		}
 		
 		if (!ValidationUtil.isValidEmail(userEmail)){
-			return "Please enter a valid email address.";
+			errorMap.put("email", "Please enter a valid email address.");
+			return errorMap;
 		}
-		
-		
+			
 		
 		if (ValidationUtil.isNullOrEmpty(userPhone)) {
-			return "Please enter your phone";
+			errorMap.put("phone", "Please enter a valid phone number.");
+			return errorMap;
 		}
 		
 		if (ValidationUtil.isNullOrEmpty(userDobString)) {
-			return "Please enter your date of birth";
+			errorMap.put("dob", "Please enter your date of birth.");
+			return errorMap;
 		}
 		
-		
 		if (ValidationUtil.isNullOrEmpty(userGender) ){
-			return "Please enter your gender";
+			errorMap.put("phone", "Please enter your gender.");
+			return errorMap;
 		}
 		
 		if (ValidationUtil.isNullOrEmpty(userBloodGroup)) {
-			return "Please enter your bloodgrp";
+			errorMap.put("bloodgroup", "Please enter your bloodgroup.");
+			return errorMap;
 		}
 		
 		
 		if (!ValidationUtil.isValidImageType(userProfile)) {
-			return "The image file should be png, jpg or jpeg.";
+			errorMap.put("image", "Please upload file in jpg, jpeg or png format.");
+			return errorMap;
 		}
 		
 		if (!ValidationUtil.isValidImageSize(userProfile)) {
-			return "The image file should be less than 2 MB.";
+			errorMap.put("image", "Please upload a file less than 2 MB.");
+			return errorMap;
 		}
-		
-		return null;
+		return errorMap;
 	}
 		
-	public UserModel createUpdatedUserModel(HttpServletRequest request, String userProfile) {
-		String userName = request.getParameter("fullname");             // User's name
-		String userEmail = request.getParameter("email");               // User's email
-		String userPhone = request.getParameter("phone");               // User's phone number
-		LocalDate userDob = LocalDate.parse(request.getParameter("dob"));             // User's date of birth (String format)
-		String userGender = request.getParameter("gender");             // User's gender
-		String userBloodGroup = request.getParameter("bloodgroup");     // User's blood group
-		String userRole=request.getParameter("role");
+		public UserModel createUpdatedUserModel(HttpServletRequest request, String userProfile, int user_id) {
+		    String userName = request.getParameter("fullName");
+		    String userEmail = request.getParameter("email");
+		    String userPhone = request.getParameter("phone");
+		    LocalDate userDob = LocalDate.parse(request.getParameter("dob"));
+		    String userGender = request.getParameter("gender");
+		    String userBloodGroup = request.getParameter("bloodGroup");
+		    int userId = user_id;
 		
-		//Encrypting the password.
+		    UserModel user = new UserModel();
+		    user.setUser_id(userId);
+		    user.setUser_name(userName);
+		    user.setUser_email(userEmail);
+		    user.setUser_phone(userPhone);
+		    user.setUser_gender(userGender);
+		    user.setUser_bloodgroup(userBloodGroup);
+		    user.setUser_dob(userDob);
+		    user.setUser_profile(userProfile);
 		
-		//Creating the user model with required attributes.
-		UserModel user=new UserModel();
-		user.setUser_name(userName);
-		user.setUser_email(userEmail);
-		user.setUser_phone(userPhone);
-		user.setUser_role(userRole);
-		user.setUser_gender(userGender);
-		user.setUser_bloodgroup(userBloodGroup);
-		user.setUser_dob(userDob);
-		user.setUser_profile(userProfile);
-		return user;
-	}
+		    return user;
+		}
+
 	
 	
 	public Boolean updateUser(UserModel user) {
+		
 	    String sql = "UPDATE users SET user_name = ?, user_email = ?, user_phone = ?, "
 	               + "user_dob = ?, user_gender = ?, user_bloodgroup = ?, user_profile = ? "
 	               + "WHERE user_id = ?";
-	    
 	    try (PreparedStatement stmt = dbConn.prepareStatement(sql)) {
-
 	        stmt.setString(1, user.getUser_name());
 	        stmt.setString(2, user.getUser_email());
 	        stmt.setString(3, user.getUser_phone());
@@ -135,13 +145,68 @@ public String validateUpdateForm(HttpServletRequest request) {
 	        stmt.setString(7, user.getUser_profile()); // use existing or new image URL
 	        stmt.setInt(8, user.getUser_id());
 
-	        int rows = stmt.executeUpdate();
-	        return rows > 0;
+
+	        return stmt.executeUpdate() > 0;
 
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        return false;
 	    }
 	}
+	
+	public Boolean changePassword(HttpServletRequest request) {
+		HttpSession session=request.getSession(false);
+		UserModel user=null;
+		if (session!=null) {
+			user=(UserModel)session.getAttribute("loggedInUser");
+		}
+		
+		String newPassword=request.getParameter("newPassword");
+		String encryptedPassword=PasswordUtil.encrypt(user.getUser_email(), newPassword);
+		
+		String query="Update users SET user_password =? WHERE user_id= ? ";
+		
+		try(PreparedStatement stmt=dbConn.prepareStatement(query)) {
+			stmt.setString(1, encryptedPassword);
+			stmt.setInt(2, user.getUser_id());
+			return stmt.executeUpdate() >0;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	public Map<String,String> validateUpdatePassword(HttpServletRequest request) {
+		HttpSession session=request.getSession(false);
+		UserModel user=null;
+		if (session!=null) {
+			user=(UserModel)session.getAttribute("loggedInUser");
+		}
+		
+		
+		Map<String,String> errorMap=new HashMap();
+		String currentPassword=request.getParameter("currentPassword");
+		String newPassword=request.getParameter("newPassword");
+		
+		
+		if (!PasswordUtil.decrypt(user.getUser_password(),user.getUser_email()).equals(currentPassword)) {
+			errorMap.put("currentPassword", "The current password does not match.");
+			return errorMap;
+		}
+		
+		if (!ValidationUtil.isValidPassword(newPassword)) {
+			errorMap.put("newPassword", "New password must be at least 8 characters long and include a symbol, a number, and a capital letter.");
+			return errorMap;
+		}
+		
+		return errorMap;
+	}
 
+	public Boolean updateProfile(HttpServletRequest request) {
+		HttpSession session=request.getSession(false);
+		UserModel user=null;
+		if (session!=null) {
+			user=(UserModel)session.getAttribute("loggedInUser");
+		}
+		return false;
+	}
 }
