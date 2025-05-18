@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Servlet implementation class adminAppointments
  */
-@WebServlet("/adminAppointments")
+@WebServlet(asyncSupported = true,urlPatterns = "/adminAppointments")
 public class adminAppointmentsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

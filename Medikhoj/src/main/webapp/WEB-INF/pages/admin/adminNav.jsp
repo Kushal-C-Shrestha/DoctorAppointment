@@ -36,13 +36,8 @@
       <div class="nav-section">
         <h3 class="nav-section__heading">MANAGEMENT</h3>
         <ul>
-<<<<<<< HEAD
-          <li class="nav-link" >
-            <a href="adminDoctors" class="${page == 'doctors' ? 'active' : ''}">
-=======
           <li class="nav-link">
             <a href="adminDoctor" class="active">
->>>>>>> branch 'main' of https://github.com/Kushal-C-Shrestha/DoctorAppointment.git
               <svg height="25px" width="25px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 63.287 63.287" xml:space="preserve" fill="currentColor" stroke="currentColor">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -76,11 +71,7 @@
           </li>
 
           <li class="nav-link">
-<<<<<<< HEAD
-            <a href="adminUsers" class="${page == 'users' ? 'active' : ''}">
-=======
             <a href="adminUser">
->>>>>>> branch 'main' of https://github.com/Kushal-C-Shrestha/DoctorAppointment.git
               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                 <circle cx="9" cy="7" r="4" />
