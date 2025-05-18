@@ -13,10 +13,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
 import java.io.IOException;
-import java.net.http.HttpConnectTimeoutException;
 import java.util.Map;
 
-import javax.swing.text.html.HTML;
 
 import com.medikhoj.model.UserModel;
 
