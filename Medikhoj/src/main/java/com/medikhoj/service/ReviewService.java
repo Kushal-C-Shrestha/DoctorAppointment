@@ -7,6 +7,7 @@ import com.medikhoj.model.ReviewDoctorModel;
 
 import java.util.List;
 import java.sql.Connection;
+import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -144,51 +145,49 @@ public class ReviewService {
 		}
 	}
 	
-	public boolean submitReview(int rating, String reviewText) {
+	public int submitReview(int rating, String reviewText) {
+		int generatedReviewId = -1;
         if (isConnectionError) {
             System.out.println("Database connection issue.");
-            return false;
+            return -1;
         }
 
         String sql = "INSERT INTO reviews (review_desc, review_rating, review_date) VALUES (?, ?, ?)";
-        try (PreparedStatement ps = dbConn.prepareStatement(sql)) {
+        try (PreparedStatement ps = dbConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, reviewText);
             ps.setInt(2, rating);
             ps.setDate(3, java.sql.Date.valueOf(LocalDate.now())); // today's date
-            return ps.executeUpdate() > 0;
-//            int affectedRows=ps.executeUpdate();
-//			
-//			if (affectedRows>0) {
-//				 ResultSet generatedKey=ps.getGeneratedKeys();
-//				 
-//				 if (generatedKey.next()) {
-//					 int appointment_id=generatedKey.getInt(1);
-//					 appointment.setAppointment_id(appointment_id);
-//					 
-//					 String newInsertQuery="INSERT into user_doctor_appointment VALUES(?,?,?)";
-//					 
-//					 try(PreparedStatement newStmt=dbConn.prepareStatement(newInsertQuery)){
-//						 newStmt.setInt(1, user.getUser_id());
-//						 newStmt.setInt(2, doctor.getDoctor_id());
-//						 newStmt.setInt(3, appointment.getAppointment_id());
-//						 
-//						 return newStmt.executeUpdate()>0;
-//
-//					 }catch (Exception e) {
-//							System.out.println("Exception during bridge insertion"  + e.getMessage());
-//						 return false;
-//						// TODO: handle exception
-//					}
-//				 }
-//				System.out.println("Appointment not created in bridge table");
-//				 return false;
-//			}
-//			System.out.println("Appointment not created");
-//			return false;
+            int rows = ps.executeUpdate();
+
+            if (rows > 0) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    generatedReviewId = rs.getInt(1);
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return generatedReviewId;
+	}
+	
+	
+	public boolean insertUserDoctorReview(int userId, int doctorId, int reviewId) {
+		if (isConnectionError) {
+            System.out.println("Database connection issue.");
             return false;
         }
+		String sql1 = "INSERT INTO user_doctor_review (user_id, doctor_id, review_id) VALUES (?, ?, ?)";
+	    try (PreparedStatement ps=dbConn.prepareStatement(sql1)) {
+	        ps.setInt(1, userId);
+	        ps.setInt(2, doctorId);
+	        ps.setInt(3, reviewId);
+	        return ps.executeUpdate() > 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
+
 	
 }
