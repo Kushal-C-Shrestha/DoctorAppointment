@@ -11,13 +11,13 @@ import java.io.IOException;
  * Servlet implementation class adminAppointments
  */
 @WebServlet("/adminAppointments")
-public class adminAppointments extends HttpServlet {
+public class adminAppointmentsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public adminAppointments() {
+    public adminAppointmentsController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,7 +27,7 @@ public class adminAppointments extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.getRequestDispatcher("WEB-INF/pages/admin/adminAppointments.jsp").forward(request, response);
 	}
 
 	/**

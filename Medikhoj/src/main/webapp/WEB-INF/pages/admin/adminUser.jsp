@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+       <c:set var="page" value="users"></c:set>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,7 +56,7 @@
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
           </div>
-          <div class="user-name">Anugrah Chor</div>
+          <div class="user-name">Anugrah </div>
         </div>
         <p class="user-bio">abc@gmail.com</p>
         <p class="user-bio">981211319331</p>

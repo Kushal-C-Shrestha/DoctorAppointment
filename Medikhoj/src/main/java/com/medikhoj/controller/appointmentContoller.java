@@ -7,8 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.medikhoj.model.AppointmentModel;
@@ -47,10 +47,8 @@ public class appointmentContoller extends HttpServlet {
 		
 		int doctorId=Integer.parseInt(request.getParameter("doctor_id"));
 		int userId=Integer.parseInt(request.getParameter("user_id"));
-		System.out.println(doctorId);
 		
 		DoctorModel doctor=doctorService.getDoctorProfile(doctorId);
-		System.out.println(doctor==null?"Null" :"not null");
 
 		UserModel user=userService.getUser(userId);
 		UserModel doctorDetails=userService.getUser(doctorId);
@@ -61,6 +59,7 @@ public class appointmentContoller extends HttpServlet {
 		request.setAttribute("doctorFullDetails", doctorDetails);
 		request.setAttribute("user", user);
 		request.setAttribute("slots", allSlots);
+		request.setAttribute("dateSelected", false);
 
 		request.getRequestDispatcher("WEB-INF/pages/appointment.jsp").forward(request, response);
 	}
@@ -82,13 +81,7 @@ public class appointmentContoller extends HttpServlet {
 		request.setAttribute("dateSelected", dateSelected);
 		
 		if (dateSelected){
-			request.setAttribute("appointmentDate", appointmentDateStr);	
-			LocalDate appointmentDate=LocalDate.parse(appointmentDateStr);
 			
-			Set <Integer> bookedSlots=appointmentService.getBookedSlots(doctorId, appointmentDate);
-			if (bookedSlots!=null) {
-				request.setAttribute("bookedSlots", bookedSlots);
-			}
 		}
 		
 		
@@ -104,25 +97,30 @@ public class appointmentContoller extends HttpServlet {
 		request.setAttribute("doctorFullDetails", doctorDetails);
 		
 		if (request.getParameter("action").equals("check")) {
+			request.setAttribute("appointmentDate", appointmentDateStr);	
+			LocalDate appointmentDate=LocalDate.parse(appointmentDateStr);
+			
+			Set <Integer> bookedSlots=appointmentService.getBookedSlots(doctorId, appointmentDate);
+			if (bookedSlots!=null) {
+				request.setAttribute("bookedSlots", bookedSlots);
+			}
 			request.getRequestDispatcher("WEB-INF/pages/appointment.jsp").forward(request, response);
 		}
 		
 		if (request.getParameter("action").equals("book")) {
-			String appointmentTimeStr=request.getParameter("appointment_time");
-			
-			if (appointmentTimeStr==null) {
+			Map <String,String> errorMap=appointmentService.validateAppointmentForm(request);
+			if (!errorMap.isEmpty()) {
+				request.setAttribute("errorMap", errorMap);
 				request.getRequestDispatcher("WEB-INF/pages/appointment.jsp").forward(request, response);
+				return;
 			}
 			
-			if (appointmentTimeStr!=null && !appointmentTimeStr.isEmpty()) {
-				AppointmentModel appointment=appointmentService.createAppointment(request);
-				Boolean isBooked =appointmentService.bookAppointment(doctor, user, appointment);
-				
-				if (isBooked) {
-					System.out.println("Appointment sucessfully booked");
-					request.getRequestDispatcher("WEB-INF/pages/home.jsp").forward(request, response);
-				}
-
+			AppointmentModel appointment=appointmentService.createAppointment(request);
+			Boolean isBooked =appointmentService.bookAppointment(doctor, user, appointment);
+			if (isBooked) {
+				System.out.println("Appointment sucessfully booked");
+				request.getRequestDispatcher("WEB-INF/pages/doctors.jsp").forward(request, response);
+				return;
 			}
 		}
 		

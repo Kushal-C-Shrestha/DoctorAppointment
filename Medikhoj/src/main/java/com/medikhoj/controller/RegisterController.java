@@ -9,6 +9,7 @@ import jakarta.servlet.http.Part;
 import jakarta.servlet.annotation.MultipartConfig;
 
 import java.io.IOException;
+import java.util.Map;
 
 import com.medikhoj.model.DoctorModel;
 import com.medikhoj.model.UserModel;
@@ -49,11 +50,10 @@ public class RegisterController extends HttpServlet {
 		ImageUtil imageUtil=new ImageUtil();
 		
 		//Validate the form. If something is wrong display the message accordingly
-		String validationMessage=registerService.validateRegistrationForm(request);
-		if (validationMessage!=null) {
-			request.setAttribute("error", validationMessage);
+		Map<String,String> errorMap=registerService.validateRegistrationForm(request);
+		if (!errorMap.isEmpty()) {
+			request.setAttribute("errorMap", errorMap);
 			request.getRequestDispatcher("WEB-INF/pages/register.jsp").forward(request, response);
-			System.out.println(validationMessage);
 			return;
 		}
 		

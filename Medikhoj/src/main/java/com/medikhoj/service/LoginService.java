@@ -25,8 +25,7 @@ public class LoginService {
 	}
 	
 	public UserModel authenticateUser(String email, String password) {
-		String query;
-		query = "SELECT * FROM users WHERE user_email = ? or user_phone = ?";
+		String query = "SELECT * FROM users WHERE user_email = ? or user_phone = ?";
         if (isConnectionError) {
 			//Checking if there is connection with database . if not this section is triggered
 			System.out.println("Database connection error");
@@ -37,7 +36,6 @@ public class LoginService {
             statement.setString(1, email);
             statement.setString(2, email);
             ResultSet rs = statement.executeQuery();
-            System.out.println(password);
 
             if (rs.next()) {	
                 // User exists , now check password.
@@ -68,6 +66,8 @@ public class LoginService {
                      user.setUser_gender(rs.getString("user_gender"));
                      user.setUser_bloodgroup(rs.getString("user_bloodgroup"));
                      user.setUser_role(rs.getString("user_role"));
+                     user.setUser_password(storedPassword);
+                     user.setUser_profile(rs.getString("user_profile"));
                      return user; 
             	}
             }

@@ -45,13 +45,40 @@ public class profileController extends HttpServlet {
 		// TODO Auto-generated method stub
 		String section=request.getParameter("section");
 		section=section==null? "appointments" : section;
-		request.setAttribute("section", section);
 		
+		String subSection="viewDetailsSection";
 		
 		HttpSession session=request.getSession(false);
 		if (session==null) {
 			request.getRequestDispatcher("WEB-INF/pages/login.jsp").forward(request, response);
 		}
+
+		String successMsg=(String)session.getAttribute("success");
+		String errorMsg=(String)session.getAttribute("error");
+		String newSection=(String)session.getAttribute("section");
+		String newSubSection=(String)session.getAttribute("subSection");
+
+		System.out.println(newSection);
+		System.out.println(newSubSection);
+		
+	    if (successMsg != null) {
+	        request.setAttribute("success", successMsg);
+	        session.removeAttribute("success");
+	    }
+	    if (errorMsg != null) {
+	        request.setAttribute("error", errorMsg);
+	        session.removeAttribute("error");
+	    }
+	    if (newSection != null) {
+	    	section=newSection;
+	    	session.removeAttribute("section");
+	    }
+	    if (newSubSection != null) {
+	    	System.out.println("changing the sub section");
+	    	subSection=newSubSection;
+	    	session.removeAttribute("subSection");
+	    }
+		
 		
 		AppointmentService appointmentService=new AppointmentService();
 		ReviewService reviewService=new ReviewService();
@@ -59,6 +86,7 @@ public class profileController extends HttpServlet {
 		CampaignsService campaignsService=new CampaignsService();
 		
 		UserModel user=(UserModel) session.getAttribute("loggedInUser");
+		System.out.println(user.getUser_name());
 		
 		//Fetching the appointments according to user.
 		List <DoctorAppointmentModel> appointmentList=appointmentService.getAppointmentByUser(user.getUser_id());
@@ -84,15 +112,14 @@ public class profileController extends HttpServlet {
 		
 		//Fetching the reviews according to user.
 		List <DoctorUserModel> favoriteList=favoriteService.getFavoritesByUser(user.getUser_id());
-		if (favoriteList==null) {
-			request.getRequestDispatcher("WEB-INF/pages/myProfile.jsp").forward(request, response);
-		}
+		
 		
 		List <CampaignUserModel> enrollmentList=campaignsService.getEnrollmentsByUser(user.getUser_id());
-		if (enrollmentList==null) {
-			request.getRequestDispatcher("WEB-INF/pages/myProfile.jsp").forward(request, response);
-		}
 		
+		
+		request.setAttribute("section", section);
+		request.setAttribute("subSection", subSection);
+
 		request.setAttribute("pendingAppointments", pendingAppointments);
 		request.setAttribute("completedAppointments", completedAppointments);
 		request.setAttribute("reviewList", reviewsList);
