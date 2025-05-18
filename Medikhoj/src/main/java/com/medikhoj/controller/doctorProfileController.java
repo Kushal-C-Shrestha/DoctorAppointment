@@ -30,7 +30,6 @@ public class doctorProfileController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String idParam=request.getParameter("doctorId");
 		int id=Integer.parseInt(idParam);
-		
 		DoctorService doctorProfileService=new DoctorService();
 		DoctorUserModel doctor=doctorProfileService.getFullDoctorDetails(id);
 		// TODO Auto-generated method stub

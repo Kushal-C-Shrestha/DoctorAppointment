@@ -67,7 +67,8 @@ public class authorizationFilter extends HttpFilter implements Filter {
 	            String userRole = user.getUser_role();
 //		    String userRole = CookieUtil.getCookie(req, "user_role");
 	        // Admin access
-		        if (uri.endsWith("/dashboard") || uri.endsWith("/addCampaign") || uri.endsWith("adminUser")){
+		        if (uri.endsWith("/dashboard") || uri.endsWith("/addCampaign") || uri.endsWith("adminUser") || 
+		        	uri.endsWith("adminDoctor") || uri.endsWith("adminAppointments") || uri.endsWith("adminReviews")){
 		            if ("admin".equals(userRole)) {
 		                chain.doFilter(request, response);
 		            } else {
@@ -77,7 +78,7 @@ public class authorizationFilter extends HttpFilter implements Filter {
 		        }
 	
 		        // User-only pages
-		        if (uri.endsWith("/profile") || uri.endsWith("/appointment") || uri.endsWith("/reviews")){
+		        if (uri.endsWith("/profile") || uri.endsWith("/appointment") || uri.endsWith("/reviews") || uri.endsWith("/leaveReviews")){
 		            if ("user".equals(userRole)) {
 		                chain.doFilter(request, response);
 		            } else {
@@ -95,7 +96,7 @@ public class authorizationFilter extends HttpFilter implements Filter {
 		            }
 		            return;
 		        }
-		        
+		        res.sendRedirect(req.getContextPath() + "/unauthorized.jsp");
 		        // Block access to any unknown or restricted page
 		            
 	        } else {
