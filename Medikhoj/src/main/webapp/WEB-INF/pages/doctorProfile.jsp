@@ -87,8 +87,8 @@
                 	<input type="hidden" value="seeReview" name="action">
                     <button class="action-btn" id="see-reviews">See all reviews</button>
                 </form>
-                <form class="review-action__buttons action-buttons" action="reviews" >
-                	<input type="hidden" value="${doctor.doctor_id}" name="doctor_id">
+                <form class="review-action__buttons action-buttons" action="reviews">
+                	<!-- <input type="hidden" value="${doctor.doctor_id}" name="doctor_id"> -->
                 	<input type="hidden" value="leaveReview" name="action">
                     <button class="action-btn" id="give-review">Leave your review</button>
                 </form>
