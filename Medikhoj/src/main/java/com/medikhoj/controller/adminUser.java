@@ -6,20 +6,22 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
-import com.medikhoj.model.DoctorUserModel;
-import com.medikhoj.service.DoctorService;
+import com.medikhoj.model.UserModel;
+import com.medikhoj.service.UserService;
+
 /**
- * Servlet implementation class doctorProfileController
+ * Servlet implementation class adminUser
  */
-@WebServlet(asyncSupported=true, urlPatterns={"/doctorProfile"})
-public class doctorProfileController extends HttpServlet {
+@WebServlet(asyncSupported = true,urlPatterns = "/adminUser")
+public class adminUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public doctorProfileController() {
+    public adminUser() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,13 +30,16 @@ public class doctorProfileController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String idParam=request.getParameter("doctorId");
-		int id=Integer.parseInt(idParam);
-		DoctorService doctorProfileService=new DoctorService();
-		DoctorUserModel doctor=doctorProfileService.getFullDoctorDetails(id);
 		// TODO Auto-generated method stub
-		request.setAttribute("doctor", doctor);
-		request.getRequestDispatcher("WEB-INF/pages/doctorProfile.jsp").forward(request, response);
+		UserService userService=new UserService();
+		
+		List<UserModel> users=userService.getAllUsers();
+		
+		if (users==null) {
+			request.setAttribute("error", "Database is down. Please try again in a few minutes.");
+		}
+		request.setAttribute("userList", users);
+		request.getRequestDispatcher("WEB-INF/pages/admin/adminUser.jsp").forward(request, response);
 	}
 
 	/**

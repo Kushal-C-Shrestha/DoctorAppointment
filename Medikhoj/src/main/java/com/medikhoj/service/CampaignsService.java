@@ -79,8 +79,7 @@ public class CampaignsService {
 		
 		return campaigns;
 	}
-	
-	
+
 	public List<CampaignUserModel> getEnrollmentsByUser(int user_id){
 		System.out.println("Entered");
 		if (isConnectionError) {
@@ -149,6 +148,5 @@ public class CampaignsService {
 	    }
 	    return isEnrolled;
 	}
-
 
 }

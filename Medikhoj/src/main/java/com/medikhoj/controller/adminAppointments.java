@@ -7,19 +7,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import com.medikhoj.model.DoctorUserModel;
-import com.medikhoj.service.DoctorService;
 /**
- * Servlet implementation class doctorProfileController
+ * Servlet implementation class adminAppointments
  */
-@WebServlet(asyncSupported=true, urlPatterns={"/doctorProfile"})
-public class doctorProfileController extends HttpServlet {
+@WebServlet(asyncSupported = true,urlPatterns = "/adminAppointments")
+public class adminAppointments extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public doctorProfileController() {
+    public adminAppointments() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,13 +26,8 @@ public class doctorProfileController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String idParam=request.getParameter("doctorId");
-		int id=Integer.parseInt(idParam);
-		DoctorService doctorProfileService=new DoctorService();
-		DoctorUserModel doctor=doctorProfileService.getFullDoctorDetails(id);
 		// TODO Auto-generated method stub
-		request.setAttribute("doctor", doctor);
-		request.getRequestDispatcher("WEB-INF/pages/doctorProfile.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/pages/admin/adminAppointments.jsp").forward(request, response);
 	}
 
 	/**

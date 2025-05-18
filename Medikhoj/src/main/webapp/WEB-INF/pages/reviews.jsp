@@ -44,9 +44,8 @@
                 </section>
 
             </div>
-            <div class="review-action__buttons action-buttons">
-                <button class="action-btn" id="give-review">Leave your review</button>
-            </div>
+
+
         </div>
     </main>
 </body>

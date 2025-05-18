@@ -25,7 +25,13 @@ public class CookieUtil {
         return null;
     }
 
-    public static void removeCookie(HttpServletResponse response, String name) {
-        addCookie(response, name, "", 0);
+//    public static void removeCookie(HttpServletResponse response, String name) {
+//        addCookie(response, name, "", 0);
+//    }
+    public static void deleteCookie(HttpServletResponse response, String name) {
+        Cookie cookie = new Cookie(name, null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/"); // Make cookie available to the entire application
+        response.addCookie(cookie);
     }
 }

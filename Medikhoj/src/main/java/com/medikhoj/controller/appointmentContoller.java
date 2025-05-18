@@ -21,6 +21,7 @@ import com.medikhoj.service.AppointmentService;
 
 
 /**
+ * @author Kushal Chandra Shrestha
  * Servlet implementation class appointmentContoller
  */
 @WebServlet(asyncSupported =true,urlPatterns = "/appointment")

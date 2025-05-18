@@ -116,7 +116,6 @@ public class profileController extends HttpServlet {
 		
 		List <CampaignUserModel> enrollmentList=campaignsService.getEnrollmentsByUser(user.getUser_id());
 		
-		
 		request.setAttribute("section", section);
 		request.setAttribute("subSection", subSection);
 

@@ -6,7 +6,7 @@
     if (session.getAttribute("loggedInUser") == null) {
     	response.sendRedirect(request.getContextPath() + "/login");
         return;
-    }
+   }
 %>
 
 <!DOCTYPE html>

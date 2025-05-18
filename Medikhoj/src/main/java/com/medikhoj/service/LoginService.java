@@ -66,6 +66,7 @@ public class LoginService {
                      user.setUser_gender(rs.getString("user_gender"));
                      user.setUser_bloodgroup(rs.getString("user_bloodgroup"));
                      user.setUser_role(rs.getString("user_role"));
+
                      user.setUser_password(storedPassword);
                      user.setUser_profile(rs.getString("user_profile"));
                      return user; 
