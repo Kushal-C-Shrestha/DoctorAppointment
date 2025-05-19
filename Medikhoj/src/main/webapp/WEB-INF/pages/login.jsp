@@ -27,7 +27,7 @@
 
             <!-- Password -->
              <div class="input-group full-width">
-                <input type="password" id="password" placeholder="Password" required />
+                <input type="password" id="password" name="password" placeholder="Password" required />
                 <i class="fas fa-lock"></i>
                 <i class="fas fa-eye-slash toggle-password" onclick="togglePassword(this, 'password')"></i>
               </div> 
