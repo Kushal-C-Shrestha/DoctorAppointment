@@ -2,6 +2,7 @@ package com.medikhoj.service;
 
 import com.medikhoj.model.SlotModel;
 import com.medikhoj.model.UserModel;
+import com.medikhoj.util.ValidationUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -11,11 +12,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import com.medikhoj.config.DbConfig;
 import com.medikhoj.controller.campaignsController;
@@ -47,16 +51,19 @@ public class AppointmentService {
 		List<SlotModel> allSlots=new ArrayList<SlotModel>();
 		
 		String query="SELECT * FROM slots";
+		DateFormat dateFormatter=new SimpleDateFormat("hh:mm a");
 		
 		try(PreparedStatement stmt=dbConn.prepareStatement(query)){
 			ResultSet rs=stmt.executeQuery();
-			
 			while(rs.next()) {
 				SlotModel slot=new SlotModel();
 				slot.setSlot_id(rs.getInt("slot_id"));
 				slot.setSlot_time(rs.getTime("slot_time").toLocalTime());
+				slot.setFormatted_time(dateFormatter.format(rs.getTime("slot_time")));
 				allSlots.add(slot);
 			}
+			
+			return allSlots;
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -209,5 +216,41 @@ public class AppointmentService {
 			// TODO: handle exception
 			return null;
 		}
+	}
+	
+	
+	public Map<String,String> validateAppointmentForm(HttpServletRequest request){
+		String appointmentTitle=request.getParameter("appointment_title");
+		String appointmentDate=request.getParameter("appointment_date");
+		String appointmentTime=request.getParameter("appointment_time");
+		String appointmentType=request.getParameter("appointment_type");
+		
+		
+		Map <String,String> errorMap=new HashMap();
+		
+		if (ValidationUtil.isNullOrEmpty(appointmentTitle)){
+			errorMap.put("appointmentTitle", "Please enter your reason for visit.");
+			return errorMap;
+		}
+		
+		if (ValidationUtil.isNullOrEmpty(appointmentDate)) {
+			errorMap.put("appointmentDate", "Please select the date for appointment.");
+			return errorMap;
+
+		}
+		
+		if (ValidationUtil.isNullOrEmpty(appointmentTime)) {
+			errorMap.put("appointmentTime", "Please select an appointment time");
+			return errorMap;
+
+		}
+		
+		if (ValidationUtil.isNullOrEmpty(appointmentType)) {
+			errorMap.put("appointmentType", "Please select the type of appointment");
+			return errorMap;
+
+		}
+		
+		return errorMap;
 	}
 }

@@ -1,47 +1,228 @@
 @charset "UTF-8";
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f7fa;
-    margin: 0;
-    padding: 40px;
-}
 
-.container {
-    max-width: 1000px;
-    margin: auto;
-    background: #fff;
-    padding: 30px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    border-radius: 10px;
-}
+.topbar {
+                position: fixed;
+                left: 240px;
+                top: 0;
+                right: 0;
+                height: 80px;
+                background: #fff;
+                border-bottom: 1px solid #E0E0E0;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 32px;
+                z-index: 100;
+                transition: left .5s;
+            }
+            .nav.close ~ .main-content .topbar {
+                left: 52px;
+            }
+            .topbar__title {
+                font-size: 22px;
+                font-weight: bold;
+                color: #308C65;
+            }
+            .topbar__actions {
+                display: flex;
+                align-items: center;
+                gap: 24px;
+            }
+            .topbar__avatar {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: #C9F7EB;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                color: #308C65;
+                font-size: 18px;
+            }
 
-h1, h2 {
-    color: #333;
-    margin-bottom: 10px;
-}
+.main-content-wrapper {
+            margin-top: 80px; /* height of .topbar */
+            margin-left: 240px; /* width of .nav */
+            padding: 32px 32px 32px 32px;
+            min-height: calc(100vh - 80px);
+            background: #f7fafc;
+            box-sizing: border-box;
+            transition: margin-left .5s;
+            }
+            .nav.close ~ .main-content .main-content-wrapper {
+            margin-left: 52px;
+            }
+            .dashboard-stats-row {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            }
+            .stat-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 24px 20px;
+            min-width: 220px;
+            flex: 1 1 220px;
+            max-width: 300px;
+            }
+            .dashboard-main-row {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            }
+            .appointments-overview,
+            .department-chart,
+            .most-appointed-doctors,
+            .most-reviewed-doctors {
+            min-width: 0;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            }
+            .appointments-overview,
+            .most-appointed-doctors {
+            flex: 1.2;
+            }
+            .department-chart,
+            .most-reviewed-doctors {
+            flex: 1;
+            }
+            .doctors-list {
+            list-style: none;
+            padding: 0;
+            margin: 18px 0 0 0;
+            }
+            .doctors-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            }
+            .doctors-list li:last-child {
+            border-bottom: none;
+            }
+            .appt-count {
+            font-size: 0.98em;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            }
+            @media (max-width: 1100px) {
+            .dashboard-stats-row,
+            .dashboard-main-row {
+                flex-direction: column;
+                gap: 18px;
+            }
+            .stat-card,
+            .appointments-overview,
+            .department-chart,
+            .most-appointed-doctors,
+            .most-reviewed-doctors {
+                max-width: 100%;
+            }
+            .main-content-wrapper {
+                margin-left: 0 !important;
+            }
+            }
+            .stat-card-flex {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .stat-card-content {
+                text-align: left;
+            }
+            .stat-card-icon {
+                border-radius: 8px;
+                padding: 10px;
+                margin-left: 18px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .stat-card-icon.calendar {
+                background: #e3f0fc;
+            }
+            .stat-card-icon.user {
+                background: #e6f7ec;
+            }
+            .stat-card-icon.hourglass {
+                background: #fff4e3;
+            }
+            .stat-card-icon.calendar-days {
+                background: #f3e9fa;
+            }
+            .stat-value.appointments {
+                color: #2a7be4;
+            }
+            .stat-value.users {
+                color: #27ae60;
+            }
+            .stat-value.pending {
+                color: #ff9800;
+            }
+            .stat-value.upcoming {
+                color: #8e44ad;
+            }
+            .stat-trend.up {
+                color: #27ae60;
+                font-size: 0.95em;
+            }
+            .stat-trend.down {
+                color: #e74c3c;
+                font-size: 0.95em;
+            }
+            .trend-label {
+                color: #888;
+            }
+            .appointments-overview,
+            .department-chart,
+            .most-appointed-doctors,
+            .most-reviewed-doctors {
+                padding: 24px 20px;
+            }
+            .appointments-overview {
+                flex: 1.2;
+                margin-right: 10px;
+            }
+            .department-chart {
+                flex: 1;
+                margin-left: 10px;
+            }
+            .most-appointed-doctors {
+                flex: 1;
+                margin-right: 10px;
+            }
+            .most-reviewed-doctors {
+                flex: 1;
+                margin-left: 10px;
+            }
+            .dashboard-section-title {
+                margin: 0;
+                font-size: 1.1rem;
+                color: #555;
+            }
+            .chart-placeholder {
+                height: 220px;
+                margin-top: 18px;
+            }
+            .doctors-list-img {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                margin-right: 12px;
+            }
+            .appt-count .fa-calendar-check,
+            .appt-count .fa-star {
+                margin-right: 5px;
+            }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
 
-table thead {
-    background-color: #007bff;
-    color: white;
-}
 
-th, td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-tr:hover {
-    background-color: #f1f1f1;
-}

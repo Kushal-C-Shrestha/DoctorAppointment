@@ -55,15 +55,12 @@ public class LoginController extends HttpServlet {
 	        	HttpSession session = request.getSession();
 	            session.setMaxInactiveInterval(1800); // 30 minutes
 	            session.setAttribute("loggedInUser", user);
-	            System.out.println("Session ID: " + session.getId());
-	        	System.out.println("User in session: " + session.getAttribute("loggedInUser"));
 
 	            // Add a cookie valid for 30 minutes (1800 seconds)
-	            CookieUtil.addCookie(response, "user_role", String.valueOf(user.getUser_role()),-1);
+	            CookieUtil.addCookie(response, "user_role", String.valueOf(user.getUser_role()),1800);
  
 	            // Role-based redirect
 	            String user_role = user.getUser_role();
-	            System.out.println(user_role);
 	            if (user_role.equals("admin")) {
 	                // Admin
 	                //response.sendRedirect(request.getContextPath() + "/dashboard");
@@ -81,7 +78,6 @@ public class LoginController extends HttpServlet {
 	            }
 
 	        } else {
-	        	System.out.println("Error login");
 	            request.setAttribute("error", "Invalid email or password");
 	            request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
 	        }

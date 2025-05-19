@@ -112,14 +112,9 @@ public class profileController extends HttpServlet {
 		
 		//Fetching the reviews according to user.
 		List <DoctorUserModel> favoriteList=favoriteService.getFavoritesByUser(user.getUser_id());
-		if (favoriteList==null) {
-			request.getRequestDispatcher("WEB-INF/pages/myProfile.jsp").forward(request, response);
-		}
+		
 		
 		List <CampaignUserModel> enrollmentList=campaignsService.getEnrollmentsByUser(user.getUser_id());
-		if (enrollmentList==null) {
-			request.getRequestDispatcher("WEB-INF/pages/myProfile.jsp").forward(request, response);
-		}
 		
 		request.setAttribute("section", section);
 		request.setAttribute("subSection", subSection);

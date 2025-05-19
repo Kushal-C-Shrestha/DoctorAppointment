@@ -13,6 +13,10 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
 import java.io.IOException;
+import java.net.http.HttpConnectTimeoutException;
+import java.util.Map;
+
+import javax.swing.text.html.HTML;
 import java.util.Map;
 
 
@@ -56,48 +60,6 @@ public class updateProfileController extends HttpServlet {
 		
 		handleProfileUpdate(request, response);
 		return;
-		
-		
-
-	    /*ImageUtil imageUtil = new ImageUtil();
-
-	    // 1. Validate the form
-	    String validationMessage = updateService.validateUpdateForm(request); // You need to create this method
-	    if (validationMessage != null) {
-	        System.out.println("Validation Error: " + validationMessage);
-	        return;
-	    }
-
-	 
-	    // Upload new profile image (optional)
-	    Part userProfile = request.getPart("user_profile");
-	    String imageUrl = null;
-
-	    if (userProfile != null && userProfile.getSize() > 0) {
-	        String rootPath = getServletContext().getRealPath("resources/images");
-	        imageUrl = imageUtil.uploadImage(userProfile, rootPath, "uploads");
-
-	        if (imageUrl == null) {
-	            System.out.println("Image upload failed");
-	            return;
-	        }
-	    }else {
-	    	imageUrl=request.getParameter("old_user_profile");
-	    }
-
-	    // 4. Create updated UserModel (pass existing image if not changed)
-	    UserModel updatedUser = updateService.createUpdatedUserModel(request, imageUrl); // You need to write this
-
-	    // 5. Update the user in database
-	    Boolean isUpdated = updateService.updateUser(updatedUser);
-	    if (!isUpdated) {
-	        System.out.println("User update failed");
-	        return;
-	    }
-
-	    System.out.println("User updated successfully");
-		request.getRequestDispatcher("WEB-INF/pages/myProfile.jsp").forward(request, response);*/
-
 	}
 	
 	public void handlePasswordChange(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -172,6 +134,7 @@ public class updateProfileController extends HttpServlet {
 	        System.out.println("User update failed");
 	        return;
 	    }
+	    
 	    session.setAttribute("section", "details");
 	    session.setAttribute("loggedInUser", updatedUser);
 

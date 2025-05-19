@@ -8,16 +8,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet implementation class adminAppointments
+ * Servlet implementation class adminUsers
  */
-@WebServlet(asyncSupported = true,urlPatterns = "/adminAppointments")
-public class adminAppointments extends HttpServlet {
+@WebServlet(asyncSupported = true, urlPatterns = { "/adminUsers" })
+public class adminUsersController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public adminAppointments() {
+    public adminUsersController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,7 +27,7 @@ public class adminAppointments extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("WEB-INF/pages/admin/adminAppointments.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/pages/admin/adminUser.jsp").forward(request, response);
 	}
 
 	/**

@@ -17,9 +17,6 @@
 <body>
 <div class="container">
     <div class="form-container" >
-    <c:if test="${not empty error }">
-      <p>${error}</p>
-      </c:if>
       <div class="logo">LOGO</div>
       <h1 class="title">Create Account</h1>
       <p class="sub-text">Skip the long queues, book your appointment in seconds, and get the care you deserve!</p>
@@ -38,6 +35,7 @@
           <div class="input-group">
             <input type="email" placeholder="Email address" name="email"/>
             <i class="fas fa-envelope"></i>
+            <p>Error message</p>
           </div>
           <div class="input-group">
             <input type="tel" placeholder="Phone No." name="phone" />

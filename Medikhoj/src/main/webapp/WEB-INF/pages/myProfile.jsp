@@ -334,7 +334,14 @@
 		        	    	<p>No enrollments</p>
 		        	    </c:when>
 		        	    <c:otherwise>
-		        	    	
+		        	    	<c:forEach var="enrollment" items="${enrollmentList}">
+		        	    		<div>
+		        	    		<p>Enrollment date : ${enrollment.campaign_date}</p> 
+		        	    		<p>Enrollment date : ${enrollment.campaign_time}</p>
+		        	    		<p>Enrollment date : ${enrollment.campaign_name}</p>
+		        	    		<p>Enrollment date : ${enrollment.campaign_desc}</p>
+		        	    		</div>
+		        	    	</c:forEach>
 		        	    </c:otherwise>
                     </c:choose>
         		</c:when>
