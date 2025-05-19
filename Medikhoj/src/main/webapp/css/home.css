@@ -18,6 +18,7 @@
       line-height: 1.5;
     }
 
+
     /* Header styles */
     .header {
       padding: 0 2em ;
@@ -67,35 +68,6 @@
     border-radius: 7px;
   }
 
-  .user-nav .btn-login:hover{
-    opacity: 0.9;
-    
-  }
-  
-  .main-nav a, .user-nav a {
-    color: #000000;
-    font-size: .99em;
-    cursor: pointer;
-  }
-
-
-  .main-nav a:hover{
-    transition-duration: .3s;
-    color: #6f95bd;
-  }
-  
-  .user-nav a:hover{
-    opacity: 0.9;
-    cursor: pointer;
-  }
-  
-  .menu_icon{
-    display: none;
-  }
-  
-  .menu_icon:hover{
-    cursor: pointer;
-  }
 
   .btn-sinup a{
     border: 1px solid black;
@@ -108,6 +80,7 @@
 
     /* Main section */
     .main{
+    margin-top: 60px;
       width: 100%;
       display: flex;
       padding: 3rem 1rem;

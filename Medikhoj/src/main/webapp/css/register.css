@@ -1,214 +1,253 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
 
-  body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    background-color: #fff;
-    /* Removed margin-bottom: 800px */
-  }
+body {
+  min-height: 100vh;
+  background-color: #fff;
+}
 
+.container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-container {
+  flex: 1;
+  background-color: #e0f5f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.sub-text {
+  font-size: 15px;
+  color: #444;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.input-row {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+}
+
+.input-group {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group.full-width {
+  width: 100%;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+/* Input & Select Fields */
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 12px 15px;
+  padding-left: 40px;
+  padding-right: 40px; /* prevents overlap with toggle icon */
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  font-size: 16px;
+  outline: none;
+  height: 48px;
+  background-color: #fff;
+}
+
+.input-group select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.input-group select option[disabled] {
+  color: #999;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-color: #4caf50;
+}
+
+/* Left icon (e.g. user, email, lock) */
+.input-wrapper i:not(.toggle-password) {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  font-size: 18px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Right icon for password toggle */
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #999;
+  font-size: 16px;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.toggle-password:hover {
+  color: #4caf50;
+}
+
+/* Dropdown icon (gender, blood) */
+.input-group.dropdown-icon::after {
+  content: '\f078';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #999;
+  font-size: 14px;
+}
+
+/* Error messages */
+.error-message {
+  display: none;
+  color: red;
+  font-size: 13px;
+  margin-top: 5px;
+  padding-left: 40px;
+  position: relative;
+}
+
+/* Optional: Show red border on error */
+.input-group.error input,
+.input-group.error select {
+  border-color: red;
+}
+
+/* Register button */
+.register-btn {
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 15px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s;
+}
+
+.register-btn:hover {
+  background-color: #333;
+}
+
+/* Login link */
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #333;
+}
+
+.login-link a {
+  color: #4caf50;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Optional: Custom file upload */
+.custom-file-upload {
+  display: inline-block;
+  padding: 12px 20px;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.custom-file-upload:hover {
+  background-color: #eee;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .container {
-    display: flex;
-    width: 100%;
-    min-height: 100vh;
-    background-color: #fff;
-    overflow: hidden;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .form-container {
-    flex: 1;
-    padding: 40px;
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
   }
 
   .image-container {
-    flex: 1;
-    background-color: #e0f5f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    height: 100vh; /* Fixed height */
-  }
-
-  .image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block; /* Prevents extra space */
-  }
-
-  .logo {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-
-  .title {
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 30px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 600px;
-    width: 100%;
+    height: 300px;
   }
 
   .input-row {
-    display: flex;
-    gap: 15px;
-    justify-content: space-between;
+    flex-direction: column;
   }
-
-  .input-group {
-    position: relative;
-    flex: 1;
-  }
-
-  .input-group.full-width {
-    flex: none;
-    width: 100%;
-  }
-
-  .input-group input {
-    width: 100%;
-    padding: 12px 15px;
-    padding-left: 40px;
-    border: 1px solid #ddd;
-    border-radius: 30px;
-    font-size: 16px;
-    outline: none;
-    height: 48px;
-  }
-
-  /* Fixed select element styling */
-  .input-group select {
-    width: 100%;
-    padding: 12px 15px 12px 40px;
-    border: 1px solid #ddd;
-    border-radius: 30px;
-    font-size: 16px;
-    outline: none;
-    height: 48px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    padding-right: 40px;
-    background-color: white;
-    line-height: normal;
-    color: #333;
-    text-indent: 0;
-    cursor: pointer;
-  }
-
-  /* Style for the placeholder option */
-  .input-group select option[disabled] {
-    color: #999;
-  }
-
-  .input-group input:focus,
-  .input-group select:focus {
-    border-color: #4caf50;
-  }
-
-  .input-group.dropdown-icon::after {
-    content: '\f078';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    color: #999;
-    font-size: 14px;
-  }
-
-  .input-group i {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #999;
-    z-index: 1; /* Ensure icon appears above select */
-  }
-
-  .input-group .toggle-password {
-    left: auto;
-    right: 15px;
-    cursor: pointer;
-  }
-
-  .toggle-password {
-    transition: color 0.3s;
-  }
-
-  .toggle-password:hover {
-    color: #4caf50;
-  }
-
-  .register-btn {
-    background-color: #000;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    padding: 15px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: background-color 0.3s;
-  }
-
-  .register-btn:hover {
-    background-color: #333;
-  }
-
-  .login-link {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 14px;
-    color: #333;
-  }
-
-  .login-link a {
-    color: #4caf50;
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  .login-link a:hover {
-    text-decoration: underline;
-  }
-
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .container {
-      flex-direction: column;
-    }
-
-    .image-container {
-      height: 300px;
-    }
-
-    .input-row {
-      flex-direction: column;
-    }
-  }
+}
