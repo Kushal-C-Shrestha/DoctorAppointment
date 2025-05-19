@@ -19,7 +19,7 @@
             Skip the long queues, book your appointment in seconds,and get the care you deserve!
           </p>
 
-          <form action="#" method="post">
+          <form action="login" method="post">
             <!-- Email -->
                 <div class="input-group full-width">
                   <input type="email" name="email" placeholder="Email address" required />
@@ -28,9 +28,10 @@
 
             <!-- Password -->
              <div class="input-group full-width">
-                <input type="password" id="password" name="password" placeholder="Password" required />
-                <i class="fas fa-lock"></i>
-                <i class="fas fa-eye-slash toggle-password" onclick="togglePassword(this, 'password')"></i>
+	             <input type="password" id="password" name="password" placeholder="Password" required />
+	             <i class="fas fa-lock"></i>
+	             <i class="fas fa-eye-slash toggle-password" onclick="togglePassword(this, 'password')"></i>
+             	 <p>Error message</p>
               </div> 
 
              <div class="forgot-link">
@@ -40,7 +41,7 @@
             <button type="submit" class="register-btn">Login</button>
 
             <div class="login-link">
-              Not a member? <a href="register.html">Register Now</a>
+              Not a member? <a href="register">Register Now</a>
             </div>
           </form>
         </div>
