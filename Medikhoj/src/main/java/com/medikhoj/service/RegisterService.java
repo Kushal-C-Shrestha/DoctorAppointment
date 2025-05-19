@@ -8,7 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-
+import java.util.HashMap;
+import java.util.Map;
 
 import jakarta.servlet.http.Part;
 
@@ -43,7 +44,7 @@ public class RegisterService {
 		}
 	}
 
-	public String validateRegistrationForm(HttpServletRequest request) {
+	public Map<String,String> validateRegistrationForm(HttpServletRequest request) {
 		
 		String userName = request.getParameter("fullname");             // User's name
 		String userEmail = request.getParameter("email");               // User's email
@@ -55,67 +56,84 @@ public class RegisterService {
 		String confirmPassword = request.getParameter("confirm_password"); // User's confirm password
 		Part userProfile=null;
 		
+		Map<String, String> errorMap=new HashMap<String, String>();
+		
+		
 		try {
 	        // Retrieve the uploaded image file from the request
 	        userProfile = request.getPart("profile-pic");  // This could throw IOException or ServletException
 	    } catch (IOException e) {
-	        return "Error reading the image file: " + e.getMessage();  // Handle IOException
+	    	errorMap.put("image","Error reading the image file." );
+	        return errorMap;  // Handle IOException
 	    } catch (ServletException e) {
-	        return "Error with the uploaded file: " + e.getMessage();  // Handle ServletException
+	    	errorMap.put("image","Error reading the image file." );
+	        return errorMap;  // Handle ServletException
 	    }
 		
 		// You can handle profile picture later (e.g., save file
 
 		
 		if (ValidationUtil.isNullOrEmpty(userName)) {
-			return "Please enter your full name.";
+			errorMap.put("fullName", "Please enter your full name.");
+			return errorMap;
 		}
 		
 		if (!ValidationUtil.isValidEmail(userEmail)){
-			return "Please enter a valid email address.";
+			errorMap.put("email", "Please enter a valid email address.");
+			return errorMap;
 		}
 		
 		
 		
 		if (ValidationUtil.isNullOrEmpty(userPhone)) {
-			return "Please enter your phone";
+			errorMap.put("fullName", "Please enter your phone");
+			return errorMap;
 		}
 		
 		if (ValidationUtil.isNullOrEmpty(userDobString)) {
-			return "Please enter your date of birth";
+			errorMap.put("fullName", "Please enter your date of birth");
+			return errorMap;
 		}
 		
 		
 		if (ValidationUtil.isNullOrEmpty(userGender) ){
-			return "Please enter your gender";
+			errorMap.put("fullName", "Please enter your gender");
+			return errorMap;
 		}
 		
 		if (ValidationUtil.isNullOrEmpty(userBloodGroup)) {
-			return "Please enter your bloodgrp";
+			errorMap.put("fullName", "Please enter your bloodgrp");
+			return errorMap;
 		}
 		
 		if (ValidationUtil.isNullOrEmpty(userPassword)){
-			return "Please enter your password";
+			errorMap.put("fullName", "Please enter your password");
+			return errorMap;
 		}
 		
 		if (ValidationUtil.isNullOrEmpty(confirmPassword)) {
-			return "Please re-enter your password";
+			errorMap.put("fullName", "Please re-enter your password");
+			return errorMap;
 		}
 		
 		if(!ValidationUtil.isValidPassword(userPassword)) {
-			return "Your password must be 8-25 characters and have atleast one uppercase, one lowecase, one letter and one symbol.";
+			errorMap.put("fullName", "Your password must be 8-25 characters and have atleast one uppercase, one lowecase, one letter and one symbol.");
+			return errorMap;
 		}
 		
 		if (!ValidationUtil.doPasswordsMatch(userPassword,confirmPassword)) {
-			return "The passwords do not match.Please enter the same password.";
+			errorMap.put("fullName", "The passwords do not match.Please enter the same password.");
+			return errorMap;
 		}
 		
 		if (!ValidationUtil.isValidImageType(userProfile)) {
-			return "The image file should be png, jpg or jpeg.";
+			errorMap.put("fullName", "The image file should be png, jpg or jpeg.");
+			return errorMap;
 		}
 		
 		if (!ValidationUtil.isValidImageSize(userProfile)) {
-			return "The image file should be less than 2 MB.";
+			errorMap.put("fullName", "The image file should be less than 2 MB.");
+			return errorMap;
 		}
 		
 		return null;

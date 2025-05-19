@@ -9,9 +9,12 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/doctors.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/modal.css">
+
 </head>
 <body>
 	<%@ include file="header.jsp" %>
+	
     <main>
         <div class="filter">
             <div class="filter-heading">

@@ -30,7 +30,7 @@
 
             <div class="form-group">
                 <label>Email:</label>
-                <input type="email" name="user_email" value="${user.user_email}" readonly>
+                <input type="email"id ="" name="user_email" value="${user.user_email}" readonly>
             </div>
 
             <div class="form-group">
