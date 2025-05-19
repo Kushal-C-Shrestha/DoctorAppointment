@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/doctorAppointment")
+@WebServlet("/doctorAppointments")
 public class doctorAppointmentsController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

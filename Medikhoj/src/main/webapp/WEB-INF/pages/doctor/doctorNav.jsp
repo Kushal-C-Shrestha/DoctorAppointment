@@ -85,7 +85,7 @@
             </li>
 
             <li class="nav-link">
-              <a href="${pageContext.request.contextPath}/doctorAppointment">My Appointments</a>
+              <a href="doctorAppointments" class="active">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
