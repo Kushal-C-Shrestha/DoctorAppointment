@@ -16,9 +16,6 @@
 <body>
 <div class="container">
     <div class="form-container" >
-    <c:if test="${not empty error }">
-      <p>${error}</p>
-      </c:if>
       <div class="logo">LOGO</div>
       <h1 class="title">Create Account</h1>
       <p class="sub-text">Skip the long queues, book your appointment in seconds, and get the care you deserve!</p>
@@ -37,11 +34,17 @@
         <!-- Email and Phone -->
         <div class="input-row">
           <div class="input-group">
+<<<<<<< HEAD
             <div class="input-wrapper">
               <input type="email" placeholder="Email address" name="email" id="email"/>
               <i class="fas fa-envelope"></i>
             </div>
             <p class="error-message" id="email-error">Please enter a valid email</p>
+=======
+            <input type="email" placeholder="Email address" name="email"/>
+            <i class="fas fa-envelope"></i>
+            <p>Error message</p>
+>>>>>>> branch 'main' of https://github.com/Kushal-C-Shrestha/DoctorAppointment.git
           </div>
         
           <div class="input-group">

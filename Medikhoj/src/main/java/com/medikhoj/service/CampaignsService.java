@@ -79,16 +79,17 @@ public class CampaignsService {
 		
 		return campaigns;
 	}
-	
+
 	public List<CampaignUserModel> getEnrollmentsByUser(int user_id){
+		System.out.println("Entered");
 		if (isConnectionError) {
 			//Checking if there is connection with database . if not this section is triggered
 			System.out.println("Database connection error");
 			return null;
 		}
 		
-		List<CampaignUserModel> enrollmentsByUser=new ArrayList();
-		String query="SELECT * FROM favorite f JOIN users u ON f.user_id = u.user_id  "
+		List<CampaignUserModel> enrollmentsByUser=new ArrayList<CampaignUserModel>();
+		String query="SELECT * FROM campaign_enrollment ce JOIN campaigns c ON ce.campaign_id=c.campaign_id JOIN users u ON ce.user_id = u.user_id  "
 				+ "WHERE u.user_id=?";
 		
 		try(PreparedStatement stmt=dbConn.prepareStatement(query)){
