@@ -59,7 +59,7 @@ public class LoginController extends HttpServlet {
 	        	System.out.println("User in session: " + session.getAttribute("loggedInUser"));
 
 	            // Add a cookie valid for 30 minutes (1800 seconds)
-	            CookieUtil.addCookie(response, "user_role", String.valueOf(user.getUser_role()),-1);
+	           CookieUtil.addCookie(response, "user_role", String.valueOf(user.getUser_role()),-1);
  
 	            // Role-based redirect
 	            String user_role = user.getUser_role();

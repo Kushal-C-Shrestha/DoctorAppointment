@@ -66,10 +66,6 @@
           </button>
         </div>
       </div>
-
-
-      
-      
       <!-- You can add more doctor cards here -->
     </div>
   </div>
