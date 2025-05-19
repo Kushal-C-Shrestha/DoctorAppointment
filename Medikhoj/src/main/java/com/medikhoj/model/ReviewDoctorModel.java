@@ -8,18 +8,19 @@ public class ReviewDoctorModel {
 	private float review_rating;
 	private LocalDate review_date;
 	private String user_name;
-	
+	private String doctor_name;
 	
 	public ReviewDoctorModel() {}
 	
 	public ReviewDoctorModel(int review_id, String review_desc, float review_rating, LocalDate review_date,
-			String user_name) {
+			String user_name,String doctor_name,int doctor_id) {
 		super();
 		this.review_id = review_id;
 		this.review_desc = review_desc;
 		this.review_rating = review_rating;
 		this.review_date = review_date;
 		this.user_name = user_name;
+		this.doctor_name = doctor_name;
 	}
 	public int getReview_id() {
 		return review_id;
@@ -52,5 +53,12 @@ public class ReviewDoctorModel {
 		this.user_name = user_name;
 	}
 	
-	
+	//new code
+	public String getDoctor_name() {
+	    return doctor_name;
+	}
+
+	public void setDoctor_name(String doctor_name) {
+	    this.doctor_name = doctor_name;
+	}
 }

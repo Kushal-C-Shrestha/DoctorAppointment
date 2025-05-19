@@ -1,7 +1,6 @@
 package com.medikhoj.service;
-import com.medikhoj.model.DoctorModel;
+
 import com.medikhoj.model.ReviewModel;
-import com.medikhoj.model.UserDoctorReview;
 import com.medikhoj.model.UserReviewModel;
 import com.medikhoj.model.ReviewDoctorModel;
 
@@ -14,7 +13,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import com.medikhoj.config.DbConfig;
-import com.medikhoj.controller.campaignsController;
 
 
 
@@ -44,7 +42,7 @@ public class ReviewService {
 			return null;
 		}
 		
-		List <ReviewModel> reviews=new  ArrayList();
+		List <ReviewModel> reviews=new  ArrayList<>();
 		String query="SELECT * FROM reviews WHERE doctor_id= ?"; //Creating the required query to fetch from the database.
 		
 		//Preparing the statement 
@@ -80,7 +78,7 @@ public class ReviewService {
 			return null;
 		}
 		
-		List<UserReviewModel> reviewsByDoctor=new ArrayList();
+		List<UserReviewModel> reviewsByDoctor=new ArrayList<>();
 		String query="SELECT * FROM reviews r JOIN user_doctor_review udr ON r.review_id=udr.review_id JOIN users u ON u.user_id=udr.user_id "
 				+ "WHERE udr.doctor_id=?";
 		
@@ -117,7 +115,7 @@ public class ReviewService {
 			return null;
 		}
 		
-		List<ReviewDoctorModel> reviewsByUser=new ArrayList();
+		List<ReviewDoctorModel> reviewsByUser=new ArrayList<>();
 		String query="SELECT * FROM reviews r JOIN user_doctor_review udr ON r.review_id=udr.review_id JOIN users u ON u.user_id=udr.user_id "
 				+ "WHERE udr.doctor_id=?";
 		
@@ -186,6 +184,71 @@ public class ReviewService {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        return false;
+	    }
+	}
+
+	
+	//new code
+	
+	public List<ReviewDoctorModel> getAllUserDoctorReviews() {
+	    if (isConnectionError) {
+	        return null;
+	    }
+
+	    List<ReviewDoctorModel> reviews = new ArrayList<>();
+	    String query = "SELECT r.*, u.user_name, d.doctor_name FROM reviews r " +
+	                   "JOIN user_doctor_review udr ON r.review_id = udr.review_id " +
+	                   "JOIN users u ON u.user_id = udr.user_id " +
+	                   "JOIN doctors d ON d.doctor_id = udr.doctor_id";
+
+	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+	        ResultSet rs = stmt.executeQuery();
+	        while (rs.next()) {
+	            ReviewDoctorModel rd = new ReviewDoctorModel();
+	            rd.setReview_id(rs.getInt("review_id"));
+	            rd.setReview_desc(rs.getString("review_desc"));
+	            rd.setReview_rating(rs.getFloat("review_rating"));
+	            rd.setReview_date(rs.getDate("review_date").toLocalDate());
+	            rd.setUser_name(rs.getString("user_name"));
+	            rd.setDoctor_name(rs.getString("doctor_name"));
+	            reviews.add(rd);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return reviews;
+	}
+
+	//new code
+	public List<ReviewDoctorModel> getAllDoctorReviewsForAdmin() {
+	    if (isConnectionError) {
+	        System.out.println("Database connection error");
+	        return null;
+	    }
+
+	    List<ReviewDoctorModel> allReviews = new ArrayList<>();
+	    String query = "SELECT r.review_id, r.review_desc, r.review_rating, r.review_date, u.user_name " +
+	                   "FROM user_doctor_review urd " +
+	                   "LEFT JOIN reviews r ON urd.review_id = r.review_id " +
+	                   "LEFT JOIN users u ON urd.user_id = u.user_id " +
+	                   "LEFT JOIN doctors d ON urd.doctor_id = d.doctor_id";
+
+	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+	        ResultSet rs = stmt.executeQuery();
+	        while (rs.next()) {
+	        	ReviewDoctorModel review = new ReviewDoctorModel();
+	            review.setReview_id(rs.getInt("review_id"));
+	            review.setReview_desc(rs.getString("review_desc"));
+	            review.setReview_rating(rs.getFloat("review_rating"));
+	            review.setReview_date(rs.getDate("review_date").toLocalDate());
+	            review.setUser_name(rs.getString("user_name"));
+	            allReviews.add(review);
+	        }
+	        return allReviews;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return allReviews;
 	    }
 	}
 
