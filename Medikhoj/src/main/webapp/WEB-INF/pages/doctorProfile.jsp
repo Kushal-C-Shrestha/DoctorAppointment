@@ -29,12 +29,25 @@
                     <p>${doctor.doctor_about}</p>
                 </section>
                 <div class="main-action__buttons action-buttons">
-	                <form>
-	                	<button class="action-btn" id="mark-favorite">Mark as favorite</button>
-	                </form>
+	                <form action="favourite" method="post">
+					    <input type="hidden" name="favouriteState" id="favoriteState"
+					           value="${isFavorite ? 'remove' : 'add'}" />
+					    <input type="hidden" name="doctor_id" value="${doctor.doctor_id}">
+					    <input type="hidden" name="user_id" value="${user.user_id}">
+					    <button class="action-btn" id="mark-favorite">
+					        <c:choose>
+					            <c:when test="${isFavorite}">
+					                Remove from favorites
+					            </c:when>
+					            <c:otherwise>
+					                Add to favorites
+					            </c:otherwise>
+					        </c:choose>
+					    </button>
+					</form>
 	                <form action="appointment" method="get">
 	                	<input type="hidden" name="doctor_id" value="${doctor.doctor_id}">
-	                	<input type="hidden" name="user_id" value="1">
+	                	<input type="hidden" name="user_id" value="${user.user_id}">
 	                	<button class="action-btn" id="book-appointment">Book appointment</button>
 	                </form>
                 </div>
@@ -95,5 +108,20 @@
             </div>
         </div>
     </main>
+    
+   <!-- <script>
+	    const button = document.getElementById('mark-favorite');
+	    const favoriteStateInput = document.getElementById('favoriteState');
+
+	    button.addEventListener('click', function (event) {
+	        if (favoriteStateInput.value === 'add') {
+	            favoriteStateInput.value = 'remove';
+	            button.textContent = 'Remove from favorites';
+	        } else {
+	            favoriteStateInput.value = 'add';
+	            button.textContent = 'Add to favorites';
+	        }
+	    });
+    </script> --> 
 </body>
 </html>

@@ -39,24 +39,28 @@
     </div>
 
     <div class="appoint-list">
+     <c:forEach var="adminAppointment" items="${appointments}">
       <div class="appoint-card">
         <div class="appoint-header">
-          <div class="appoint-avatar">
+          <!-- <div class="appoint-avatar">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
-          </div>
-          <div class="appoint-name">General Checkup</div>
+          </div> -->
+          <div class="appoint-name">${adminAppointment.appointmentTitle}</div>
         </div>
-        <p class="appoint-bio">Ram Thapa</p>
-        <p class="appoint-bio">2025/05/10</p>
+        <p class="appoint-bio">${adminAppointment.userName}</p>
+        <p class="appoint-bio">${adminAppointment.doctorName}</p>
+        <p class="appoint-bio">${adminAppointment.appointmentDate}</p>
+        <p class="appoint-bio">${adminAppointment.appointmentTime}</p>
+        <p class="appoint-bio">${adminAppointment.appointmentStatus}</p>
         <div class="appoint-actions">
            <button class="edit-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pencil-icon">
               <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
             </svg>
-            Edit
+            Reschedule
           </button>
           <button class="delete-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="trash-icon">
@@ -64,10 +68,11 @@
               <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
               <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
             </svg>
-            Delete
+            Cancel
           </button>
         </div>
       </div>
+     </c:forEach>
 
 
       

@@ -33,6 +33,83 @@ public class FavoriteService {
 		}
 	}
 	
+	public boolean addtoFavourite(int user_id, int doctor_id) {
+		if (isConnectionError) {
+			//Checking if there is connection with database . if not this section is triggered
+			System.out.println("Database connection error");
+			return false;
+		}
+		
+	    String checkQuery = "SELECT * FROM favorite WHERE user_id = ? AND doctor_id = ?";
+	    String insertQuery = "INSERT INTO favorite (user_id, doctor_id) VALUES (?, ?)";
+
+	    try (PreparedStatement checkStmt = dbConn.prepareStatement(checkQuery);
+	    	PreparedStatement insertStmt = dbConn.prepareStatement(insertQuery)) {
+	        // Set parameters for checking
+	        checkStmt.setInt(1, user_id);
+	        checkStmt.setInt(2, doctor_id);
+
+	        try (ResultSet rs = checkStmt.executeQuery()) {
+	            if (rs.next()) {
+	                // Entry already exists
+	                System.out.println("Already marked as favorite.");
+	                return false;
+	            }
+	        }
+
+	        // Set parameters for insert
+	        insertStmt.setInt(1, user_id);
+	        insertStmt.setInt(2, doctor_id);
+
+	        int rowsAffected = insertStmt.executeUpdate();
+	        return rowsAffected > 0;
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+	
+	public boolean removeFavourite(int user_id, int doctor_id) {
+	    if (isConnectionError) {
+	        System.out.println("Database connection error");
+	        return false;
+	    }
+
+	    String checkQuery = "SELECT * FROM favorite WHERE user_id = ? AND doctor_id = ?";
+	    String deleteQuery = "DELETE FROM favorite WHERE user_id = ? AND doctor_id = ?";
+
+	    try (
+	        PreparedStatement checkStmt = dbConn.prepareStatement(checkQuery);
+	        PreparedStatement deleteStmt = dbConn.prepareStatement(deleteQuery)
+	    ) {
+	        // Check if the entry exists
+	        checkStmt.setInt(1, user_id);
+	        checkStmt.setInt(2, doctor_id);
+
+	        try (ResultSet rs = checkStmt.executeQuery()) {
+	            if (!rs.next()) {
+	                // Entry doesn't exist
+	                System.out.println("Favorite entry does not exist.");
+	                return false;
+	            }
+	        }
+
+	        // Entry exists, proceed to delete
+	        deleteStmt.setInt(1, user_id);
+	        deleteStmt.setInt(2, doctor_id);
+
+	        int rowsAffected = deleteStmt.executeUpdate();
+	        return rowsAffected > 0;
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
+	
+	
 	public List<DoctorUserModel> getFavoritesByUser(int user_id){
 		if (isConnectionError) {
 			//Checking if there is connection with database . if not this section is triggered
@@ -71,4 +148,25 @@ public class FavoriteService {
 			// TODO: handle exception
 		}
 	}
+	
+	
+	public boolean isDoctorFavorited(int userId, int doctorId) {
+	    if (isConnectionError) {
+	        System.out.println("Database connection error");
+	        return false;
+	    }
+
+	    String query = "SELECT 1 FROM favorite WHERE user_id = ? AND doctor_id = ?";
+
+	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+	        stmt.setInt(1, userId);
+	        stmt.setInt(2, doctorId);
+	        ResultSet rs = stmt.executeQuery();
+	        return rs.next(); // true if exists
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+	
 }

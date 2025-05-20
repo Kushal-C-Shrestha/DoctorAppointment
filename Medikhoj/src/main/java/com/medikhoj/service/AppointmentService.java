@@ -1,6 +1,7 @@
 package com.medikhoj.service;
 
 import com.medikhoj.model.SlotModel;
+import com.medikhoj.model.UserDoctorAppointment;
 import com.medikhoj.model.UserModel;
 import com.medikhoj.util.ValidationUtil;
 
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
 
 import com.medikhoj.config.DbConfig;
 import com.medikhoj.controller.campaignsController;
+import com.medikhoj.model.AdminAppointmentsModel;
 import com.medikhoj.model.AppointmentModel;
 import com.medikhoj.model.DoctorAppointmentModel;
 import com.medikhoj.model.DoctorModel;
@@ -247,6 +249,42 @@ public class AppointmentService {
 		return appointments;
 	}
 
+	public List<AdminAppointmentsModel> getAllAppointmentForAdmin() {
+		if (dbConn == null) {
+			System.err.println("Database connection is not available.");
+			return null;
+		}
+        List<AdminAppointmentsModel> AdminAppointmentsList = new ArrayList<>();
+
+        String sql = "SELECT a.appointment_id, a.appointment_title, a.appointment_date, a.appointment_time, a.appointment_status, u.user_name AS UserName, d.user_name AS DoctorName "
+        		+ "FROM appointments a "
+        		+ "JOIN user_doctor_appointment uda ON a.appointment_id = uda.appointment_id "
+        		+ "JOIN users u ON uda.user_id = u.user_id "
+        		+ "JOIN users d ON uda.doctor_id = d.user_id "
+        		+ "ORDER BY a.appointment_date DESC";
+
+        try (PreparedStatement ps = dbConn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                AdminAppointmentsModel details = new AdminAppointmentsModel();
+                details.setAppointmentId(rs.getInt("appointment_id"));
+                details.setAppointmentTitle(rs.getString("appointment_title"));
+                details.setAppointmentDate(rs.getString("appointment_date")); // format as needed
+                details.setAppointmentTime(rs.getString("appointment_time"));
+                details.setAppointmentStatus(rs.getString("appointment_status"));
+                details.setUserName(rs.getString("UserName"));
+                details.setDoctorName(rs.getString("DoctorName"));
+
+                AdminAppointmentsList.add(details);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return AdminAppointmentsList;
+    }
+	
 	
 	public Map<String,String> validateAppointmentForm(HttpServletRequest request){
 		String appointmentTitle=request.getParameter("appointment_title");

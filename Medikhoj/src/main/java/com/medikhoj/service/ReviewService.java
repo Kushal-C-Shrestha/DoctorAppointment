@@ -176,9 +176,9 @@ public class ReviewService {
             return false;
         }
 		String sql1 = "INSERT INTO user_doctor_review (user_id, doctor_id, review_id) VALUES (?, ?, ?)";
-		String sql2 = "UPDATE doctor SET rating = (SELECT AVG(rating) FROM reviews WHERE doctor_id = ?) WHERE id = ?";
+		String sql2 = "UPDATE doctors d JOIN (SELECT udr.doctor_id, AVG(r.review_rating) AS avg_rating, COUNT(*) AS review_count FROM user_doctor_review udr JOIN reviews r ON udr.review_id = r.review_id GROUP BY udr.doctor_id) stats ON d.doctor_id = stats.doctor_id SET d.doctor_rating = stats.avg_rating, d.review_count = stats.review_count WHERE d.doctor_id = ?"; 
 	    try (PreparedStatement ps1=dbConn.prepareStatement(sql1);
-	    	PreparedStatement ps2 = dbConn.prepareStatement(sql2)) {
+	    	PreparedStatement ps2=dbConn.prepareStatement(sql2)) {
 	        ps1.setInt(1, userId);
 	        ps1.setInt(2, doctorId);
 	        ps1.setInt(3, reviewId);
@@ -186,11 +186,8 @@ public class ReviewService {
 //	        return ps.executeUpdate() > 0;
 	        if (insertedRows>0) {
         		ps2.setInt(1, doctorId);
-        	 	ps2.setInt(2, doctorId);
                 int updatedRows = ps2.executeUpdate();
                 if (updatedRows > 0) {
-                    // Commit only if both succeed
-                    dbConn.commit();
                     return true;
                 } else {
                     return false;
