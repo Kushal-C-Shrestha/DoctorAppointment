@@ -9,6 +9,8 @@ public class DoctorUserModel {
     private String doctor_qualification;
     private String doctor_about;
     private int doctor_experience;
+    private float doctor_rating;
+    private int rating_count;
 
     // User Details
     private int user_id;
@@ -29,6 +31,8 @@ public class DoctorUserModel {
         this.doctor_qualification = doctor.getDoctor_qualification();
         this.doctor_about = doctor.getDoctor_about();
         this.doctor_experience = doctor.getDoctor_experience();
+        this.doctor_rating=doctor.getDoctor_rating();
+        this.rating_count=doctor.getRating_count();
         
         this.user_id = user.getUser_id();
         this.user_name = user.getUser_name();
@@ -40,6 +44,7 @@ public class DoctorUserModel {
         this.user_bloodgroup = user.getUser_bloodgroup();
         this.user_role = user.getUser_role();
         this.user_profile = user.getUser_profile();
+        
     }
     
     public DoctorUserModel() {}
@@ -94,7 +99,23 @@ public class DoctorUserModel {
         this.user_id = user_id;
     }
 
-    public String getUser_name() {
+    public float getDoctor_rating() {
+		return doctor_rating;
+	}
+
+	public void setDoctor_rating(float doctor_rating) {
+		this.doctor_rating = doctor_rating;
+	}
+
+	public int getRating_count() {
+		return rating_count;
+	}
+
+	public void setRating_count(int rating_count) {
+		this.rating_count = rating_count;
+	}
+
+	public String getUser_name() {
         return user_name;
     }
 

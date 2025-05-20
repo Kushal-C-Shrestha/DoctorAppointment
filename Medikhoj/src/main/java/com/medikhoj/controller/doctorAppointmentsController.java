@@ -38,10 +38,12 @@ public class doctorAppointmentsController extends HttpServlet {
 
         // 3. Fetch appointments for this doctor
         AppointmentService appointmentService = new AppointmentService();
-        List<AppointmentModel> appointments = appointmentService.getAppointmentsForDoctor(user.getUser_id());
+        //List<AppointmentModel> appointments = appointmentService.getAppointmentsForDoctor(user.getUser_id());
 
+        // 3. Set appointment list in request scope
+       // request.setAttribute("appointments", appointments);
         // 4. Set appointments in request scope
-        request.setAttribute("appointments", appointments);
+       // request.setAttribute("appointments", appointments);
 
         // 5. Forward to JSP (ensure this path exists)
         request.getRequestDispatcher("/WEB-INF/pages/doctor/doctorAppointments.jsp").forward(request, response);

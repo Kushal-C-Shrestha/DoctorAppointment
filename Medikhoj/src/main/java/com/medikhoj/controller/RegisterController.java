@@ -52,6 +52,7 @@ public class RegisterController extends HttpServlet {
 		//Validate the form. If something is wrong display the message accordingly
 		Map<String,String> errorMap=registerService.validateRegistrationForm(request);
 		if (!errorMap.isEmpty()) {
+			System.out.println("Eror not empty");
 			request.setAttribute("errorMap", errorMap);
 			request.getRequestDispatcher("WEB-INF/pages/register.jsp").forward(request, response);
 			return;

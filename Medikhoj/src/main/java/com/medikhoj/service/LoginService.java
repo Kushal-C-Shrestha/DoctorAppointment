@@ -40,6 +40,7 @@ public class LoginService {
             if (rs.next()) {	
                 // User exists , now check password.
             	String storedPassword = rs.getString("user_password");
+            	System.out.println(storedPassword);
             	
             	if (!email.contains("@")) {
             		String mailQuery = "SELECT user_email FROM users WHERE user_phone= ?";
