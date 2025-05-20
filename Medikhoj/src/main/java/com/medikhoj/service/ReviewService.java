@@ -176,11 +176,28 @@ public class ReviewService {
             return false;
         }
 		String sql1 = "INSERT INTO user_doctor_review (user_id, doctor_id, review_id) VALUES (?, ?, ?)";
-	    try (PreparedStatement ps=dbConn.prepareStatement(sql1)) {
-	        ps.setInt(1, userId);
-	        ps.setInt(2, doctorId);
-	        ps.setInt(3, reviewId);
-	        return ps.executeUpdate() > 0;
+		String sql2 = "UPDATE doctor SET rating = (SELECT AVG(rating) FROM reviews WHERE doctor_id = ?) WHERE id = ?";
+	    try (PreparedStatement ps1=dbConn.prepareStatement(sql1);
+	    	PreparedStatement ps2 = dbConn.prepareStatement(sql2)) {
+	        ps1.setInt(1, userId);
+	        ps1.setInt(2, doctorId);
+	        ps1.setInt(3, reviewId);
+	        int insertedRows= ps1.executeUpdate();
+//	        return ps.executeUpdate() > 0;
+	        if (insertedRows>0) {
+        		ps2.setInt(1, doctorId);
+        	 	ps2.setInt(2, doctorId);
+                int updatedRows = ps2.executeUpdate();
+                if (updatedRows > 0) {
+                    // Commit only if both succeed
+                    dbConn.commit();
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        return false;
