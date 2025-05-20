@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Servlet implementation class doctorReviewsController
  */
-@WebServlet("/doctorReviewsController")
+@WebServlet("/doctorReviews")
 public class doctorReviewsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -27,7 +27,7 @@ public class doctorReviewsController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		 request.getRequestDispatcher("WEB-INF/pages/admin/doctorReviews.jsp").forward(request, response);
+		 request.getRequestDispatcher("WEB-INF/pages/doctor/doctorReviews.jsp").forward(request, response);
 	}
 
 	/**
