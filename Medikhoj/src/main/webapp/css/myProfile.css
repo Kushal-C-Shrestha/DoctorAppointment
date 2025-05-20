@@ -141,6 +141,7 @@ body {
     flex: 1;
     padding: 30px;
     overflow-y:auto;
+    margin-top:65px;
 }
 
 .page-header{
