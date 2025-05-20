@@ -37,10 +37,11 @@ body {
 }
 
 /* COMPACT FORM STYLES */
-.container {
+.main {
     width: 100%;
     max-width: 550px !important; /* Reduced from 650px */
     margin: 0 auto;
+    margin-top:65px;
     padding: 0;
     background: white;
     border-radius: 16px;

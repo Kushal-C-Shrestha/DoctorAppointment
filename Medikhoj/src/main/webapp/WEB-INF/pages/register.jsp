@@ -20,55 +20,59 @@
       <h1 class="title">Create Account</h1>
       <p class="sub-text">Skip the long queues, book your appointment in seconds, and get the care you deserve!</p>
       
-      <form id="registrationForm" action="register" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+      <form id="registrationForm" action="register" method="post" enctype="multipart/form-data">
       <input type="hidden" name="role" value="user">
         <!-- Full Name (full width) -->
         <div class="input-group full-width">
           <div class="input-wrapper">
-            <input type="text" placeholder="Full Name" name="fullname" id="fullname"/>
+            <input type="text" placeholder="Full Name" name="fullname" id="fullname" value="${userName}"/>
             <i class="fas fa-user"></i>
           </div>
-          <p class="error-message" id="fullname-error">Please enter your name</p>
+          <c:if test="${not empty errorMap['fullName']}">
+			<p class="error-message" id="fullname-error">${errorMap.fullName}</p>
+          </c:if>
         </div>
         
         <!-- Email and Phone -->
         <div class="input-row">
           <div class="input-group">
-<<<<<<< HEAD
             <div class="input-wrapper">
-              <input type="email" placeholder="Email address" name="email" id="email"/>
+              <input type="email" placeholder="Email address" name="email" id="email" value="${userEmail}"/>
               <i class="fas fa-envelope"></i>
             </div>
-            <p class="error-message" id="email-error">Please enter a valid email</p>
-=======
-            <input type="email" placeholder="Email address" name="email"/>
-            <i class="fas fa-envelope"></i>
-            <p>Error message</p>
->>>>>>> branch 'main' of https://github.com/Kushal-C-Shrestha/DoctorAppointment.git
+            <c:if test="${not empty errorMap['email']}">
+				<p class="error-message" id="email-error">${errorMap['email']}</p>
+            </c:if>
+            
           </div>
         
           <div class="input-group">
             <div class="input-wrapper">
-              <input type="tel" placeholder="Phone No." name="phone" id="phone"/>
+              <input type="tel" placeholder="Phone No." name="phone" id="phone" value="${userPhone}"/>
               <i class="fas fa-phone"></i>
             </div>
-            <p class="error-message" id="phone-error">Please enter your phone number</p>
+            <c:if test="${not empty errorMap['phone']}">
+            	<p class="error-message" id="phone-error">${errorMap['phone']}</p>
+            </c:if>
+            
           </div>
         </div>
 
         <div class="input-group full-width">
           <div class="input-wrapper">
-            <input type="date" placeholder="Date of birth" name="dob" id="dob"/>
+            <input type="date" placeholder="Date of birth" name="dob" id="dob" value="${userDob}"/>
             <i class="fas fa-calendar"></i>
           </div>
-          <p class="error-message" id="dob-error">Please select your date of birth</p>
+          <c:if test="${not empty errorMap['dob']}">
+          		<p class="error-message" id="dob-error">${errorMap['dob']}</p>
+          </c:if>
         </div>
 
         <!-- Gender + Blood Group -->
         <div class="input-row">
           <div class="input-group dropdown-icon">
             <div class="input-wrapper">
-              <select name="gender" id="gender">
+              <select name="gender" id="gender" value="${userGender}">
                 <option value="" disabled selected>Gender</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -76,11 +80,13 @@
               </select>
               <i class="fas fa-venus-mars"></i>
             </div>
-            <p class="error-message" id="gender-error">Please select your gender</p>
+            <c:if test="${not empty errorMap['gender']}">
+            	<p class="error-message" id="gender-error">${errorMap['gender']}</p>
+            </c:if>
           </div>
           <div class="input-group dropdown-icon">
             <div class="input-wrapper">
-              <select name="bloodgroup" id="bloodgroup">
+              <select name="bloodgroup" id="bloodgroup" value="${userBloodGroup}">
                 <option value="" disabled selected>Blood Group</option>
                 <option value="A+">A+</option>
                 <option value="A-">A-</option>
@@ -93,36 +99,44 @@
               </select>
               <i class="fas fa-tint"></i>
             </div>
-            <p class="error-message" id="bloodgroup-error">Please select your blood group</p>
+            <c:if test="${not empty errorMap['bloodGroup']}">
+            	<p class="error-message" id="bloodgroup-error">${errorMap['bloodGroup']}</p>
+            </c:if>
           </div>
         </div>
 
         <!-- Password -->
         <div class="input-group full-width">
           <div class="input-wrapper">
-            <input type="password" id="password" placeholder="Password" name="password"/>
+            <input type="password" id="password" placeholder="Password" name="password" value="${userPassword}"/>
             <i class="fas fa-lock"></i>
             <i class="fas fa-eye-slash toggle-password" onclick="togglePassword(this, 'password')"></i>
           </div>
-          <p class="error-message" id="password-error">Password must be at least 6 characters</p>
+          <c:if test="${not empty errorMap['password']}">
+          		<p class="error-message" id="password-error">${errorMap['password']}</p>
+          </c:if>
         </div>
 
         <!-- Confirm Password -->
         <div class="input-group full-width">
           <div class="input-wrapper">
-            <input type="password" id="confirm-password" placeholder="Confirm Password" name="confirm_password"/>
+            <input type="password" id="confirm-password" placeholder="Confirm Password" name="confirm_password" value="${confirmPassword}"/>
             <i class="fas fa-lock"></i>
             <i class="fas fa-eye-slash toggle-password" onclick="togglePassword(this, 'confirm-password')"></i>
           </div>
-          <p class="error-message" id="confirm-password-error">Passwords do not match</p>
+          <c:if test="${not empty errorMap['confirmPassword']}">
+          		<p class="error-message" id="confirm-password-error">${errorMap['confirmPassword']}</p>
+          </c:if>
         </div>
         
         <div class="input-group full-width">
           <div class="input-wrapper">
-            <input type="file" id="profile-pic" name="profile-pic"/>
+            <input type="file" id="profile-pic" name="profile-pic" value="${image}"/>
             <i class="fas fa-file"></i>
           </div>
-          <p class="error-message" id="profile-pic-error">Please upload a profile picture</p>
+          <c:if test="${not empty errorMap['image']}">
+          		<p class="error-message" id="confirm-password-error">${errorMap['image']}</p>
+          </c:if>
         </div>
 
         <button type="submit" class="register-btn">Register</button>
@@ -144,82 +158,6 @@
       input.type = isPassword ? "text" : "password";
       iconElement.classList.toggle("fa-eye");
       iconElement.classList.toggle("fa-eye-slash");
-    }
-    
-    function validateForm() {
-      let isValid = true;
-      
-      // Hide all error messages initially
-      const errorMessages = document.querySelectorAll('.error-message');
-      errorMessages.forEach(msg => {
-        msg.style.display = 'none';
-      });
-      
-      // Validate Full Name
-      const fullname = document.getElementById('fullname');
-      if (!fullname.value.trim()) {
-        document.getElementById('fullname-error').style.display = 'block';
-        isValid = false;
-      }
-      
-      // Validate Email
-      const email = document.getElementById('email');
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!email.value.trim() || !emailRegex.test(email.value.trim())) {
-        document.getElementById('email-error').style.display = 'block';
-        isValid = false;
-      }
-      
-      // Validate Phone
-      const phone = document.getElementById('phone');
-      if (!phone.value.trim() || phone.value.trim().length < 10) {
-        document.getElementById('phone-error').style.display = 'block';
-        isValid = false;
-      }
-      
-      // Validate Date of Birth
-      const dob = document.getElementById('dob');
-      if (!dob.value) {
-        document.getElementById('dob-error').style.display = 'block';
-        isValid = false;
-      }
-      
-      // Validate Gender
-      const gender = document.getElementById('gender');
-      if (gender.value === "" || gender.selectedIndex === 0) {
-        document.getElementById('gender-error').style.display = 'block';
-        isValid = false;
-      }
-      
-      // Validate Blood Group
-      const bloodgroup = document.getElementById('bloodgroup');
-      if (bloodgroup.value === "" || bloodgroup.selectedIndex === 0) {
-        document.getElementById('bloodgroup-error').style.display = 'block';
-        isValid = false;
-      }
-      
-      // Validate Password
-      const password = document.getElementById('password');
-      if (!password.value || password.value.length < 6) {
-        document.getElementById('password-error').style.display = 'block';
-        isValid = false;
-      }
-      
-      // Validate Confirm Password
-      const confirmPassword = document.getElementById('confirm-password');
-      if (password.value !== confirmPassword.value) {
-        document.getElementById('confirm-password-error').style.display = 'block';
-        isValid = false;
-      }
-      
-      // Validate Profile Picture (optional, remove if not required)
-      const profilePic = document.getElementById('profile-pic');
-      if (!profilePic.files || profilePic.files.length === 0) {
-        document.getElementById('profile-pic-error').style.display = 'block';
-        isValid = false;
-      }
-      
-      return isValid;
     }
   </script>
 </body>

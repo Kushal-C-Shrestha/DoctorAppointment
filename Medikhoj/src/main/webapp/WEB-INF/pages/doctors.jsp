@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,38 +16,44 @@
 </head>
 <body>
 	<%@ include file="header.jsp" %>
-	
+<c:set var="selectedSpecs" value="${fn:join(paramValues.specialization, ',')}"  />
+
     <main>
         <div class="filter">
             <div class="filter-heading">
                 <p>Filter</p>
             </div>
             <div class="filter-content">
-                <form action="" class="filter-form">
+                <form action="search" class="filter-form">
                     <fieldset class="filter-fieldset">
                         <legend class="fieldset-header">Specialization</legend>
                         <div class="filter-options">
 
                             <div class="filter-option">
-                                <input type="checkbox" id="physician" name="specialization" value="physician">
-                                <label for="physician">Physician</label>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="ent" name="specialization" value="ent">
-                                <label for="ent">ENT</label>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="cardiologist" name="specialization" value="cardiologist">
-                                <label for="cardiologist">Cardiologist</label>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="neurologist" name="specialization" value="neurologist">
-                                <label for="neurologist">Neurologist</label>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="dermatologist" name="specialization" value="dermatologist">
-                                <label for="dermatologist">Dermatologist</label>
-                            </div>
+							    <input type="checkbox" id="physician" name="specialization" value="physician"
+							        <c:if test="${selectedSpecs != null && fn:contains(selectedSpecs, 'physician')}">checked</c:if>>
+							    <label for="physician">Physician</label>
+							</div>
+							<div class="filter-option">
+							    <input type="checkbox" id="ent" name="specialization" value="ent"
+							        <c:if test="${selectedSpecs != null && fn:contains(selectedSpecs, 'ent')}">checked</c:if>>
+							    <label for="ent">ENT</label>
+							</div>
+							<div class="filter-option">
+							    <input type="checkbox" id="cardiologist" name="specialization" value="cardiologist"
+							        <c:if test="${selectedSpecs != null && fn:contains(selectedSpecs, 'cardiologist')}">checked</c:if>>
+							    <label for="cardiologist">Cardiologist</label>
+							</div>
+							<div class="filter-option">
+							    <input type="checkbox" id="neurologist" name="specialization" value="neurologist"
+							        <c:if test="${selectedSpecs != null && fn:contains(selectedSpecs, 'neurologist')}">checked</c:if>>
+							    <label for="neurologist">Neurologist</label>
+							</div>
+							<div class="filter-option">
+							    <input type="checkbox" id="dermatologist" name="specialization" value="dermatologist"
+							        <c:if test="${selectedSpecs != null && fn:contains(selectedSpecs, 'dermatologist')}">checked</c:if>>
+							    <label for="dermatologist">Dermatologist</label>
+							</div>
                         </div>
                     </fieldset>
                     <fieldset class="filter-fieldset">
@@ -70,38 +78,48 @@
                         <legend class="fieldset-header">Experience</legend>
                         <div class="filter-options">
 
-                            <div class="filter-option">
-                                <input type="checkbox" id="experience-0-5" name="experience" value="0-5">
-                                <label for="experience-0-5">0-5 yrs</label>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="experience-5-10" name="experience" value="5-10">
-                                <label for="experience-5-10">5-10 yrs</label>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="experience-10-plus" name="experience" value="10+">
-                                <label for="experience-10-plus">10+ yrs</label>
-                            </div>
+							<div class="filter-option">
+							    <input type="radio" id="experience-0-5" name="experience" value="0-5"
+							        <c:if test="${param.experience == '0-5'}">checked</c:if>>
+							    <label for="experience-0-5">0-5 yrs</label>
+							</div>
+							
+							<div class="filter-option">
+							    <input type="radio" id="experience-5-10" name="experience" value="5-10"
+							        <c:if test="${param.experience == '5-10'}">checked</c:if>>
+							    <label for="experience-5-10">5-10 yrs</label>
+							</div>
+							
+							<div class="filter-option">
+							    <input type="radio" id="experience-10-plus" name="experience" value="10+"
+							        <c:if test="${param.experience == '10+'}">checked</c:if>>
+							    <label for="experience-10-plus">10+ yrs</label>
+							</div>
+
                         </div>
                     </fieldset>
-                    <button type="reset" class="reset-filter">Reset filters</button>
+                    <button type="button" class="reset-filter">Reset filters</button>
+                    <button type="submit">Filter</button>
                 </form>
             </div>
         </div>
         <div class="main-content">
             <div class="main-top">
                 <div class="search-bar">
-                    <input type="text" placeholder="Search for doctors"/>
+                <form action="search" >
+                	<input type="text" placeholder="Search for doctors" name="doctorSearch" value="${param.doctorSearch}"/>
+                </form>
                     <!--<img src="Search icon.png" alt="">-->
                 </div>
-                <div class="sort-section">
-                    <p>Sort by:</p>
-                    <select name="sort" id="sort">
-                        <option value="rating-desc">Ratings: High to low</option>
-                        <option value="rating-aesc">Ratings: Low to high</option>
-                        <option value="experience">Experience</option>
-                    </select>
-                </div>
+                <form action="search">
+	                <div class="sort-section">
+	                    <p>Sort by:</p>
+	                    <select name="sort" id="sort" onchange="this.form.submit()">
+	                        <option value="desc" ${param.sort == 'desc' ? 'selected' : ''}>Ratings: High to low</option>
+			                <option value="asc" ${param.sort == 'asc' ? 'selected' : ''}>Ratings: Low to high</option>
+	                    </select>
+	                </div>
+                </form>
             </div>
             <c:choose>
             	<c:when test="${not empty error}">
@@ -142,19 +160,34 @@
 	                            </div>
 	                        </button>
 	                    </form> 
-	                    <form action="">
+	                    <form action="appointment">
 	                        <div class="action-buttons">
+	                        	<input type="hidden" name="doctor_id" value="${doctor.doctor_id}">
 	                            <button>Book appointment</button>
 	                        </div>
 	                    </form>
                 	</div>
             	</c:forEach>
-                
             </div>
             </c:otherwise>
             </c:choose>
         </div>
     </main>
     <%@ include file="footer.jsp" %>
+    
+    <script>
+    	document.querySelector('.reset-filter').addEventListener('click',()=>{
+    		console.log("clciked");
+    		document.querySelectorAll("input[type='checkbox']").forEach(checkbox=>{
+    			checkbox.checked=false;
+    		})
+    		
+    		document.querySelectorAll("input[type='radio']").forEach(radio=>{
+    			radio.checked=false;
+    		})
+    		
+    		 window.location.href = '/Medikhoj/doctors';  
+    	})
+    </script>
 </body>
 </html>

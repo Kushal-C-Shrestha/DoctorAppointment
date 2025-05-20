@@ -20,7 +20,7 @@
                     <p class="dname">${doctor.user_name}</p>
                     <p class="dspecialization">${doctor.doctor_specialization}</p>
                     <p class="dqualificaiton">${doctor.doctor_qualification}</p>
-                    <p class="drating">Rating: 4.5/5</p>
+                    <p class="drating">Rating: ${doctor.doctor_rating}</p>
                 </div>
             </div>
             <div class="profile-contents">
@@ -34,7 +34,6 @@
 	                </form>
 	                <form action="appointment" method="get">
 	                	<input type="hidden" name="doctor_id" value="${doctor.doctor_id}">
-	                	<input type="hidden" name="user_id" value="1">
 	                	<button class="action-btn" id="book-appointment">Book appointment</button>
 	                </form>
                 </div>
