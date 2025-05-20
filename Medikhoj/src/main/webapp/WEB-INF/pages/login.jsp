@@ -22,7 +22,7 @@
           <form action="login" method="post">
             <!-- Email -->
                 <div class="input-group full-width">
-                  <input type="email" name="email" placeholder="Email address" required />
+                  <input name="email" placeholder="Email address or phone" />
                    <i class="fas fa-envelope"></i>
                 </div>
 

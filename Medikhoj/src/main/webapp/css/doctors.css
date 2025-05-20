@@ -8,6 +8,7 @@
 }
 
 main{
+	margin-top:65px;
     display: flex;
     height: 100vh;
     overflow: hidden;
@@ -138,12 +139,12 @@ main{
 	cursor:pointer;
 
     .doctor-image{
-        img{
-        	height: 80px;
-	        width: 80px;
-	        border-radius: 50%;
-	        border: 1px solid black;
-        }
+       	height: 80px;
+        width: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        
+        
     }
 
     .doctor-info{
