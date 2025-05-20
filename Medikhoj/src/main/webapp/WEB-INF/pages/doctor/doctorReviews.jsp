@@ -39,7 +39,7 @@
     </div>
 
 <div class="reviews-container">
-  <c:forEach var="review" items="${allReviews}">
+  <c:forEach var="review" items="${doctorReviews}">
     <div class="review-card">
       <div class="review-header">
         <div class="reviewer">

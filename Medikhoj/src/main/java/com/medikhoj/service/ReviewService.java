@@ -268,6 +268,41 @@ public class ReviewService {
 	        return allReviews;
 	    }
 	}
+	
+	public List<ReviewDoctorModel> getAllDoctorReviewsForDoctor() {
+		if (isConnectionError) {
+			System.out.println("Database Connection Error");
+			return null;
+		}
+		
+		List<ReviewDoctorModel> docReviews = new ArrayList<>();
+		String query =  "SELECT r.review_id, r.review_desc, r.review_rating, r.review_date, " +
+                "       u.user_name, d.doctor_name " +  // optional: include doctor_name
+                "FROM   user_doctor_review urd " +
+                "JOIN   reviews  r ON urd.review_id = r.review_id " +
+                "JOIN   users    u ON urd.user_id   = u.user_id " +
+                "JOIN   doctors  d ON urd.doctor_id = d.doctor_id " +
+                "WHERE  d.doctor_id = ? " +
+                "ORDER BY r.review_date DESC";
+		
+		try(PreparedStatement stmt = dbConn.prepareStatement(query)){
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				 ReviewDoctorModel rd = new ReviewDoctorModel();
+		            rd.setReview_id(rs.getInt("review_id"));
+		            rd.setReview_desc(rs.getString("review_desc"));
+		            rd.setReview_rating(rs.getFloat("review_rating"));
+		            rd.setReview_date(rs.getDate("review_date").toLocalDate());
+		            rd.setUser_name(rs.getString("user_name"));
+		            rd.setDoctor_name(rs.getString("doctor_name"));
+		            docReviews.add(rd);
+		        }
+			}catch(SQLException e) {
+				e.printStackTrace();
+		}
+		return docReviews;
+	}
+	
 
 	
 }
