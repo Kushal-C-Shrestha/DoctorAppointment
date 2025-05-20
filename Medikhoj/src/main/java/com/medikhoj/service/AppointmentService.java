@@ -218,6 +218,35 @@ public class AppointmentService {
 		}
 	}
 	
+	public List<AppointmentModel> getAppointmentsForDoctor(int doctorId) {
+		if (dbConn == null) {
+			System.err.println("Database connection is not available.");
+			return null;
+		}
+		List<AppointmentModel> appointments = new ArrayList<>();
+		String query = "SELECT a.* FROM appointments a " +
+				"JOIN user_doctor_appointment uda ON a.appointment_id = uda.appointment_id " +
+				"WHERE uda.doctor_id = ?";
+		try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+			stmt.setInt(1, doctorId);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				AppointmentModel appointment = new AppointmentModel();
+				appointment.setAppointment_id(rs.getInt("appointment_id"));
+				appointment.setAppointment_title(rs.getString("appointment_title"));
+				appointment.setAppointment_date(rs.getDate("appointment_date").toLocalDate());
+				appointment.setAppointment_time(rs.getInt("appointment_time"));
+				appointment.setAppointment_type(rs.getString("appointment_type"));
+				appointment.setAppointment_remarks(rs.getString("appointment_remarks"));
+				appointment.setAppointment_status(rs.getString("appointment_status"));
+				appointments.add(appointment);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return appointments;
+	}
+
 	
 	public Map<String,String> validateAppointmentForm(HttpServletRequest request){
 		String appointmentTitle=request.getParameter("appointment_title");

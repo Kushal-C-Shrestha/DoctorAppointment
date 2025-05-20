@@ -48,8 +48,6 @@ public class ReviewModel {
 
 	public void setReview_date(LocalDate review_date) {
 		this.review_date = review_date;
-	}
-
-	
+	} 
 	
 }
