@@ -242,7 +242,7 @@ public class ReviewService {
 	    }
 
 	    List<ReviewDoctorModel> allReviews = new ArrayList<>();
-<<<<<<< HEAD
+
 	    String query = "SELECT r.review_id, r.review_desc, r.review_rating, r.review_date, reviewer.user_name AS user_name, doctor.user_name AS doctor_name " +
                 "FROM reviews r " +
                 "JOIN user_doctor_review udr ON r.review_id = udr.review_id " +
@@ -250,13 +250,6 @@ public class ReviewService {
                 "JOIN doctors d ON udr.doctor_id = d.doctor_id "+
                 "JOIN users doctor ON d.doctor_id = doctor.user_id";
 	    
-=======
-	    String query = "SELECT r.review_id, r.review_desc, r.review_rating, r.review_date, u.user_name " +
-	                   "FROM user_doctor_review urd " +
-	                   "JOIN reviews r ON urd.review_id = r.review_id " +
-	                   "JOIN users u ON urd.user_id = u.user_id " +
-	                   "JOIN doctors d ON urd.doctor_id = d.doctor_id";
->>>>>>> branch 'main' of https://github.com/Kushal-C-Shrestha/DoctorAppointment.git
 
 	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
 	    	
@@ -279,7 +272,7 @@ public class ReviewService {
 	    }
 	}
 	
-<<<<<<< HEAD
+
 	public boolean deleteReview(int reviewId) {
 	    if (isConnectionError) {
 	        System.out.println("Database connection error");
@@ -308,7 +301,7 @@ public class ReviewService {
 	    }
 	}
 
-=======
+
 	public List<ReviewDoctorModel> getAllDoctorReviewsForDoctor(int doctor_id) {
 		if (isConnectionError) {
 			System.out.println("Database Connection Error");
@@ -344,7 +337,7 @@ public class ReviewService {
 		return docReviews;
 	}
 	
->>>>>>> branch 'main' of https://github.com/Kushal-C-Shrestha/DoctorAppointment.git
+
 
 	
 }

@@ -26,10 +26,7 @@
       </div>
     </div>
 
-<<<<<<< HEAD
-=======
 
->>>>>>> branch 'main' of https://github.com/Kushal-C-Shrestha/DoctorAppointment.git
 <div class="reviews-container">
   <c:forEach var="review" items="${allReviews}">
     <div class="review-card">
