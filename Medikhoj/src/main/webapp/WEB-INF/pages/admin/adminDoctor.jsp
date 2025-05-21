@@ -48,6 +48,7 @@
     </div>
 
     <div class="doctor-list">
+     <c:forEach var="doctors" items="${doctorList}">
       <div class="doctor-card">
         <div class="doctor-header">
           <div class="doctor-avatar">
@@ -56,11 +57,11 @@
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
           </div>
-          <div class="doctor-name">Anugrah Chor</div>
+          <div class="doctor-name">${doctors.user_name}</div>
         </div>
-        <p class="doctor-bio">abc@gmail.com</p>
-        <p class="doctor-bio">981211319331</p>
-        <p class="doctor-bio">Dental</p>
+        <p class="doctor-bio">${doctors.user_email}</p>
+        <p class="doctor-bio">${doctors.user_phone}</p>
+        <p class="doctor-bio">${doctors.doctor_specialization}</p>
         <div class="doctor-actions">
           <button class="edit-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pencil-icon">
@@ -78,6 +79,7 @@
           </button>
         </div>
       </div>
+     </c:forEach>
 
     
 
