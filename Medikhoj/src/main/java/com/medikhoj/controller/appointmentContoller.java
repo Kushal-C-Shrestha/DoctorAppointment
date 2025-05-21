@@ -72,6 +72,7 @@ public class appointmentContoller extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 		DoctorService doctorService=new DoctorService();
 		UserService userService=new UserService();
 		AppointmentService appointmentService=new AppointmentService();
@@ -121,14 +122,26 @@ public class appointmentContoller extends HttpServlet {
 			}
 			
 			AppointmentModel appointment=appointmentService.createAppointment(request);
-			Boolean isBooked =appointmentService.bookAppointment(doctor, user, appointment);
-			if (isBooked) {
-				System.out.println("Appointment sucessfully booked");
-				session.setAttribute("showPopup","true");
-				session.setAttribute("popupTitle", "Success");
-				session.setAttribute("popupMessage", "Your appointment has been successfully booked.");
-				response.sendRedirect("doctors");
-				return;
+			boolean alreadybooked=appointmentService.checkBooked(user.getUser_id(),doctorId,appointment.getAppointment_date());
+			System.out.print("check"+alreadybooked);
+			session.setAttribute("showPopup","true");
+			if(!alreadybooked) {
+				Boolean isBooked =appointmentService.bookAppointment(doctor, user, appointment);
+				if (isBooked) {
+					session.setAttribute("popupTitle", "Success");
+					session.setAttribute("popupMessage", "Your appointment has been successfully booked.");
+					response.sendRedirect("doctors");
+					return;
+				}else {
+					session.setAttribute("popupTitle", "Error");
+					session.setAttribute("popupMessage", "Database error, please try again later.");
+					response.sendRedirect("doctors");
+					return;
+				}
+			}else {
+			session.setAttribute("popupTitle", "Error");
+			session.setAttribute("popupMessage", "You have already booked your appointment for the given date, please try another date.");
+			response.sendRedirect("doctors");
 			}
 		}
 		

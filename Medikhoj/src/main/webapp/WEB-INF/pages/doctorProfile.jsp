@@ -21,7 +21,7 @@
                     <p class="dname">${doctor.user_name}</p>
                     <p class="dspecialization">${doctor.doctor_specialization}</p>
                     <p class="dqualificaiton">${doctor.doctor_qualification}</p>
-                    <p class="drating">Rating: ${doctor.doctor_rating}</p>
+                    <!-- <p class="drating">Rating: ${doctor.doctor_rating}</p> -->
                 </div>
             </div>
             <div class="profile-contents">
@@ -55,7 +55,7 @@
                 <section class="profile-section">
                     <div class="profile-section__header">
                         <p>Reviews</p>
-                        <p class="rating-text">Rating: 4.5/5</p>
+                        <p class="rating-text">Rating: ${doctor.doctor_rating}</p>
                     </div>
                     <div class="review-list">
                         <div class="review">

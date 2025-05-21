@@ -126,7 +126,7 @@
                     
                     <div class="form-group">
                         <label for="appointmentTitle">Reason for Visit *</label>
-                        <input type="text" id="appointmentTitle" name="appointment_title" placeholder="Brief description of your visit reason" class="${not empty error['appointmentTitle'] ? 'error' : ''}">
+                        <input type="text" id="appointmentTitle" name="appointment_title" placeholder="Brief description of your visit reason" value="${param.appointment_title}" class="${not empty error['appointmentTitle'] ? 'error' : ''}">
 						<p class="error-message"><c:if test="${not empty error['appointmentTitle']}">${error['appointmentTitle']}</c:if></p>
                         
                     </div>
@@ -200,10 +200,22 @@
                         </div>
 						<p class="error-message"><c:if test="${not empty error['appointmentType']}">${error['appointmentType']}</c:if></p>
                     </div>
+                    <button type="button" onclick="window.location.href='${pageContext.request.contextPath}/doctors'">Cancel</button>
                     <button type="submit" onclick="document.getElementById('form-action').value='book'" class="submit-btn">Submit</button>
 				</div>
 			</form>
 		</div>
     </div>
+    <script>
+    	console.log("running");
+        let input= document.getElementById('appointmentDate');
+        console.log(input);
+        input.addEventListener('change',()=>{
+            if (input.value){
+                document.getElementById('form-action').value="check";
+                document.getElementById('appointment-form').submit();
+            }
+        }) 
+    </script>
 </body>
 </html>

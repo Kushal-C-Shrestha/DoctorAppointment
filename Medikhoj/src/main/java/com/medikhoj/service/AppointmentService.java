@@ -133,7 +133,6 @@ public class AppointmentService {
 		
 		String insertQuery = "INSERT INTO appointments (appointment_date, appointment_time, appointment_type, appointment_remarks, appointment_title, appointment_status)"
 				+ "VALUES (?, ?, ? , ?,?,?)";
-		
 		try(PreparedStatement stmt=dbConn.prepareStatement(insertQuery,Statement.RETURN_GENERATED_KEYS)){
 			stmt.setDate(1, java.sql.Date.valueOf(appointment.getAppointment_date()));
 			stmt.setInt(2, appointment.getAppointment_time());
@@ -331,6 +330,30 @@ public class AppointmentService {
         return AdminAppointmentsList;
     }
 	
+	public boolean checkBooked(int user_id, int doctor_id, LocalDate appointment_date) {
+		if (dbConn == null) {
+			System.err.println("Database connection is not available.");
+			return false;
+		}
+	
+		String insertQuery = "SELECT COUNT(*) FROM user_doctor_appointment uda "
+				+ "JOIN appointments a ON uda.appointment_id = a.appointment_id "
+				+ "WHERE uda.user_id = ? "
+				+ "AND uda.doctor_id = ? "
+				+ "AND DATE(a.appointment_date) = ? ";
+		try(PreparedStatement stmt=dbConn.prepareStatement(insertQuery)){
+			stmt.setInt(1, user_id);
+			stmt.setInt(2, doctor_id);
+			stmt.setObject(3, appointment_date);
+			ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            return rs.getInt(1) > 0;
+	        }
+		}catch (SQLException e) {
+            e.printStackTrace();
+        }
+		return false;
+	}
 	
 	public Map<String,String> validateAppointmentForm(HttpServletRequest request){
 		String appointmentTitle=request.getParameter("appointment_title");

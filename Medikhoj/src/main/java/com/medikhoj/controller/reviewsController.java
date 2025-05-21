@@ -113,9 +113,6 @@ public class reviewsController extends HttpServlet {
 		String ratingParam = request.getParameter("rating");
         String reviewText = request.getParameter("reviewText");
         String doctorIdParam = request.getParameter("doctor_id");
-        System.out.print("rat"+ratingParam);
-        System.out.print(reviewText);
-        System.out.print("id"+doctorIdParam);
         if (ratingParam == null || reviewText == null || doctorIdParam == null ||
                 ratingParam.isEmpty() || reviewText.isEmpty() || doctorIdParam.isEmpty()) {
                 response.sendRedirect("reviews?doctor_id=" + doctorIdParam + "&error=Missing+fields");

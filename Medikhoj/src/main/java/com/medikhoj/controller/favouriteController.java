@@ -42,9 +42,7 @@ public class favouriteController extends HttpServlet {
 		String doctorIdparam=request.getParameter("doctor_id");
 		String userIdparam=request.getParameter("user_id");
 		String favouriteState=request.getParameter("favouriteState");
-		System.out.print("doc"+doctorIdparam);
-		System.out.print("user"+userIdparam);
-		System.out.print("fav"+favouriteState);
+		
 		
 		if (doctorIdparam == null || userIdparam == null || favouriteState == null ||
 			doctorIdparam.isEmpty() || userIdparam.isEmpty() || favouriteState.isEmpty()) {
