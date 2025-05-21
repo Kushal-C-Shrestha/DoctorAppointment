@@ -18,6 +18,7 @@ html, body {
   display: flex;
   width: 100%;
   height: 100vh;
+  margin-top:65px;
 }
 
 .form-container {
@@ -39,8 +40,8 @@ html, body {
 }
 
 .image-container img {
-  max-width: 80%;
-  height: auto;
+  height: 100%;
+  width:100%;
   object-fit: cover;
 }
 
@@ -99,6 +100,10 @@ form {
   outline: none;
 }
 
+.input-wrapper input.error {
+  border-color: red;
+}
+
 /* icons inside inputs */
 .input-wrapper i {
   position: absolute;
@@ -126,8 +131,8 @@ form {
 .error-message {
   color: red;
   font-size: 13px;
-  margin-top: 4px;
-  margin-left: 10px;
+  padding:2px 48px;
+  
 }
 
 /* —— Links & Button —— */

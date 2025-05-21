@@ -337,6 +337,42 @@ public class ReviewService {
 		return docReviews;
 	}
 	
+	public Boolean isReviewExist(int userId,int doctorId) {
+		if (isConnectionError) {
+			System.out.println("Database Connection Error");
+			return false;
+		}
+		
+		 String query = "SELECT 1 FROM user_doctor_review WHERE user_id = ? AND doctor_id = ? LIMIT 1";
+
+		    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+		        stmt.setInt(1, userId);
+		        stmt.setInt(2, doctorId);
+
+		        ResultSet rs = stmt.executeQuery();
+		        return rs.next(); // true if a row is found
+		    } catch (Exception e) {
+		        e.printStackTrace(); // Optional: log error properly
+		        return false; // fail safely or rethrow depending on design
+		    }
+	}
+	
+	public boolean hasBookedAppointment(int userId, int doctorId) {
+	    String query = "SELECT * FROM user_doctor_appointment WHERE user_id = ? AND doctor_id = ? LIMIT 1";
+		System.out.println("entered");
+		System.out.println(userId);
+		System.out.println(doctorId);
+	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+	        stmt.setInt(1, userId);
+	        stmt.setInt(2, doctorId);
+
+	        ResultSet rs = stmt.executeQuery();
+	        return rs.next(); // true if a row exists
+	    } catch (Exception e) {
+	        e.printStackTrace(); // log properly in production
+	        return false;
+	    }
+	}
 
 
 	

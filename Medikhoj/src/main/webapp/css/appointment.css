@@ -389,14 +389,36 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin: 12px 0 !important; /* Reduced from 24px 0 */
 }
 
+
+.action-buttons{
+	display:flex;
+	gap:10px;
+}
+
+.cancel-btn{
+	flex:1;
+	background-color:transparent;	
+	border: 1px solid var(--primary);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 6px;
+    padding: 10px ;
+    font-size: 14px;
+    font-weight: 600;
+    color:var(----primary);
+    
+}
+
 .submit-btn {
-    width: 100%;
+	flex:1;
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: white;
     border: none;
     border-radius: 8px;
-    padding: 10px !important; /* Reduced from 12px */
-    font-size: 14px !important; /* Reduced from 15px */
+    padding: 10px ;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;

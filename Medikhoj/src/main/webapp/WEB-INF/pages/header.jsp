@@ -13,10 +13,11 @@
 <body>
 <div id="header">
     <header class="header">
-        <h1 class="logo">
-            <a href="${contextPath}/home.jsp">
-                <img src="${pageContext.request.contextPath}/resources/images/assets/logo.png"></a>
-        </h1>
+        <div class="logo">
+            <a href="${pageContext.request.contextPath}/home">
+                <img src="${pageContext.request.contextPath}/resources/images/assets/logo.png">
+            </a>
+        </div>
         <ul class="main-nav">
             <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
             <li><a href="${pageContext.request.contextPath}/doctors">Doctor</a></li>

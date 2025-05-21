@@ -20,6 +20,7 @@ body {
 
 /* Sidebar Styles */
 .sidebar {
+	margin-top:65px;
     width: 250px;
     background-color: #fff;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
@@ -37,19 +38,6 @@ body {
     margin-bottom: 30px;
 }
 
-.logo {
-    width: 40px;
-    height: 40px;
-    background-color: #1a9aab;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-weight: bold;
-    font-size: 20px;
-    margin-right: 10px;
-}
 
 .logo-text {
     font-size: 18px;
@@ -485,6 +473,30 @@ body {
 	font-size: 14px;
 }
 
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper input[type="password"],
+.input-wrapper input[type="text"] {
+    flex: 1;
+    padding-right: 2.5rem; /* space for icons */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 0.5rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #666;
+    user-select: none;
+}
+
+.toggle-password:hover {
+    color: #000;
+}
 
 
 .edit-button svg {

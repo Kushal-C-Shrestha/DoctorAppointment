@@ -40,8 +40,8 @@ public class doctorProfileController extends HttpServlet {
         if (session != null) {
             UserModel loggedInUser = (UserModel) session.getAttribute("loggedInUser");
             //for popups
-            String showPopup = (String) session.getAttribute("showPopup");
-		    if ("true".equals(showPopup)) {
+            Boolean showPopup = (Boolean) session.getAttribute("showPopup");
+		    if (Boolean.TRUE.equals(showPopup)) {
 		        String title = (String) session.getAttribute("popupTitle");
 		        String message = (String) session.getAttribute("popupMessage");
 
@@ -60,9 +60,12 @@ public class doctorProfileController extends HttpServlet {
         }
         
 		UserModel user = userService.getUser(user_id);
-        
-		String idParam=request.getParameter("doctorId");
-		int id=Integer.parseInt(idParam);
+		int id;
+		if (session.getAttribute("doctorId")!=null) {
+			id=(Integer)(session.getAttribute("doctorId"));
+		}else {
+			id=Integer.parseInt(request.getParameter("doctorId")) ;
+		}
 		DoctorService doctorProfileService=new DoctorService();
 		DoctorUserModel doctor=doctorProfileService.getFullDoctorDetails(id);
 		

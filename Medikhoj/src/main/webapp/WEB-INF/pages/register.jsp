@@ -14,24 +14,27 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
+<%@ include file="header.jsp" %>
 <div class="container">
     <div class="form-container" >
-      <div class="logo">LOGO</div>
-      <h1 class="title">Create Account</h1>
-      <p class="sub-text">Skip the long queues, book your appointment in seconds, and get the care you deserve!</p>
+    	<div class="logo">
+      		<img src="${pageContext.request.contextPath}/resources/images/assets/logo.png" alt="Logo" />
+		</div>
+      	<h1 class="title">Create Account</h1>
+      	<p class="sub-text">Skip the long queues, book your appointment in seconds, and get the care you deserve!</p>
       
-      <form id="registrationForm" action="register" method="post" enctype="multipart/form-data">
-      <input type="hidden" name="role" value="user">
+      	<form id="registrationForm" action="register" method="post" enctype="multipart/form-data">
+      		<input type="hidden" name="role" value="user">
         <!-- Full Name (full width) -->
-        <div class="input-group full-width">
-          <div class="input-wrapper">
-            <input type="text" placeholder="Full Name" name="fullname" id="fullname" value="${userName}"/>
-            <i class="fas fa-user"></i>
-          </div>
-          <c:if test="${not empty errorMap['fullName']}">
-			<p class="error-message" id="fullname-error">${errorMap.fullName}</p>
-          </c:if>
-        </div>
+        	<div class="input-group full-width">
+	          	<div class="input-wrapper">
+	            	<input type="text" placeholder="Full Name" name="fullname" id="fullname" value="${userName}"/>
+	            	<i class="fas fa-user"></i>
+	          	</div>
+	          	<c:if test="${not empty errorMap['fullName']}">
+					<p class="error-message" id="fullname-error">${errorMap.fullName}</p>
+	          	</c:if>
+        	</div>
         
         <!-- Email and Phone -->
         <div class="input-row">
@@ -147,7 +150,7 @@
     </div>
 
     <div class="image-container">
-      <img src="image 6.png" alt="Medical professionals illustration" />
+      <img src="${pageContext.request.contextPath}/resources/images/assets/register.png" alt="Medical professionals illustration" />
     </div>
   </div>
 

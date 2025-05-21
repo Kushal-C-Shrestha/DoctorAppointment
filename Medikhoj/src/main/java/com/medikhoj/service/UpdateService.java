@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public class UpdateService {
 		}
 	}
 	
-public Map<String,String> validateUpdateForm(HttpServletRequest request) {
+public Map<String,String> validateUpdateForm(int user_id,HttpServletRequest request) {
 		String userName = request.getParameter("fullName");             // User's name
 		String userEmail = request.getParameter("email");               // User's email
 		String userPhone = request.getParameter("phone");               // User's phone number
@@ -74,7 +75,7 @@ public Map<String,String> validateUpdateForm(HttpServletRequest request) {
 			
 		
 		if (ValidationUtil.isNullOrEmpty(userPhone)) {
-			errorMap.put("phone", "Please enter a valid phone number.");
+			errorMap.put("phone", "Please enter a phone number.");
 			return errorMap;
 		}
 		
@@ -103,7 +104,24 @@ public Map<String,String> validateUpdateForm(HttpServletRequest request) {
 			errorMap.put("image", "Please upload a file less than 2 MB.");
 			return errorMap;
 		}
+		
+		if(!ValidationUtil.isValidPhoneNumber(userPhone)) {
+			errorMap.put("phone", "Please enter a valid phone number.");
+			return errorMap;
+		}
+		
+		if(emailExists(user_id, userEmail)) {
+			errorMap.put("email", "User with this email already exists.");
+			return errorMap;
+		}
+		
+		if(numberExists(user_id, userPhone)) {
+			errorMap.put("phone", "User with this phone number already exists.");
+			return errorMap;
+		}
+		
 		return errorMap;
+
 	}
 		
 		public UserModel createUpdatedUserModel(HttpServletRequest request, String userProfile, UserModel user) {
@@ -188,7 +206,18 @@ public Map<String,String> validateUpdateForm(HttpServletRequest request) {
 		Map<String,String> errorMap=new HashMap();
 		String currentPassword=request.getParameter("currentPassword");
 		String newPassword=request.getParameter("newPassword");
+	
 		
+		if (ValidationUtil.isNullOrEmpty(currentPassword)) {
+			errorMap.put("currentPassword", "The current password is empty");
+			return errorMap;
+		}
+		
+		
+		if (ValidationUtil.isNullOrEmpty(newPassword)) {
+			errorMap.put("newPassword", "The new password is empty");
+			return errorMap;
+		}
 		
 		if (!PasswordUtil.decrypt(user.getUser_password(),user.getUser_email()).equals(currentPassword)) {
 			errorMap.put("currentPassword", "The current password does not match.");
@@ -210,6 +239,43 @@ public Map<String,String> validateUpdateForm(HttpServletRequest request) {
 			user=(UserModel)session.getAttribute("loggedInUser");
 		}
 		return false;
+	}
+	
+	
+	public Boolean emailExists(int user_id, String user_email) {
+		
+		String query="SELECT 1 FROM users WHERE user_email=? AND user_id!=? ";
+		try(PreparedStatement stmt=dbConn.prepareStatement(query)){
+			stmt.setString(1, user_email);
+			stmt.setInt(2,user_id);
+			
+			ResultSet rs=stmt.executeQuery();
+			
+			if (rs.next()) {
+				return true;
+			}
+			return false;
+		}catch (Exception e) {
+			return true;
+		}
+	}
+	
+	
+public Boolean numberExists(int user_id, String user_phone) {
+		String query="SELECT 1 FROM users WHERE user_phone=? AND user_id!=? ";
+		try(PreparedStatement stmt=dbConn.prepareStatement(query)){
+			stmt.setString(1, user_phone);
+			stmt.setInt(2,user_id);
+			
+			ResultSet rs=stmt.executeQuery();
+			
+			if (rs.next()) {
+				return true;
+			}
+			return false;
+		}catch (Exception e) {
+			return true;
+		}
 	}
 }
 
