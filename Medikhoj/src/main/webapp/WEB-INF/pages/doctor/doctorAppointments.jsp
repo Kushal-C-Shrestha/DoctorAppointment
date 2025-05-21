@@ -71,7 +71,7 @@
 			    <input type="hidden" name="appointment_id" value="<%= app.getAppointment_id() %>" />
 			    <input type="hidden" name="action" value="complete" />
 			    <textarea name="appointment_remarks" placeholder="Enter remarks..." required></textarea>
-			    <button type="submit" style="background-color:green; color:white;">Confirm</button>
+			    <button type="submit" style="background-color:green; color:white;">Completed</button>
 			</form>
 
 		</div>
