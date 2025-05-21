@@ -60,7 +60,7 @@
         <a href="${pageContext.request.contextPath}/doctorAppointments" style="margin-top: 1rem;">Cancel</a>
     </form>
 
-   
+  
 
 </body>
 </html>
