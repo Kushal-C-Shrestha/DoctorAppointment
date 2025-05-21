@@ -6,22 +6,20 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
-import com.medikhoj.model.ReviewDoctorModel;
 import com.medikhoj.service.ReviewService;
 
 /**
- * Servlet implementation class AdminReview
+ * Servlet implementation class deleteReview
  */
-@WebServlet(asyncSupported = true, urlPatterns = {"/adminReviews"})
-public class AdminReviewController extends HttpServlet {
+@WebServlet("/deleteReview")
+public class DeleteReviewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminReviewController() {
+    public DeleteReviewController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,25 +29,33 @@ public class AdminReviewController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		 	ReviewService reviewService = new ReviewService();
-	        List<ReviewDoctorModel> allReviews = reviewService.getAllDoctorReviewsForAdmin();
-	        System.out.println("Total reviews fetched: " + allReviews.size());
-	        for (ReviewDoctorModel review : allReviews) {
-	            System.out.println("User: " + review.getUser_name() + ", Doctor: " + review.getDoctor_name() + ", Rating: " + review.getReview_rating());
-	        }
-	        
-	        if (allReviews == null || allReviews.isEmpty()) {
-	    		request.setAttribute("error", "No reviews found or database is down.");
-	    	} else {
-	    		request.setAttribute("allReviews", allReviews);
-	    	}
-	        request.getRequestDispatcher("WEB-INF/pages/admin/adminReviews.jsp").forward(request, response);
-	    }
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		try {
+            int reviewId = Integer.parseInt(request.getParameter("reviewId"));
+
+            ReviewService reviewService = new ReviewService();
+            boolean isDeleted = reviewService.deleteReview(reviewId);
+
+            if (isDeleted) {
+                System.out.println("Review deleted successfully: ID = " + reviewId);
+            } else {
+                System.out.println("Failed to delete review: ID = " + reviewId);
+            }
+
+            response.sendRedirect("adminReviews");
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            response.sendRedirect("adminReviews");
+        }
 	}
+
 }

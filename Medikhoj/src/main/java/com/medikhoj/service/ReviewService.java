@@ -242,11 +242,14 @@ public class ReviewService {
 	    }
 
 	    List<ReviewDoctorModel> allReviews = new ArrayList<>();
-	    String query = "SELECT r.review_id, r.review_desc, r.review_rating, r.review_date, u.user_name " +
-	                   "FROM user_doctor_review urd " +
-	                   "JOIN reviews r ON urd.review_id = r.review_id " +
-	                   "JOIN users u ON urd.user_id = u.user_id " +
-	                   "JOIN doctors d ON urd.doctor_id = d.doctor_id";
+
+	    String query = "SELECT r.review_id, r.review_desc, r.review_rating, r.review_date, reviewer.user_name AS user_name, doctor.user_name AS doctor_name " +
+                "FROM reviews r " +
+                "JOIN user_doctor_review udr ON r.review_id = udr.review_id " +
+                "JOIN users reviewer ON udr.user_id = reviewer.user_id " +
+                "JOIN doctors d ON udr.doctor_id = d.doctor_id "+
+                "JOIN users doctor ON d.doctor_id = doctor.user_id";
+	    
 
 	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
 	    	
@@ -259,6 +262,7 @@ public class ReviewService {
 	            review.setReview_rating(rs.getFloat("review_rating"));
 	            review.setReview_date(rs.getDate("review_date").toLocalDate());
 	            review.setUser_name(rs.getString("user_name"));
+	            review.setDoctor_name(rs.getString("doctor_name"));
 	            allReviews.add(review);
 	        }
 	        return allReviews;
@@ -268,6 +272,36 @@ public class ReviewService {
 	    }
 	}
 	
+
+	public boolean deleteReview(int reviewId) {
+	    if (isConnectionError) {
+	        System.out.println("Database connection error");
+	        return false;
+	    }
+
+	    String deleteUserDoctorReview = "DELETE FROM user_doctor_review WHERE review_id = ?";
+	    String deleteReview = "DELETE FROM reviews WHERE review_id = ?";
+	    
+	    try (PreparedStatement stmt1 = dbConn.prepareStatement(deleteUserDoctorReview);
+	         PreparedStatement stmt2 = dbConn.prepareStatement(deleteReview)) {
+	        
+	        // Delete from user_doctor_review first (foreign key dependency)
+	        stmt1.setInt(1, reviewId);
+	        stmt1.executeUpdate();
+
+	        // Then delete from reviews
+	        stmt2.setInt(1, reviewId);
+	        int rowsdeleted = stmt2.executeUpdate();
+
+	        return rowsdeleted > 0;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
+
 	public List<ReviewDoctorModel> getAllDoctorReviewsForDoctor(int doctor_id) {
 		if (isConnectionError) {
 			System.out.println("Database Connection Error");
@@ -303,6 +337,7 @@ public class ReviewService {
 		return docReviews;
 	}
 	
+
 
 	
 }

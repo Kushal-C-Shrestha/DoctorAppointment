@@ -49,9 +49,8 @@ public class ReviewDoctorModel {
 	public String getUser_name() {
 		return user_name;
 	}
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
-	}
+
+		
 	
 	//new code
 	public String getDoctor_name() {
@@ -61,4 +60,11 @@ public class ReviewDoctorModel {
 	public void setDoctor_name(String doctor_name) {
 	    this.doctor_name = doctor_name;
 	}
+
+	public void setUser_name(String user_name) {
+		// TODO Auto-generated method stub
+		this.user_name = user_name;
+
+	}
+
 }

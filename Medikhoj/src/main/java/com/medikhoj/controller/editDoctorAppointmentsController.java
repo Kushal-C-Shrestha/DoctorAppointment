@@ -46,9 +46,24 @@ public class editDoctorAppointmentsController extends HttpServlet {
         AppointmentService service = new AppointmentService();
 
         if ("complete".equals(action)) {
-            service.markAppointmentCompleted(appointmentId);
+            // Validate remarks input
+            String remarks = request.getParameter("appointment_remarks");
+            if (remarks == null || remarks.trim().isEmpty()) {
+                AppointmentModel appointment = service.getAppointmentById(appointmentId);
+                List<SlotModel> slots = service.getAllSlots();
+
+                request.setAttribute("appointment", appointment);
+                request.setAttribute("slots", slots);
+                request.setAttribute("error", "Remarks are required to complete the appointment.");
+                request.getRequestDispatcher("/WEB-INF/pages/doctor/editAppointment.jsp").forward(request, response);
+                return;
+            }
+
+            //  Mark as completed with remarks
+            service.markAppointmentCompletedWithRemarks(appointmentId, remarks);
+
         } else {
-            // Get updated fields from the form
+            //  Update appointment details
             String title = request.getParameter("appointment_title");
             String type = request.getParameter("appointment_type");
             String status = request.getParameter("appointment_status");
