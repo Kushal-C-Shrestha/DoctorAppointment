@@ -55,14 +55,24 @@
         </div>
         <div class="appoint-name"><%= app.getAppointment_title() %></div>
       </div>
-      <p class="appoint-bio">Date: <%= app.getAppointment_date() %></p>
-      <p class="appoint-bio">Time Slot ID: <%= app.getAppointment_time() %></p>
-      <p class="appoint-bio">Type: <%= app.getAppointment_type() %></p>
-      <p class="appoint-bio">Status: <%= app.getAppointment_status() %></p>
+      <p class="appoint-bio"> <%= app.getAppointment_date() %></p>
+      <p class="appoint-bio"> <%= app.getFormatted_time() %></p>
+      <p class="appoint-bio"> <%= app.getAppointment_type() %></p>
+      <p class="appoint-bio"> <%= app.getAppointment_status() %></p>
       <div class="appoint-actions">
-        <button class="edit-btn">Edit</button>
-        <button class="delete-btn">Delete</button>
-      </div>
+		  <form method="get" action="${pageContext.request.contextPath}/editAppointment" style="display: inline;">
+			   <input type="hidden" name="appointment_id" value="<%= app.getAppointment_id() %>" />
+			   <button class="edit-btn" type="submit">Edit</button>
+		  </form>
+			
+		  <form method="post" action="${pageContext.request.contextPath}/editAppointment">
+			  <input type="hidden" name="appointment_id" value="<%= app.getAppointment_id() %>" />
+			  <input type="hidden" name="action" value="complete" />
+			  <button type="submit" class="complete-btn">Complete</button>
+		  </form>
+
+		</div>
+
     </div>
     <% }} else { %>
     <p style="margin: 1rem;">No appointments found.</p>

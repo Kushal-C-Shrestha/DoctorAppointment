@@ -137,7 +137,7 @@
     gap: 10px;
   }
 
-  .edit-btn, .delete-btn {
+  .edit-btn, .complete-btn {
     padding: 6px 12px;
     border-radius: 4px;
     cursor: pointer;
@@ -150,17 +150,17 @@
     color: #FFB300;
   }
 
-  .delete-btn {
+  .complete-btn {
     background-color: white;
-    border: 1px solid #FF5252;
-    color: #FF5252;
+    border: 1px solid rgb(20, 236, 8);
+    color: rgb(20, 236, 8);
   }
 
   .edit-btn:hover {
     background-color: #fff8e1;
   }
 
-  .delete-btn:hover {
+  .complete-btn:hover {
     background-color: #ffebee;
   }
 
