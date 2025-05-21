@@ -152,7 +152,7 @@ public class RegisterService {
 			return errorMap;
 		}
 		
-		return null;
+		return errorMap;
 	}
 	
 	public Boolean isUserExists(HttpServletRequest request) {

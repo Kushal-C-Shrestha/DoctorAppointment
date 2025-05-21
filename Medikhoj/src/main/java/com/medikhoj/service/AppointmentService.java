@@ -248,6 +248,52 @@ public class AppointmentService {
 		}
 		return appointments;
 	}
+	public AppointmentModel getAppointmentById(int appointmentId) {
+        String query = "SELECT * FROM appointments WHERE appointment_id=?";
+        try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+            stmt.setInt(1, appointmentId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                AppointmentModel appt = new AppointmentModel();
+                appt.setAppointment_id(rs.getInt("appointment_id"));
+                appt.setAppointment_title(rs.getString("appointment_title"));
+                appt.setAppointment_type(rs.getString("appointment_type"));
+                appt.setAppointment_status(rs.getString("appointment_status"));
+                appt.setAppointment_date(rs.getDate("appointment_date").toLocalDate());
+                appt.setAppointment_time(rs.getInt("appointment_time"));
+                return appt;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+	public boolean updateAppointment(AppointmentModel appointment) {
+        String query = "UPDATE appointments SET appointment_title=?, appointment_type=?, appointment_status=?, appointment_date=?, appointment_time=? WHERE appointment_id=?";
+        try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+            stmt.setString(1, appointment.getAppointment_title());
+            stmt.setString(2, appointment.getAppointment_type());
+            stmt.setString(3, appointment.getAppointment_status());
+            stmt.setDate(4, java.sql.Date.valueOf(appointment.getAppointment_date()));
+            stmt.setInt(5, appointment.getAppointment_time());
+            stmt.setInt(6, appointment.getAppointment_id());
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean markAppointmentCompleted(int appointmentId) {
+        String query = "UPDATE appointments SET appointment_status = 'completed' WHERE appointment_id = ?";
+        try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+            stmt.setInt(1, appointmentId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 	public List<AdminAppointmentsModel> getAllAppointmentForAdmin() {
 		if (dbConn == null) {
