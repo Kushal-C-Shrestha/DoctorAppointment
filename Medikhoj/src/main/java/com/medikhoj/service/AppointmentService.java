@@ -219,33 +219,44 @@ public class AppointmentService {
 	}
 	
 	public List<AppointmentModel> getAppointmentsForDoctor(int doctorId) {
-		if (dbConn == null) {
-			System.err.println("Database connection is not available.");
-			return null;
-		}
-		List<AppointmentModel> appointments = new ArrayList<>();
-		String query = "SELECT a.* FROM appointments a " +
-				"JOIN user_doctor_appointment uda ON a.appointment_id = uda.appointment_id " +
-				"WHERE uda.doctor_id = ?";
-		try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
-			stmt.setInt(1, doctorId);
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				AppointmentModel appointment = new AppointmentModel();
-				appointment.setAppointment_id(rs.getInt("appointment_id"));
-				appointment.setAppointment_title(rs.getString("appointment_title"));
-				appointment.setAppointment_date(rs.getDate("appointment_date").toLocalDate());
-				appointment.setAppointment_time(rs.getInt("appointment_time"));
-				appointment.setAppointment_type(rs.getString("appointment_type"));
-				appointment.setAppointment_remarks(rs.getString("appointment_remarks"));
-				appointment.setAppointment_status(rs.getString("appointment_status"));
-				appointments.add(appointment);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return appointments;
+	    if (dbConn == null) {
+	        System.err.println("Database connection is not available.");
+	        return null;
+	    }
+
+	    List<AppointmentModel> appointments = new ArrayList<>();
+	    String query = "SELECT a.*, s.slot_time FROM appointments a " +
+	                   "JOIN user_doctor_appointment uda ON a.appointment_id = uda.appointment_id " +
+	                   "JOIN slots s ON a.appointment_time = s.slot_id " +
+	                   "WHERE uda.doctor_id = ?";
+
+	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+	        stmt.setInt(1, doctorId);
+	        ResultSet rs = stmt.executeQuery();
+	        DateFormat formatter = new SimpleDateFormat("hh:mm a");
+
+	        while (rs.next()) {
+	            AppointmentModel appointment = new AppointmentModel();
+	            appointment.setAppointment_id(rs.getInt("appointment_id"));
+	            appointment.setAppointment_title(rs.getString("appointment_title"));
+	            appointment.setAppointment_date(rs.getDate("appointment_date").toLocalDate());
+	            appointment.setAppointment_time(rs.getInt("appointment_time"));
+	            appointment.setAppointment_type(rs.getString("appointment_type"));
+	            appointment.setAppointment_remarks(rs.getString("appointment_remarks"));
+	            appointment.setAppointment_status(rs.getString("appointment_status"));
+
+	            // 🟢 Set formatted time string from slot_time
+	            appointment.setFormatted_time(formatter.format(rs.getTime("slot_time")));
+
+	            appointments.add(appointment);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return appointments;
 	}
+
+	
 	public AppointmentModel getAppointmentById(int appointmentId) {
         String query = "SELECT * FROM appointments WHERE appointment_id=?";
         try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
@@ -282,16 +293,18 @@ public class AppointmentService {
             return false;
         }
     }
-    public boolean markAppointmentCompleted(int appointmentId) {
-        String query = "UPDATE appointments SET appointment_status = 'completed' WHERE appointment_id = ?";
-        try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
-            stmt.setInt(1, appointmentId);
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+	public boolean markAppointmentCompletedWithRemarks(int appointmentId, String remarks) {
+	    String query = "UPDATE appointments SET appointment_status = 'completed', appointment_remarks = ? WHERE appointment_id = ?";
+	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+	        stmt.setString(1, remarks);
+	        stmt.setInt(2, appointmentId);
+	        return stmt.executeUpdate() > 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
 
 	
 	public Map<String,String> validateAppointmentForm(HttpServletRequest request){

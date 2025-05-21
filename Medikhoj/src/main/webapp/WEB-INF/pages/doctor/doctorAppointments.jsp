@@ -65,11 +65,14 @@
 			   <button class="edit-btn" type="submit">Edit</button>
 		  </form>
 			
-		  <form method="post" action="${pageContext.request.contextPath}/editAppointment">
-			  <input type="hidden" name="appointment_id" value="<%= app.getAppointment_id() %>" />
-			  <input type="hidden" name="action" value="complete" />
-			  <button type="submit" class="complete-btn">Complete</button>
-		  </form>
+		  <button class="complete-btn" onclick="toggleRemarks(<%= app.getAppointment_id() %>)">Complete</button>
+
+			<form id="remarksForm-<%= app.getAppointment_id() %>" action="${pageContext.request.contextPath}/editAppointment" method="post" style="display:none;">
+			    <input type="hidden" name="appointment_id" value="<%= app.getAppointment_id() %>" />
+			    <input type="hidden" name="action" value="complete" />
+			    <textarea name="appointment_remarks" placeholder="Enter remarks..." required></textarea>
+			    <button type="submit" style="background-color:green; color:white;">Confirm</button>
+			</form>
 
 		</div>
 
@@ -96,6 +99,12 @@
   admindoc_menu_icon.onclick = () => {
     admindoc_menu.classList.toggle('close');
     admindoc_cont.classList.toggle('close');
+  }
+
+  
+  function toggleRemarks(id) {
+      const form = document.getElementById("remarksForm-" + id);
+      form.style.display = form.style.display === "none" ? "block" : "none";
   }
 
 

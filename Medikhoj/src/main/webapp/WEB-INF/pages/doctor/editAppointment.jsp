@@ -45,13 +45,13 @@
         <label for="appointment_type">Type:</label>
         <select name="appointment_type" id="appointment_type" required>
             <option value="online" <%= "online".equals(appointment.getAppointment_type()) ? "selected" : "" %>>Online</option>
-            <option value="in_person" <%= "in_person".equals(appointment.getAppointment_type()) ? "selected" : "" %>>In Person</option>
+            <option value="physical" <%= "physical".equals(appointment.getAppointment_type()) ? "selected" : "" %>>Physical</option>
         </select>
 
         <label for="appointment_status">Status:</label>
         <select name="appointment_status" id="appointment_status" required>
             <option value="pending" <%= "pending".equals(appointment.getAppointment_status()) ? "selected" : "" %>>Pending</option>
-            <option value="confirmed" <%= "confirmed".equals(appointment.getAppointment_status()) ? "selected" : "" %>>Confirmed</option>
+            <option value="completed" <%= "completed".equals(appointment.getAppointment_status()) ? "selected" : "" %>>completed</option>
             <option value="cancelled" <%= "cancelled".equals(appointment.getAppointment_status()) ? "selected" : "" %>>Cancelled</option>
         </select>
 
