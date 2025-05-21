@@ -428,6 +428,38 @@ body {
 .edit-button:hover {
     background-color: #365899;
 }
+.enrollment-box-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.enrollment-card {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0e0e0;
+  max-width: 100%;
+  width: 100%;
+}
+
+.enrollment-card h3 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  color: #1f2d3d;
+}
+
+.enrollment-card p {
+  margin: 0.3rem 0;
+  font-size: 1rem;
+  color: #34495e;
+}
+
+.enrollment-card p strong {
+  color: #2c3e50;
+}
 
 
 .view-button {
