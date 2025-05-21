@@ -18,7 +18,6 @@
                 <section class="profile-section">
                     <div class="profile-section__header">
                         <p>Reviews</p>
-                        <p class="rating-text">Rating: 4.5/5</p>
                     </div>
                     <div class="review-list">
                     <c:forEach var="review" items="${reviewList}">
