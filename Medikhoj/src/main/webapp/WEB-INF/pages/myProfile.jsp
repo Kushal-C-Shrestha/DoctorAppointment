@@ -305,7 +305,19 @@
 		        	    	<p>No favorite doctors</p>
 		        	    </c:when>
 		        	    <c:otherwise>
-		        	    	
+		        	    	<div class="doctor-list">
+							    <c:forEach var="favoriteList" items="${favoriteList}">
+							      <div class="doctor-card">
+							        <div class="doctor-header">
+							          <div class="doctor-name">${favoriteList.user_name}</div>
+							        </div>
+							       	<p class="appoint-bio">${favoriteList.user_email}</p>
+							       	<p class="appoint-bio">${favoriteList.user_phone}</p>
+							       	<a href="${pageContext.request.contextPath}/doctorProfile?doctorId=${favoriteList.doctor_id}">Go to profile</a>
+							      </div>
+							     </c:forEach>
+							    </div>
+							</div>		        	    	
 		        	    </c:otherwise>
         	    	</c:choose>
                     <!-- Add doctor content here -->

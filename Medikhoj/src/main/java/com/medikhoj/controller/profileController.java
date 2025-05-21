@@ -1,6 +1,7 @@
 package com.medikhoj.controller;
 
 import com.medikhoj.model.DoctorUserModel;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -74,8 +75,8 @@ public class profileController extends HttpServlet {
 		String newSection=(String)session.getAttribute("section");
 		String newSubSection=(String)session.getAttribute("subSection");
 
-		System.out.println(newSection);
-		System.out.println(newSubSection);
+//		System.out.println(newSection);
+//		System.out.println(newSubSection);
 		
 	    if (successMsg != null) {
 	        request.setAttribute("success", successMsg);
@@ -128,7 +129,6 @@ public class profileController extends HttpServlet {
 		
 		//Fetching the reviews according to user.
 		List <DoctorUserModel> favoriteList=favoriteService.getFavoritesByUser(user.getUser_id());
-		
 		
 		List <CampaignUserModel> enrollmentList=campaignsService.getEnrollmentsByUser(user.getUser_id());
 		

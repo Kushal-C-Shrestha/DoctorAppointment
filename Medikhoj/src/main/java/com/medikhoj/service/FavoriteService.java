@@ -118,32 +118,33 @@ public class FavoriteService {
 		}
 		
 		List<DoctorUserModel> favoritesByUser=new ArrayList();
-		String query="SELECT * FROM favorite f JOIN users u ON f.user_id = u.user_id  "
-				+ "WHERE u.user_id=?";
+		String query="SELECT * FROM users u JOIN favorite f ON f.doctor_id=u.user_id "
+				+ "WHERE f.user_id=?";
 		
 		try(PreparedStatement stmt=dbConn.prepareStatement(query)){
 			
 			stmt.setInt(1, user_id);			
 			ResultSet rs=stmt.executeQuery();
-					
+			
 			
 			while (rs.next()) {
 				DoctorUserModel du=new DoctorUserModel();
-				
 				du.setDoctor_id(rs.getInt("doctor_id"));
 				du.setUser_id(rs.getInt("user_id"));
 				du.setUser_name(rs.getString("user_name"));
 				du.setUser_email(rs.getString("user_email"));
 				du.setUser_phone(rs.getString("user_phone"));
-				du.setDoctor_specialization(rs.getString("doctor_specialization"));
-				du.setDoctor_qualification(rs.getString("doctor_qualification"));
-
+//				du.setDoctor_specialization(rs.getString("doctor_specialization"));
+//				du.setDoctor_qualification(rs.getString("doctor_qualification"));
+//
 
 				
 				favoritesByUser.add(du);
 			}
 			return favoritesByUser;
-		}catch (Exception e) {
+		}catch (SQLException e) {
+			e.printStackTrace();
+			System.out.print("error");
 			return null;
 			// TODO: handle exception
 		}
