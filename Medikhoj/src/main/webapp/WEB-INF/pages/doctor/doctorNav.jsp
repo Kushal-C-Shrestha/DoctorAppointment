@@ -62,7 +62,7 @@
           <h3 class="nav-section__heading">MANAGEMENT</h3>
           <ul>
             <li class="nav-link">
-              <a href="#" class="active">
+              <a href="doctorOwnProfile" class="active">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"

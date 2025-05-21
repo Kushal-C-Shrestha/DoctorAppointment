@@ -345,6 +345,7 @@
 		        	    </c:otherwise>
                     </c:choose>
         		</c:when>
+        		
 				<c:when test="${section=='details'}">
 				        <div class="page-header">
 				            <h1 class="page-title">My Details</h1>
