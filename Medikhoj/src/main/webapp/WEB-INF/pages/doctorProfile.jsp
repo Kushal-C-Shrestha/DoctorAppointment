@@ -20,7 +20,7 @@
                     <p class="dname">${doctor.user_name}</p>
                     <p class="dspecialization">${doctor.doctor_specialization}</p>
                     <p class="dqualificaiton">${doctor.doctor_qualification}</p>
-                    <p class="drating">Rating: 4.5/5</p>
+                    <p class="drating">Rating: ${doctor.doctor_rating}</p>
                 </div>
             </div>
             <div class="profile-contents">

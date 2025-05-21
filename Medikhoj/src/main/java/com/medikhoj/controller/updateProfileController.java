@@ -53,7 +53,6 @@ public class updateProfileController extends HttpServlet {
 		String newPassword=request.getParameter("newPassword");
 		
 		if (currentPassword!=null ||  newPassword!=null) {
-			System.out.println("Entered");
 			handlePasswordChange(request, response);
 			return;
 		}
@@ -118,12 +117,11 @@ public class updateProfileController extends HttpServlet {
 	        }
 	    }else {
 	    	imageUrl=user.getUser_profile();
-	    }
+	    }	
 	    
-	    int user_id=user.getUser_id();
 
 	    // 4. Create updated UserModel (pass existing image if not changed)
-	    UserModel updatedUser = updateService.createUpdatedUserModel(request, imageUrl,user_id); 
+	    UserModel updatedUser = updateService.createUpdatedUserModel(request, imageUrl,user); 
 	    if (updatedUser==null) {
 	    	System.out.println("User creation failed");
 	    	return;

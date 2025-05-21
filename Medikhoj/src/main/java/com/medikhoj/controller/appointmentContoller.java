@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -45,13 +47,13 @@ public class appointmentContoller extends HttpServlet {
 		UserService userService=new UserService();
 		AppointmentService appointmentService=new AppointmentService();
 
+		HttpSession session=request.getSession(false);
+		UserModel user=(UserModel) session.getAttribute("loggedInUser");
 		
 		int doctorId=Integer.parseInt(request.getParameter("doctor_id"));
-		int userId=Integer.parseInt(request.getParameter("user_id"));
 		
 		DoctorModel doctor=doctorService.getDoctorProfile(doctorId);
 
-		UserModel user=userService.getUser(userId);
 		UserModel doctorDetails=userService.getUser(doctorId);
 
 		
@@ -74,8 +76,11 @@ public class appointmentContoller extends HttpServlet {
 		UserService userService=new UserService();
 		AppointmentService appointmentService=new AppointmentService();
 
+		
+		HttpSession session=request.getSession(false);
+		UserModel user=(UserModel) session.getAttribute("loggedInUser");
+		
 		int doctorId=Integer.parseInt(request.getParameter("doctor_id"));
-		int userId=Integer.parseInt(request.getParameter("user_id"));
 		
 		String appointmentDateStr=request.getParameter("appointment_date");
 		Boolean dateSelected=(appointmentDateStr!=null && !appointmentDateStr.isEmpty());
@@ -87,7 +92,6 @@ public class appointmentContoller extends HttpServlet {
 		
 		
 		DoctorModel doctor=doctorService.getDoctorProfile(doctorId);
-		UserModel user=userService.getUser(userId);
 		UserModel doctorDetails=userService.getUser(doctorId);
 
 		List <SlotModel> allSlots=appointmentService.getAllSlots();
