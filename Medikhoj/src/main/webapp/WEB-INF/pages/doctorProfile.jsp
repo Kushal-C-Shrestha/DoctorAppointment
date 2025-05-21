@@ -30,7 +30,7 @@
                     <p>${doctor.doctor_about}</p>
                 </section>
                 <div class="main-action__buttons action-buttons">
-	                <form action="favourite" method="post">
+	                <form action="favourite" method="post" class="action-forms">
 					    <input type="hidden" name="favouriteState" id="favoriteState"
 					           value="${isFavorite ? 'remove' : 'add'}" />
 					    <input type="hidden" name="doctor_id" value="${doctor.doctor_id}">
@@ -46,7 +46,7 @@
 					        </c:choose>
 					    </button>
 					</form>
-	                <form action="appointment" method="get">
+	                <form action="appointment" method="get" class="action-forms">
 	                	<input type="hidden" name="doctor_id" value="${doctor.doctor_id}">
 	                	<input type="hidden" name="user_id" value="${user.user_id}">
 	                	<button class="action-btn" id="book-appointment">Book appointment</button>

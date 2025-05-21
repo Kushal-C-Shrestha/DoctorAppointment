@@ -156,7 +156,7 @@
 	                                        <p>Available time: 1:00 P.M - 3:00 P.M</p>
 	                                    </div>
 	                                </div>
-	                                <p>Reviews : 4.5/5</p>
+	                                <p>${doctor.doctor_rating}</p>
 	                            </div>
 	                        </button>
 	                    </form> 

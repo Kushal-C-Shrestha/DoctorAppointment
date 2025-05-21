@@ -85,7 +85,7 @@ main{
 
 .action-btn{
     padding: 12px 0px;
-    flex:1;
+    width:100%;
     color:#2282AF;
     background-color: transparent;
     border:none;
@@ -94,10 +94,15 @@ main{
 }
 
 .main-action__buttons{
+	display:flex;
+	width:100%;
     gap:24px;
     border: none;
 }
 
+.action-forms{
+	flex:1;
+}
 
 #mark-favorite{
     border:1.5px solid #F8459E;

@@ -56,6 +56,7 @@ public class DoctorService {
 				doctor.setDoctor_qualification(rs.getString("doctor_qualification"));
 				doctor.setDoctor_about(rs.getString("doctor_desc")); // assuming doctor_about is stored as doctor_desc in DB
 				doctor.setDoctor_experience(rs.getInt("doctor_experience"));
+				doctor.setDoctor_rating(rs.getFloat("doctor_rating"));
 
 				// UserModel fields
 				doctor.setUser_id(rs.getInt("user_id"));
@@ -281,6 +282,7 @@ public class DoctorService {
 				doctor.setDoctor_qualification(rs.getString("doctor_qualification"));
 				doctor.setDoctor_about(rs.getString("doctor_desc")); // assuming doctor_about is stored as doctor_desc in DB
 				doctor.setDoctor_experience(rs.getInt("doctor_experience"));
+				doctor.setDoctor_rating(rs.getFloat("doctor_rating"));
 
 				// UserModel fields
 				doctor.setUser_id(rs.getInt("user_id"));
