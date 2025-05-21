@@ -116,6 +116,10 @@
             background-color: #e5e7eb;
             transform: translateY(-2px);
         }
+        
+         .neutral-icon {
+            fill: var(--neutral-color);
+        }
 
         /* Responsive adjustments */
         @media (max-width: 480px) {

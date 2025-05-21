@@ -51,6 +51,22 @@ public class profileController extends HttpServlet {
 		HttpSession session=request.getSession(false);
 		if (session==null) {
 			request.getRequestDispatcher("WEB-INF/pages/login.jsp").forward(request, response);
+		}else {
+			//for popup
+			String showPopup = (String) session.getAttribute("showPopup");
+		    if ("true".equals(showPopup)) {
+		        String title = (String) session.getAttribute("popupTitle");
+		        String message = (String) session.getAttribute("popupMessage");
+
+		        request.setAttribute("showPopup", true); // pass to JSP
+		        request.setAttribute("popupTitle", title);
+		        request.setAttribute("popupMessage", message);
+
+		        // Clear the session attributes so it doesn't show again on refresh
+		        session.removeAttribute("showPopup");
+		        session.removeAttribute("popupTitle");
+		        session.removeAttribute("popupMessage");
+		    }
 		}
 
 		String successMsg=(String)session.getAttribute("success");
@@ -126,6 +142,7 @@ public class profileController extends HttpServlet {
 		request.setAttribute("enrollmentList", enrollmentList);
 
 		request.setAttribute("user",user);
+		
 		request.getRequestDispatcher("WEB-INF/pages/myProfile.jsp").forward(request, response);
 	}
 

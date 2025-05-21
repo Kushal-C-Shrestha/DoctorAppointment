@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/campaigns.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/popup.css">
 </head>
 <body>
 
@@ -60,5 +61,67 @@
             </c:choose>
         </div>
     </main>
+     <c:if test="${showPopup}">
+		<div class="modal-container show" id="modalContainer">
+		    <div class="modal">
+		        <div class="modal-icon" id="modalIcon">
+		        	<!-- Show success icon if it's a success popup -->
+			        <c:if test="${popupTitle == 'Success'}">
+			            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" class="success-icon">
+			                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+			            </svg>
+			        </c:if>
+			        
+			        <!-- Show information icon if it's an error popup -->
+			        <c:if test="${popupTitle== 'Information'}">
+			            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" class="neutral-icon">
+                			<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            			</svg>
+			        </c:if>
+			        
+			        <!-- Show error icon if it's an error popup -->
+			        <c:if test="${popupTitle== 'Error'}">
+			            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" class="error-icon">
+			                <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/>
+			            </svg>
+			        </c:if>
+		        </div>
+		        <div class="modal-title" id="modalTitle">${popupTitle}</div>
+		        <div class="modal-message" id="modalMessage">${popupMessage}</div>
+		        <div class="modal-actions">
+		            <button class="close-button" id="closeModal">Close</button>
+		        </div>
+		    </div>
+		</div>
+	</c:if>
+    <c:if test="${param.error != null}">
+        <p style="color: red;">${param.error}</p>
+    </c:if>
+	<script>
+	const modalContainer = document.getElementById('modalContainer');
+	const closeModal = document.getElementById('closeModal');
+	
+	// Function to hide the modal
+	function hideModal() {
+	    modalContainer.classList.remove('show');
+	}
+	
+	// Close modal when close button is clicked
+	closeModal.addEventListener('click', hideModal);
+	
+	// Close modal when clicking outside the modal content
+	modalContainer.addEventListener('click', (event) => {
+	    if (event.target === modalContainer) {
+	        hideModal();
+	    }
+	});
+	
+	// Close modal when pressing the ESC key
+	document.addEventListener('keydown', (event) => {
+	    if (event.key === 'Escape' && modalContainer.classList.contains('show')) {
+	        hideModal();
+	    }
+	});
+	</script>
 </body>
 </html>

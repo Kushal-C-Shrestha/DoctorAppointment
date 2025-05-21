@@ -117,6 +117,12 @@ public class CampaignsService {
 	}
 	
 	public boolean enrollUserInCampaign(int userId, int campaignId) {
+		if (isConnectionError) {
+			//Checking if there is connection with database . if not this section is triggered
+			System.out.println("Database connection error");
+			return false;
+		}
+		
 	    String sql = "INSERT INTO campaign_enrollment (campaign_id,user_id) VALUES (?, ?)";
 
 	    try (PreparedStatement stmt = dbConn.prepareStatement(sql)) {
@@ -132,6 +138,12 @@ public class CampaignsService {
 	
 	
 	public boolean isUserEnrolledInCampaign(int userId, int campaignId) {
+		if (isConnectionError) {
+			//Checking if there is connection with database . if not this section is triggered
+			System.out.println("Database connection error");
+			return false;
+		}
+		
 	    boolean isEnrolled = false;
 	    String campaignquery = "SELECT COUNT(*) FROM campaign_enrollment WHERE user_id = ? AND campaign_id = ?";
 
@@ -145,6 +157,7 @@ public class CampaignsService {
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
+	        return false;
 	    }
 	    return isEnrolled;
 	}
