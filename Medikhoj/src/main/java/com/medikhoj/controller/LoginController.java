@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.Map;
 
 import com.medikhoj.model.UserModel;
 import com.medikhoj.service.LoginService;
@@ -51,6 +52,15 @@ public class LoginController extends HttpServlet {
 	    LoginService loginService = new LoginService();
 
 	    try {
+	    	
+	    	Map<String,String> errorMap=loginService.validateLoginForm(email, password);
+	    	
+	    	if (!errorMap.isEmpty()) {
+	    		request.setAttribute("errorMap", errorMap);
+                request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+                return;
+	    	}
+	    	
 	        UserModel user = loginService.authenticateUser(email, password);
 
 	        if (user != null) {
