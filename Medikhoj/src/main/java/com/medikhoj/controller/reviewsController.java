@@ -52,6 +52,21 @@ public class reviewsController extends HttpServlet {
         HttpSession session = request.getSession(false); // don't create a new session if none exists
         if (session != null) {
             UserModel loggedInUser = (UserModel) session.getAttribute("loggedInUser");
+            //for popup
+            String showPopup = (String) session.getAttribute("showPopup");
+		    if ("true".equals(showPopup)) {
+		        String title = (String) session.getAttribute("popupTitle");
+		        String message = (String) session.getAttribute("popupMessage");
+
+		        request.setAttribute("showPopup", true); // pass to JSP
+		        request.setAttribute("popupTitle", title);
+		        request.setAttribute("popupMessage", message);
+
+		        // Clear the session attributes so it doesn't show again on refresh
+		        session.removeAttribute("showPopup");
+		        session.removeAttribute("popupTitle");
+		        session.removeAttribute("popupMessage");
+		    }
             if (loggedInUser != null) {
                 user_id = loggedInUser.getUser_id(); // get user ID from session object
             }
@@ -59,6 +74,13 @@ public class reviewsController extends HttpServlet {
 
 
         DoctorModel doctor = doctorService.getDoctorProfile(doctor_id);
+        if (doctor == null) {
+            //request.setAttribute("error", "Doctor not found or database connection error.");
+            //request.getRequestDispatcher("/errorPage.jsp").forward(request, response);
+        	response.sendRedirect("doctors?error=database+error");
+            System.out.print("Database error");
+        	return;
+        }
         UserModel user = userService.getUser(user_id);
 
         request.setAttribute("doctor", doctor);
@@ -91,33 +113,50 @@ public class reviewsController extends HttpServlet {
 		String ratingParam = request.getParameter("rating");
         String reviewText = request.getParameter("reviewText");
         String doctorIdParam = request.getParameter("doctor_id");
+        System.out.print("rat"+ratingParam);
+        System.out.print(reviewText);
+        System.out.print("id"+doctorIdParam);
         if (ratingParam == null || reviewText == null || doctorIdParam == null ||
                 ratingParam.isEmpty() || reviewText.isEmpty() || doctorIdParam.isEmpty()) {
-                response.sendRedirect("reviews?error=Missing+fields");
+                response.sendRedirect("reviews?doctor_id=" + doctorIdParam + "&error=Missing+fields");
                 return;
             }
        
         try {
         	int rating = Integer.parseInt(ratingParam);
             int doctorId = Integer.parseInt(doctorIdParam);
+            System.out.print(rating);
+            if (rating<1 || rating>5) {
+            	response.sendRedirect("reviews?doctor_id=" + doctorId + "&error=Invalid+rating");
+            	return;
+            }
             
             ReviewService reviewService = new ReviewService();
             int generatedReviewId = reviewService.submitReview(rating, reviewText);
-
+            session.setAttribute("showPopup","true");
             if (generatedReviewId > 0) {
             	boolean linked = reviewService.insertUserDoctorReview(user_id, doctorId, generatedReviewId);
             	if (linked) {
-            		response.sendRedirect("reviews?doctor_id=" + doctorId + "&success=true");
+            		//response.sendRedirect("reviews?doctor_id=" + doctorId + "&success=true");
+            		//session.setAttribute("showPopup","true");
+    				session.setAttribute("popupTitle", "Success");
+    				session.setAttribute("popupMessage", "Your review has been stored successfully.");
+    				response.sendRedirect("doctorProfile?doctorId="+ doctorId);
                 } else {
-                	response.sendRedirect("reviews?doctor_id=" + doctorId + "&error=Failed+to+link+review");
+                	session.setAttribute("popupTitle", "Error");
+		    		session.setAttribute("popupMessage", "Database error, please try again later.");
+                	response.sendRedirect("doctorProfile?doctorId="+ doctorId);
                 }
             } else {
-                response.sendRedirect("reviews?error=Could+not+submit+review");
+            	session.setAttribute("popupTitle", "Error");
+	    		session.setAttribute("popupMessage", "Database error, please try again later.");
+            	response.sendRedirect("doctorProfile?doctorId="+ doctorId);
+                //response.sendRedirect("reviews?error=Could+not+submit+review");
             }
 
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            response.sendRedirect("reviews?error=Invalid+rating");
+            response.sendRedirect("reviews?doctor_id="+ doctorIdParam + "&error=Invalid+rating");
         }
 	}
 

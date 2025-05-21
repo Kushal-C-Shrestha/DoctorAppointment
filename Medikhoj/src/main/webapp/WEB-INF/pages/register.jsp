@@ -141,7 +141,7 @@
 
         <button type="submit" class="register-btn">Register</button>
         <div class="login-link">
-          Already have an account? <a href="#">Login</a>
+          Already have an account? <a href="login">Login</a>
         </div>
       </form>
     </div>

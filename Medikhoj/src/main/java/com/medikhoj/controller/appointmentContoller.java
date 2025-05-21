@@ -124,7 +124,10 @@ public class appointmentContoller extends HttpServlet {
 			Boolean isBooked =appointmentService.bookAppointment(doctor, user, appointment);
 			if (isBooked) {
 				System.out.println("Appointment sucessfully booked");
-				request.getRequestDispatcher("WEB-INF/pages/doctors.jsp").forward(request, response);
+				session.setAttribute("showPopup","true");
+				session.setAttribute("popupTitle", "Success");
+				session.setAttribute("popupMessage", "Your appointment has been successfully booked.");
+				response.sendRedirect("doctors");
 				return;
 			}
 		}

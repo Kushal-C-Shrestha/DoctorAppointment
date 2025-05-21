@@ -73,6 +73,7 @@ public class ImageUtil {
 	 */
 	public String uploadImage(Part part, String rootPath, String saveFolder) {
 		String savePath = rootPath+File.separator+saveFolder;
+		System.out.println(savePath);
 		File fileSaveDir = new File(savePath);
 
 		// Ensure the directory exists

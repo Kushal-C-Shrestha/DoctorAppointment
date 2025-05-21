@@ -12,20 +12,29 @@
 	    <form action="${pageContext.request.contextPath}/reviews" method="post" class="review-form">
 	    	<input type="hidden" value="${doctor.doctor_id}" name="doctor_id">
 	        <label for="rating">Rating (1 to 5):</label>
-	        <input type="number" name="rating" id="rating" min="1" max="5">
+	        <input type="number" name="rating" id="rating">
 	
 	        <label for="reviewText">Your Review:</label>
 	        <textarea name="reviewText" id="reviewText" rows="4"></textarea>
 		
 	        <button type="submit" class="action-btn">Leave your review</button>
 	    </form>
-    	<c:if test="${param.success != null}">
-        	<p style="color: green;">Review submitted successfully!</p>
-	    </c:if>
-	
 	    <c:if test="${param.error != null}">
 	        <p style="color: red;">${param.error}</p>
 	    </c:if>
+	    
 	</div>
+	
+	 <script>
+    console.log("running");
+    	let input= document.getElementById('appointmentDate');
+    	console.log(input);
+    	input.addEventListener('change',()=>{
+    		if (input.value){
+    			document.getElementById('form-action').value="check";
+    			document.getElementById('appointment-form').submit();
+    		}
+    	}) 
+    </script>
 </body>
 </html>

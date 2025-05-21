@@ -95,9 +95,9 @@ public class updateProfileController extends HttpServlet {
 	
 	public void handleProfileUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		HttpSession session=request.getSession(false);
+		UserModel user=(UserModel)session.getAttribute("loggedInUser");
 	    UpdateService updateService = new UpdateService();
 		Map<String,String> errorMap= updateService.validateUpdateForm(request);
-	    UserModel user=(UserModel)session.getAttribute("loggedInUser");
 
 		ImageUtil imageUtil = new ImageUtil();
 
@@ -132,7 +132,10 @@ public class updateProfileController extends HttpServlet {
 	        System.out.println("User update failed");
 	        return;
 	    }
-	    
+	    session.setAttribute("showPopup","true");
+		session.setAttribute("popupTitle", "Success");
+		session.setAttribute("popupMessage", "Your profile has been updated successfully.");
+		
 	    session.setAttribute("section", "details");
 	    session.setAttribute("loggedInUser", updatedUser);
 

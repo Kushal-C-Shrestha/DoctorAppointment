@@ -66,7 +66,7 @@ public class RegisterController extends HttpServlet {
 		}
 		
 		if (isExists) {
-			request.setAttribute("error", "The user already exists. Enter a new email or phone number.");
+			request.setAttribute("errorMap", errorMap.put("email","User already exists. Please enter another email."));
 			request.getRequestDispatcher("WEB-INF/pages/register.jsp").forward(request, response);
 			System.out.print("User already exists");
 			return;
@@ -76,6 +76,8 @@ public class RegisterController extends HttpServlet {
 		Part userProfile=request.getPart("profile-pic");
 		String rootPath=getServletContext().getRealPath("resources/images");
 		String imageUrl=imageUtil.uploadImage(userProfile, rootPath, "uploads");
+		System.out.println(imageUrl);
+
 		
 		if (imageUrl==null) {
 			return;
@@ -92,10 +94,6 @@ public class RegisterController extends HttpServlet {
 		}
 		
 		
-
-		
-		
-
 		if (user.getUser_role().equals("doctor")) {
             DoctorModel doctor=registerService.createDoctorModel(request,user);
 
@@ -109,6 +107,6 @@ public class RegisterController extends HttpServlet {
         }
 		
 		//Redirect to the login page after user is added successfully.
-		request.getRequestDispatcher("WEB-INF/pages/login.jsp").forward(request, response);
+		response.sendRedirect("login");
 	}
 }
