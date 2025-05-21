@@ -40,6 +40,8 @@ public class doctorAppointmentsController extends HttpServlet {
         AppointmentService appointmentService = new AppointmentService();
         List<AppointmentModel> appointments = appointmentService.getAppointmentsForDoctor(user.getUser_id());
 
+        // 3. Set appointment list in request scope
+        request.setAttribute("appointments", appointments);
         // 4. Set appointments in request scope
         request.setAttribute("appointments", appointments);
 

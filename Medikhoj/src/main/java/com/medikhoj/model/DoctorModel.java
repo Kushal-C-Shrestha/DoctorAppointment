@@ -6,19 +6,22 @@ public class DoctorModel {
 	private String doctor_qualification;
 	private String doctor_about;
 	private int doctor_experience;
-	
+    private float doctor_rating;
+    private int rating_count;
 	
 	
 	public DoctorModel() {}
 	
 	public DoctorModel(int doctor_id, String doctor_specialization, String doctor_qualification, String doctor_about,
-			int doctor_experience) {
+			int doctor_experience,float doctor_rating,int rating_count) {
 		super();
 		this.doctor_id = doctor_id;
 		this.doctor_specialization = doctor_specialization;
 		this.doctor_qualification = doctor_qualification;
 		this.doctor_about = doctor_about;
 		this.doctor_experience = doctor_experience;
+		this.doctor_rating=doctor_rating;
+		this.rating_count=rating_count;
 	}
 	
 	
@@ -52,6 +55,22 @@ public class DoctorModel {
 	}
 	public void setDoctor_experience(int doctor_experience) {
 		this.doctor_experience = doctor_experience;
+	}
+
+	public float getDoctor_rating() {
+		return doctor_rating;
+	}
+
+	public void setDoctor_rating(float doctor_rating) {
+		this.doctor_rating = doctor_rating;
+	}
+
+	public int getRating_count() {
+		return rating_count;
+	}
+
+	public void setRating_count(int rating_count) {
+		this.rating_count = rating_count;
 	}
 	
 	

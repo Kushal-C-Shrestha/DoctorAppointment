@@ -71,6 +71,18 @@ public class RegisterService {
 	    }
 		
 		// You can handle profile picture later (e.g., save file
+		request.setAttribute("userName", userName);
+		request.setAttribute("userEmail", userEmail);
+		request.setAttribute("userPhone", userPhone);
+		request.setAttribute("userDob", userDobString);
+		request.setAttribute("userGender", userGender);
+		request.setAttribute("userBloodGroup", userBloodGroup);
+		request.setAttribute("userPassword", userPassword);
+		request.setAttribute("confirmPassword", confirmPassword);
+		request.setAttribute("image", userProfile);
+
+
+
 
 		
 		if (ValidationUtil.isNullOrEmpty(userName)) {
@@ -84,59 +96,63 @@ public class RegisterService {
 		}
 		
 		
-		
 		if (ValidationUtil.isNullOrEmpty(userPhone)) {
-			errorMap.put("fullName", "Please enter your phone");
+			errorMap.put("phone", "Please enter your phone");
 			return errorMap;
 		}
 		
 		if (ValidationUtil.isNullOrEmpty(userDobString)) {
-			errorMap.put("fullName", "Please enter your date of birth");
+			errorMap.put("dob", "Please enter your date of birth");
 			return errorMap;
 		}
 		
 		
 		if (ValidationUtil.isNullOrEmpty(userGender) ){
-			errorMap.put("fullName", "Please enter your gender");
+
+			errorMap.put("gender", "Please enter your gender");
 			return errorMap;
 		}
 		
 		if (ValidationUtil.isNullOrEmpty(userBloodGroup)) {
-			errorMap.put("fullName", "Please enter your bloodgrp");
+
+			errorMap.put("bloodGroup", "Please enter your bloodgrp");
 			return errorMap;
 		}
 		
 		if (ValidationUtil.isNullOrEmpty(userPassword)){
-			errorMap.put("fullName", "Please enter your password");
+
+			errorMap.put("password", "Please enter your password");
 			return errorMap;
 		}
 		
 		if (ValidationUtil.isNullOrEmpty(confirmPassword)) {
-			errorMap.put("fullName", "Please re-enter your password");
+
+			errorMap.put("confirmPassword", "Please re-enter your password");
 			return errorMap;
 		}
 		
 		if(!ValidationUtil.isValidPassword(userPassword)) {
-			errorMap.put("fullName", "Your password must be 8-25 characters and have atleast one uppercase, one lowecase, one letter and one symbol.");
+			request.setAttribute("userPassword", userPassword);
+			errorMap.put("password", "Your password must be 8-25 characters and have atleast one uppercase, one lowecase, one letter and one symbol.");
 			return errorMap;
 		}
 		
 		if (!ValidationUtil.doPasswordsMatch(userPassword,confirmPassword)) {
-			errorMap.put("fullName", "The passwords do not match.Please enter the same password.");
+			errorMap.put("confirmPassword", "The passwords do not match.Please enter the same password.");
 			return errorMap;
 		}
 		
 		if (!ValidationUtil.isValidImageType(userProfile)) {
-			errorMap.put("fullName", "The image file should be png, jpg or jpeg.");
+			errorMap.put("image", "The image file should be png, jpg or jpeg.");
 			return errorMap;
 		}
 		
 		if (!ValidationUtil.isValidImageSize(userProfile)) {
-			errorMap.put("fullName", "The image file should be less than 2 MB.");
+			errorMap.put("image", "The image file should be less than 2 MB.");
 			return errorMap;
 		}
 		
-		return null;
+		return errorMap;
 	}
 	
 	public Boolean isUserExists(HttpServletRequest request) {

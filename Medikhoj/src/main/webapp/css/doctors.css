@@ -8,6 +8,7 @@
 }
 
 main{
+	margin-top:65px;
     display: flex;
     height: 100vh;
     overflow: hidden;
@@ -52,6 +53,67 @@ main{
     display: flex;
     align-items: center;
     gap:10px;
+}
+
+/* Filter Form Button Styles */
+.filter-form button {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  width: 100%;
+}
+
+/* Filter Submit Button */
+.filter-form button[type="submit"] {
+  background-color: #4a8fe7;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter-form button[type="submit"]:hover {
+  background-color: #3a7dd2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Reset Filter Button */
+.filter-form .reset-filter {
+  background-color: #f0f0f0;
+  color: #505050;
+  border: 1px solid #e0e0e0;
+}
+
+.filter-form .reset-filter:hover {
+  background-color: #e5e5e5;
+  color: #303030;
+}
+
+/* Button Focus States */
+.filter-form button:focus {
+  outline: 2px solid #4a8fe7;
+  outline-offset: 2px;
+}
+
+/* Active/Pressed State */
+.filter-form button:active {
+  transform: translateY(1px);
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+  .filter-form button {
+    padding: 12px 16px;
+    font-size: 16px;
+  }
+  
+  /* Add some spacing between buttons on small screens */
+  .filter-form .reset-filter {
+    margin-bottom: 8px;
+  }
 }
 
 
@@ -138,12 +200,12 @@ main{
 	cursor:pointer;
 
     .doctor-image{
-        img{
-        	height: 80px;
-	        width: 80px;
-	        border-radius: 50%;
-	        border: 1px solid black;
-        }
+       	height: 80px;
+        width: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        
+        
     }
 
     .doctor-info{

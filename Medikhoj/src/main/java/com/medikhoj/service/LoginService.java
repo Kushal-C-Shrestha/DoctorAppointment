@@ -3,8 +3,11 @@ package com.medikhoj.service;
 import com.medikhoj.config.DbConfig;
 import com.medikhoj.model.UserModel;
 import com.medikhoj.util.PasswordUtil;
+import com.medikhoj.util.ValidationUtil;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginService {
 	
@@ -40,6 +43,7 @@ public class LoginService {
             if (rs.next()) {	
                 // User exists , now check password.
             	String storedPassword = rs.getString("user_password");
+            	System.out.println(storedPassword);
             	
             	if (!email.contains("@")) {
             		String mailQuery = "SELECT user_email FROM users WHERE user_phone= ?";
@@ -66,7 +70,6 @@ public class LoginService {
                      user.setUser_gender(rs.getString("user_gender"));
                      user.setUser_bloodgroup(rs.getString("user_bloodgroup"));
                      user.setUser_role(rs.getString("user_role"));
-
                      user.setUser_password(storedPassword);
                      user.setUser_profile(rs.getString("user_profile"));
                      return user; 
@@ -81,5 +84,53 @@ public class LoginService {
             return null;
         }
     }
-    
+
+	public Map<String, String> validateLoginForm(String emailOrPhone, String password) {
+	    Map<String, String> errorMap = new HashMap<>();
+
+	    if (ValidationUtil.isNullOrEmpty(emailOrPhone)) {
+	        errorMap.put("email", "Please enter your email or phone.");
+	        return errorMap;
+	    }
+
+	    if (ValidationUtil.isNullOrEmpty(password)) {
+	        errorMap.put("password", "Please enter your password.");
+	        return errorMap;
+	    }
+
+	    // Check if user exists
+	    String query = "SELECT * FROM users WHERE user_email = ? OR user_phone = ?";
+	    if (isConnectionError) {
+	        errorMap.put("general", "Database connection error. Please try again later.");
+	        return errorMap;
+	    }
+
+	    try (PreparedStatement statement = dbConn.prepareStatement(query)) {
+	        statement.setString(1, emailOrPhone);
+	        statement.setString(2, emailOrPhone);
+	        ResultSet rs = statement.executeQuery();
+
+	        if (rs.next()) {
+	            // User exists, now check password
+	            String storedPassword = rs.getString("user_password");
+	            String actualEmail = rs.getString("user_email");
+
+	            if (!password.equals(PasswordUtil.decrypt(storedPassword, actualEmail))) {
+	                errorMap.put("password", "Incorrect password.");
+	                return errorMap;
+	            }
+
+	        } else {
+	            errorMap.put("email", "No user found with this email or phone.");
+	            return errorMap;
+	        }
+	        return errorMap;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        errorMap.put("general", "An error occurred while accessing the database.");
+	        return errorMap;
+	    }
+	    
+	}
 }

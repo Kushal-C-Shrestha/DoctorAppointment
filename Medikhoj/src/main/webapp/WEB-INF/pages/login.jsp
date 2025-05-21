@@ -19,18 +19,28 @@
             Skip the long queues, book your appointment in seconds,and get the care you deserve!
           </p>
 
-          <form action="#" method="post">
+          <form action="login" method="post">
             <!-- Email -->
                 <div class="input-group full-width">
-                  <input type="email" name="email" placeholder="Email address" required />
-                   <i class="fas fa-envelope"></i>
+	                <div class="input-wrapper">
+	                	<input name="email" placeholder="Email address or phone" value="${param.email}"/>
+	                   	<i class="fas fa-envelope"></i>
+	                </div>
+                   <c:if test="${not empty errorMap['email']}">
+                   		<p class="error-message">${errorMap['email']}</p>
+                   </c:if>
                 </div>
 
             <!-- Password -->
              <div class="input-group full-width">
-                <input type="password" id="password" name="password" placeholder="Password" required />
-                <i class="fas fa-lock"></i>
-                <i class="fas fa-eye-slash toggle-password" onclick="togglePassword(this, 'password')"></i>
+             	 <div class="input-wrapper">
+             	 	 <input type="password" id="password" name="password" placeholder="Password"  value="${param.password}"/>
+		             <i class="fas fa-lock"></i>
+		             <i class="fas fa-eye-slash toggle-password" onclick="togglePassword(this, 'password')"></i>
+             	 </div>
+             	 <c:if test="${not empty errorMap['password']}">
+                   		<p class="error-message">${errorMap['password']}</p>
+                   </c:if>
               </div> 
 
              <div class="forgot-link">
@@ -40,7 +50,7 @@
             <button type="submit" class="register-btn">Login</button>
 
             <div class="login-link">
-              Not a member? <a href="register.html">Register Now</a>
+              Not a member? <a href="register">Register Now</a>
             </div>
           </form>
         </div>

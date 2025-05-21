@@ -176,11 +176,25 @@ public class ReviewService {
             return false;
         }
 		String sql1 = "INSERT INTO user_doctor_review (user_id, doctor_id, review_id) VALUES (?, ?, ?)";
-	    try (PreparedStatement ps=dbConn.prepareStatement(sql1)) {
-	        ps.setInt(1, userId);
-	        ps.setInt(2, doctorId);
-	        ps.setInt(3, reviewId);
-	        return ps.executeUpdate() > 0;
+		String sql2 = "UPDATE doctors d JOIN (SELECT udr.doctor_id, AVG(r.review_rating) AS avg_rating, COUNT(*) AS review_count FROM user_doctor_review udr JOIN reviews r ON udr.review_id = r.review_id GROUP BY udr.doctor_id) stats ON d.doctor_id = stats.doctor_id SET d.doctor_rating = stats.avg_rating, d.review_count = stats.review_count WHERE d.doctor_id = ?"; 
+	    try (PreparedStatement ps1=dbConn.prepareStatement(sql1);
+	    	PreparedStatement ps2=dbConn.prepareStatement(sql2)) {
+	        ps1.setInt(1, userId);
+	        ps1.setInt(2, doctorId);
+	        ps1.setInt(3, reviewId);
+	        int insertedRows= ps1.executeUpdate();
+//	        return ps.executeUpdate() > 0;
+	        if (insertedRows>0) {
+        		ps2.setInt(1, doctorId);
+                int updatedRows = ps2.executeUpdate();
+                if (updatedRows > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        return false;
@@ -228,6 +242,7 @@ public class ReviewService {
 	    }
 
 	    List<ReviewDoctorModel> allReviews = new ArrayList<>();
+<<<<<<< HEAD
 	    String query = "SELECT r.review_id, r.review_desc, r.review_rating, r.review_date, reviewer.user_name AS user_name, doctor.user_name AS doctor_name " +
                 "FROM reviews r " +
                 "JOIN user_doctor_review udr ON r.review_id = udr.review_id " +
@@ -235,8 +250,17 @@ public class ReviewService {
                 "JOIN doctors d ON udr.doctor_id = d.doctor_id "+
                 "JOIN users doctor ON d.doctor_id = doctor.user_id";
 	    
+=======
+	    String query = "SELECT r.review_id, r.review_desc, r.review_rating, r.review_date, u.user_name " +
+	                   "FROM user_doctor_review urd " +
+	                   "JOIN reviews r ON urd.review_id = r.review_id " +
+	                   "JOIN users u ON urd.user_id = u.user_id " +
+	                   "JOIN doctors d ON urd.doctor_id = d.doctor_id";
+>>>>>>> branch 'main' of https://github.com/Kushal-C-Shrestha/DoctorAppointment.git
 
 	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+	    	
+	    	
 	        ResultSet rs = stmt.executeQuery();
 	        while (rs.next()) {
 	        	ReviewDoctorModel review = new ReviewDoctorModel();
@@ -255,6 +279,7 @@ public class ReviewService {
 	    }
 	}
 	
+<<<<<<< HEAD
 	public boolean deleteReview(int reviewId) {
 	    if (isConnectionError) {
 	        System.out.println("Database connection error");
@@ -283,6 +308,43 @@ public class ReviewService {
 	    }
 	}
 
+=======
+	public List<ReviewDoctorModel> getAllDoctorReviewsForDoctor(int doctor_id) {
+		if (isConnectionError) {
+			System.out.println("Database Connection Error");
+			return null;
+		}
+		
+		List<ReviewDoctorModel> docReviews = new ArrayList<>();
+		String query =  "SELECT r.review_id, r.review_desc, r.review_rating, r.review_date, " +
+                "       u.user_name " +  // optional: include doctor_name
+                "FROM   user_doctor_review urd " +
+                "JOIN   reviews  r ON urd.review_id = r.review_id " +
+                "JOIN   users    u ON urd.user_id   = u.user_id " +
+                "JOIN   doctors  d ON urd.doctor_id = d.doctor_id " +
+                "WHERE  d.doctor_id = ? " +
+                "ORDER BY r.review_date DESC";
+		
+		try(PreparedStatement stmt = dbConn.prepareStatement(query)){
+			
+			stmt.setInt(1, doctor_id);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				 ReviewDoctorModel rd = new ReviewDoctorModel();
+		            rd.setReview_id(rs.getInt("review_id"));
+		            rd.setReview_desc(rs.getString("review_desc"));
+		            rd.setReview_rating(rs.getFloat("review_rating"));
+		            rd.setReview_date(rs.getDate("review_date").toLocalDate());
+		            rd.setUser_name(rs.getString("user_name"));
+		            docReviews.add(rd);
+		        }
+			}catch(SQLException e) {
+				e.printStackTrace();
+		}
+		return docReviews;
+	}
+	
+>>>>>>> branch 'main' of https://github.com/Kushal-C-Shrestha/DoctorAppointment.git
 
 	
 }

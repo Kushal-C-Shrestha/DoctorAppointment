@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import com.medikhoj.service.CampaignsService;
 import com.medikhoj.util.CookieUtil;
@@ -34,11 +36,29 @@ public class campaignsController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session=request.getSession(false);
 		CampaignsService campaignService=new CampaignsService();
 		List <CampaignModel> campaigns=campaignService.getAllCampaigns();
 		
 		if (campaigns==null) {
 			request.setAttribute("error", "Database is down. Please try again in a few minutes.");
+		}
+		
+		if(session!=null) {
+			String showPopup = (String) session.getAttribute("showPopup");
+		    if ("true".equals(showPopup)) {
+		        String title = (String) session.getAttribute("popupTitle");
+		        String message = (String) session.getAttribute("popupMessage");
+
+		        request.setAttribute("showPopup", true); // pass to JSP
+		        request.setAttribute("popupTitle", title);
+		        request.setAttribute("popupMessage", message);
+
+		        // Clear the session attributes so it doesn't show again on refresh
+		        session.removeAttribute("showPopup");
+		        session.removeAttribute("popupTitle");
+		        session.removeAttribute("popupMessage");
+		    }
 		}
 		
 		request.setAttribute("campaigns", campaigns);
@@ -50,7 +70,8 @@ public class campaignsController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		UserModel user = (UserModel) SessionUtil.getAttribute(request, "loggedInUser");
+		HttpSession session=request.getSession(false);
+		UserModel user = (UserModel) session.getAttribute("loggedInUser");
 		if (user != null) {
 			String userRole = user.getUser_role();
 
@@ -74,17 +95,24 @@ public class campaignsController extends HttpServlet {
 	
 		        CampaignsService service = new CampaignsService();
 		        boolean alreadyEnrolled = service.isUserEnrolledInCampaign(userId, campaignId);
+		        session.setAttribute("showPopup","true");
 		        if (alreadyEnrolled) {
 		            // If user is already enrolled, redirect to campaigns page with a message
-		            response.sendRedirect("campaigns?error=alreadyEnrolled");
+		    		session.setAttribute("popupTitle", "Information");
+		    		session.setAttribute("popupMessage", "You are already enrolled this campaign.");
+		    		response.sendRedirect("campaigns");
 		            return;
 		        }
 		        boolean enrolled = service.enrollUserInCampaign(userId, campaignId);
 	
 		        if (enrolled) {
-		            response.sendRedirect("campaigns?success=true");
+		    		session.setAttribute("popupTitle", "Success");
+		    		session.setAttribute("popupMessage", "Your have been enrolled to the campaign successfully.");
+		    		response.sendRedirect("campaigns");
 		        } else {
-		            response.sendRedirect("campaigns?error=enrollmentFailed");
+		    		session.setAttribute("popupTitle", "Error");
+		    		session.setAttribute("popupMessage", "Database error, please try again later.");
+		    		response.sendRedirect("campaigns");
 		        }
 		    } catch (NumberFormatException e) {
 		        System.err.println("[ERROR] Invalid ID format:");

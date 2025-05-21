@@ -171,7 +171,6 @@ form {
 
 /* Error messages */
 .error-message {
-  display: none;
   color: red;
   font-size: 13px;
   margin-top: 5px;

@@ -106,26 +106,28 @@ public Map<String,String> validateUpdateForm(HttpServletRequest request) {
 		return errorMap;
 	}
 		
-		public UserModel createUpdatedUserModel(HttpServletRequest request, String userProfile, int user_id) {
+		public UserModel createUpdatedUserModel(HttpServletRequest request, String userProfile, UserModel user) {
 		    String userName = request.getParameter("fullName");
 		    String userEmail = request.getParameter("email");
 		    String userPhone = request.getParameter("phone");
 		    LocalDate userDob = LocalDate.parse(request.getParameter("dob"));
 		    String userGender = request.getParameter("gender");
 		    String userBloodGroup = request.getParameter("bloodGroup");
-		    int userId = user_id;
+		    int userId = user.getUser_id();
 		
-		    UserModel user = new UserModel();
-		    user.setUser_id(userId);
-		    user.setUser_name(userName);
-		    user.setUser_email(userEmail);
-		    user.setUser_phone(userPhone);
-		    user.setUser_gender(userGender);
-		    user.setUser_bloodgroup(userBloodGroup);
-		    user.setUser_dob(userDob);
-		    user.setUser_profile(userProfile);
+		    UserModel newUser = new UserModel();
+		    newUser.setUser_id(userId);
+		    newUser.setUser_name(userName);
+		    newUser.setUser_email(userEmail);
+		    newUser.setUser_phone(userPhone);
+		    newUser.setUser_gender(userGender);
+		    newUser.setUser_bloodgroup(userBloodGroup);
+		    newUser.setUser_dob(userDob);
+		    newUser.setUser_role(user.getUser_role());
+		    newUser.setUser_password(user.getUser_password());
+		    newUser.setUser_profile(userProfile);
 		
-		    return user;
+		    return newUser;
 		}
 
 	

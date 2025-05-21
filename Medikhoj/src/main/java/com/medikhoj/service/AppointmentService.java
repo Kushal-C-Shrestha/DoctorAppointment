@@ -1,6 +1,7 @@
 package com.medikhoj.service;
 
 import com.medikhoj.model.SlotModel;
+import com.medikhoj.model.UserDoctorAppointment;
 import com.medikhoj.model.UserModel;
 import com.medikhoj.util.ValidationUtil;
 
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
 
 import com.medikhoj.config.DbConfig;
 import com.medikhoj.controller.campaignsController;
+import com.medikhoj.model.AdminAppointmentsModel;
 import com.medikhoj.model.AppointmentModel;
 import com.medikhoj.model.DoctorAppointmentModel;
 import com.medikhoj.model.DoctorModel;
@@ -219,34 +221,129 @@ public class AppointmentService {
 	}
 	
 	public List<AppointmentModel> getAppointmentsForDoctor(int doctorId) {
+	    if (dbConn == null) {
+	        System.err.println("Database connection is not available.");
+	        return null;
+	    }
+
+	    List<AppointmentModel> appointments = new ArrayList<>();
+	    String query = "SELECT a.*, s.slot_time FROM appointments a " +
+	                   "JOIN user_doctor_appointment uda ON a.appointment_id = uda.appointment_id " +
+	                   "JOIN slots s ON a.appointment_time = s.slot_id " +
+	                   "WHERE uda.doctor_id = ?";
+
+	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+	        stmt.setInt(1, doctorId);
+	        ResultSet rs = stmt.executeQuery();
+	        DateFormat formatter = new SimpleDateFormat("hh:mm a");
+
+	        while (rs.next()) {
+	            AppointmentModel appointment = new AppointmentModel();
+	            appointment.setAppointment_id(rs.getInt("appointment_id"));
+	            appointment.setAppointment_title(rs.getString("appointment_title"));
+	            appointment.setAppointment_date(rs.getDate("appointment_date").toLocalDate());
+	            appointment.setAppointment_time(rs.getInt("appointment_time"));
+	            appointment.setAppointment_type(rs.getString("appointment_type"));
+	            appointment.setAppointment_remarks(rs.getString("appointment_remarks"));
+	            appointment.setAppointment_status(rs.getString("appointment_status"));
+
+	            // 🟢 Set formatted time string from slot_time
+	            appointment.setFormatted_time(formatter.format(rs.getTime("slot_time")));
+
+	            appointments.add(appointment);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return appointments;
+	}
+
+	
+	public AppointmentModel getAppointmentById(int appointmentId) {
+        String query = "SELECT * FROM appointments WHERE appointment_id=?";
+        try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+            stmt.setInt(1, appointmentId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                AppointmentModel appt = new AppointmentModel();
+                appt.setAppointment_id(rs.getInt("appointment_id"));
+                appt.setAppointment_title(rs.getString("appointment_title"));
+                appt.setAppointment_type(rs.getString("appointment_type"));
+                appt.setAppointment_status(rs.getString("appointment_status"));
+                appt.setAppointment_date(rs.getDate("appointment_date").toLocalDate());
+                appt.setAppointment_time(rs.getInt("appointment_time"));
+                return appt;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+	public boolean updateAppointment(AppointmentModel appointment) {
+        String query = "UPDATE appointments SET appointment_title=?, appointment_type=?, appointment_status=?, appointment_date=?, appointment_time=? WHERE appointment_id=?";
+        try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+            stmt.setString(1, appointment.getAppointment_title());
+            stmt.setString(2, appointment.getAppointment_type());
+            stmt.setString(3, appointment.getAppointment_status());
+            stmt.setDate(4, java.sql.Date.valueOf(appointment.getAppointment_date()));
+            stmt.setInt(5, appointment.getAppointment_time());
+            stmt.setInt(6, appointment.getAppointment_id());
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+	public boolean markAppointmentCompletedWithRemarks(int appointmentId, String remarks) {
+	    String query = "UPDATE appointments SET appointment_status = 'completed', appointment_remarks = ? WHERE appointment_id = ?";
+	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+	        stmt.setString(1, remarks);
+	        stmt.setInt(2, appointmentId);
+	        return stmt.executeUpdate() > 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
+
+	public List<AdminAppointmentsModel> getAllAppointmentForAdmin() {
 		if (dbConn == null) {
 			System.err.println("Database connection is not available.");
 			return null;
 		}
-		List<AppointmentModel> appointments = new ArrayList<>();
-		String query = "SELECT a.* FROM appointments a " +
-				"JOIN user_doctor_appointment uda ON a.appointment_id = uda.appointment_id " +
-				"WHERE uda.doctor_id = ?";
-		try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
-			stmt.setInt(1, doctorId);
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				AppointmentModel appointment = new AppointmentModel();
-				appointment.setAppointment_id(rs.getInt("appointment_id"));
-				appointment.setAppointment_title(rs.getString("appointment_title"));
-				appointment.setAppointment_date(rs.getDate("appointment_date").toLocalDate());
-				appointment.setAppointment_time(rs.getInt("appointment_time"));
-				appointment.setAppointment_type(rs.getString("appointment_type"));
-				appointment.setAppointment_remarks(rs.getString("appointment_remarks"));
-				appointment.setAppointment_status(rs.getString("appointment_status"));
-				appointments.add(appointment);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return appointments;
-	}
+        List<AdminAppointmentsModel> AdminAppointmentsList = new ArrayList<>();
 
+        String sql = "SELECT a.appointment_id, a.appointment_title, a.appointment_date, a.appointment_time, a.appointment_status, u.user_name AS UserName, d.user_name AS DoctorName "
+        		+ "FROM appointments a "
+        		+ "JOIN user_doctor_appointment uda ON a.appointment_id = uda.appointment_id "
+        		+ "JOIN users u ON uda.user_id = u.user_id "
+        		+ "JOIN users d ON uda.doctor_id = d.user_id "
+        		+ "ORDER BY a.appointment_date DESC";
+
+        try (PreparedStatement ps = dbConn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                AdminAppointmentsModel details = new AdminAppointmentsModel();
+                details.setAppointmentId(rs.getInt("appointment_id"));
+                details.setAppointmentTitle(rs.getString("appointment_title"));
+                details.setAppointmentDate(rs.getString("appointment_date")); // format as needed
+                details.setAppointmentTime(rs.getString("appointment_time"));
+                details.setAppointmentStatus(rs.getString("appointment_status"));
+                details.setUserName(rs.getString("UserName"));
+                details.setDoctorName(rs.getString("DoctorName"));
+
+                AdminAppointmentsList.add(details);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return AdminAppointmentsList;
+    }
+	
 	
 	public Map<String,String> validateAppointmentForm(HttpServletRequest request){
 		String appointmentTitle=request.getParameter("appointment_title");
