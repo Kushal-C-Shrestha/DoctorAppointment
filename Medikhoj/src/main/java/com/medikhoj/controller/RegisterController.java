@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import jakarta.servlet.annotation.MultipartConfig;
 
@@ -45,6 +46,7 @@ public class RegisterController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session=request.getSession(false);
 		System.out.println("Entered post ");
 		RegisterService registerService=new RegisterService();
 		ImageUtil imageUtil=new ImageUtil();
@@ -87,26 +89,37 @@ public class RegisterController extends HttpServlet {
 		UserModel user=registerService.createUserModel(request,imageUrl);
 		
 		//Adding the user to the database.
-		Boolean userAdded=registerService.addUser(user);
+		Integer userId=registerService.addUser(user);
 		
-		if (!userAdded) {
+		if (userId==null) {
 			return;
 		}
 		
+		user.setUser_id(userId);
 		
 		if (user.getUser_role().equals("doctor")) {
             DoctorModel doctor=registerService.createDoctorModel(request,user);
-
+            doctor.setDoctor_id(userId);
+            
             if (doctor!=null) {
                 Boolean isAdded=registerService.addDoctor(doctor);
                 if (!isAdded) {
-                    return;
+                	session.setAttribute("showPopup","true");
+            		session.setAttribute("popupTitle", "Error");
+            		session.setAttribute("popupMessage", "Database error, please try again later");
+                	response.sendRedirect("adminDoctor");
+                	return;
+                }else {
+                	session.setAttribute("showPopup","true");
+            		session.setAttribute("popupTitle", "Success");
+            		session.setAttribute("popupMessage", "Doctor has been added sucessfully");
+                	response.sendRedirect("adminDoctor");
+                	return;
                 }
             }
-            return;
         }
 		
-		//Redirect to the login page after user is added successfully.
-		response.sendRedirect("login");
+//		//Redirect to the login page after user is added successfully.
+//		response.sendRedirect("login");
 	}
 }

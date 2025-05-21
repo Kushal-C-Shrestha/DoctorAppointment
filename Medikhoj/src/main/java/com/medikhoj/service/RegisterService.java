@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -206,16 +207,16 @@ public class RegisterService {
 		return user;
 	}
 	
-	public Boolean addUser(UserModel newUser) {
+	public Integer addUser(UserModel newUser) {
 		if (dbConn == null) {
 			System.err.println("Database connection is not available.");
-			return false;
+			return null;
 		}
 		
 		String insertQuery = "INSERT INTO users (user_name, user_email, user_phone, user_password, user_dob, user_gender, user_bloodgroup, user_role,user_profile) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
 
-		try (PreparedStatement stmt = dbConn.prepareStatement(insertQuery)) {
+		try (PreparedStatement stmt = dbConn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
 
 			stmt.setString(1, newUser.getUser_name()); // user_name
 	        stmt.setString(2, newUser.getUser_email()); // user_email
@@ -227,11 +228,19 @@ public class RegisterService {
 	        stmt.setString(8, newUser.getUser_role()); // user_role
 	        stmt.setString(9, newUser.getUser_profile());
 
-			return stmt.executeUpdate() > 0;
+	        int affectedRows = stmt.executeUpdate();
+			if (affectedRows > 0) {
+				try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+					if (generatedKeys.next()) {
+						return generatedKeys.getInt(1); // Return user_id
+					}
+				}
+			}
+			return null;
 		} catch (SQLException e) {
 			System.err.println("Error during user registration: " + e.getMessage());
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 	}
 	
@@ -284,6 +293,10 @@ public class RegisterService {
 		try (PreparedStatement stmt = dbConn.prepareStatement(insertQuery)) {
 			stmt.setInt(1, doctor.getDoctor_id());
 			stmt.setString(2, doctor.getDoctor_specialization());
+			stmt.setString(2, doctor.getDoctor_specialization());
+			stmt.setString(3, doctor.getDoctor_qualification());
+			stmt.setInt(4, doctor.getDoctor_experience());
+			stmt.setString(5," ");
 			return stmt.executeUpdate() > 0;
 		} catch (SQLException e) {
 			System.err.println("Error during user registration: " + e.getMessage());
