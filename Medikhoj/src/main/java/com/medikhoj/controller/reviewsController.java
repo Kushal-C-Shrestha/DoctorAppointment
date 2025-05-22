@@ -147,7 +147,7 @@ public class reviewsController extends HttpServlet {
             
             ReviewService reviewService = new ReviewService();
             int generatedReviewId = reviewService.submitReview(rating, reviewText);
-            session.setAttribute("showPopup","true");
+            session.setAttribute("showPopup",true);
             if (generatedReviewId > 0) {
             	boolean linked = reviewService.insertUserDoctorReview(user_id, doctorId, generatedReviewId);
             	if (linked) {

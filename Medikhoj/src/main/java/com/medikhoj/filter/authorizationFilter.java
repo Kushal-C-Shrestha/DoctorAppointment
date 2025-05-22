@@ -66,7 +66,7 @@ public class authorizationFilter extends HttpFilter implements Filter {
 //		    String userRole = CookieUtil.getCookie(req, "user_role");
 	        // Admin access
 	        if (uri.endsWith("/dashboard") || uri.endsWith("/addCampaign") || uri.endsWith("/adminUser") || uri.endsWith("/addDoctor") || uri.endsWith("/adminNav") ||
-	        	uri.endsWith("/adminDoctor") || uri.endsWith("/adminAppointments") || uri.endsWith("/adminReviews") || uri.endsWith("/adminDoctor")){
+	        	uri.endsWith("/adminDoctor") || uri.endsWith("/adminAppointments") || uri.endsWith("/adminReviews") || uri.endsWith("/adminDoctor") || uri.endsWith("/editAdminDoctor")){
 	            if ("admin".equals(userRole)) {
 	                chain.doFilter(request, response);
 	            } else {
