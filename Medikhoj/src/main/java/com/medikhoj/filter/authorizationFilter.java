@@ -76,7 +76,7 @@ public class authorizationFilter extends HttpFilter implements Filter {
 	        }
 
 	        // User-only pages
-	        if (uri.endsWith("/profile") || uri.endsWith("/appointment") || uri.endsWith("/leaveReviews") || uri.endsWith("/favourite")){
+	        if (uri.endsWith("/profile") || uri.endsWith("/appointment") || uri.endsWith("/leaveReviews") || uri.endsWith("/favourite") || uri.endsWith("/myProfile")){
 	            if ("user".equals(userRole)) {
 	                chain.doFilter(request, response);
 	            } else {

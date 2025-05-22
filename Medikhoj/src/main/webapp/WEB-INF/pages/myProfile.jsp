@@ -304,6 +304,7 @@
 							       	<p class="appoint-bio">${favoriteList.user_phone}</p>
 							       	<a href="${pageContext.request.contextPath}/doctorProfile?doctorId=${favoriteList.doctor_id}">Go to profile</a>
 							      </div>
+							      <br>
 							     </c:forEach>
 							    </div>
 							</div>		        	    	
