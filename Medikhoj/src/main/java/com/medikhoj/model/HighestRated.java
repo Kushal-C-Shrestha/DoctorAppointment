@@ -32,6 +32,4 @@ public class HighestRated {
 	public void setDoctor_rating(float doctor_rating) {
 		this.doctor_rating = doctor_rating;
 	}
-	
-	
 }

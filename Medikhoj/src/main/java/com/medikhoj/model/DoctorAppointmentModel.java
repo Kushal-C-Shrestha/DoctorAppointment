@@ -112,8 +112,5 @@ public class DoctorAppointmentModel {
 
 	public void setSlot_time(LocalTime slot_time) {
 		this.slot_time = slot_time;
-	}
-	
-	
-	
+	}	
 }

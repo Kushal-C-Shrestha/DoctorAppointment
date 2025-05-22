@@ -331,7 +331,36 @@
 		        	    	<p>No reviews</p>	
 		        	    </c:when>
 		        	    <c:otherwise>
-		        	    	
+		        	    	<form class="doctor-card">
+	                    	<input type="hidden" name="doctorId" value="${doctor.doctor_id}">
+	                        <button class="doctor">
+	                            <img src="${pageContext.request.contextPath}/resources/images/uploads/${doctor.user_profile}" alt="" class="doctor-image">
+	                            <div class="doctor-info">
+	                                <p>${doctor.user_name}</p>
+	                                <p>${doctor.doctor_specialization}</p>
+	                                <div class="doctor-availability">
+	                                    <div class="available-date availability-info">
+	                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" 
+	                                        stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-icon 
+	                                        lucide-calendar"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/>
+	                                        </svg>
+	
+	                                        <p>Available dates: Monday-Friday </p>
+	                                    </div>
+	                                    <div class="available-time availability-info" >
+	                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" 
+	                                        stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" 
+	                                        class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/>
+	                                        <polyline points="12 6 12 12 16 14"/>
+	                                        </svg>
+	                                        <p>Available time: 1:00 P.M - 3:00 P.M</p>
+	                                    </div>
+	                                </div>
+	                                <p>Reviews : 4.5/5</p>
+	                            </div>
+	                        </button>
+	                    </form> 
+	                    <h1>cqc</h1>
 		        	    </c:otherwise>
                     </c:choose>
                     	

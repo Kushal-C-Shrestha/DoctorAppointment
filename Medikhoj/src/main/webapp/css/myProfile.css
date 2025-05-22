@@ -320,34 +320,8 @@ body {
     margin-right: 5px;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-    .appointments-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    }
-}
 
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
-    
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        padding: 15px 0;
-    }
-    
-    .main-content {
-        margin-left: 0;
-        padding: 20px;
-    }
-    
-    .appointments-grid {
-        grid-template-columns: 1fr;
-    }
-}
+
 
 /* Add these styles to your myProfile.css file */
 
@@ -602,4 +576,61 @@ select.error {
 
 .save-button:hover {
     background-color: #365899;
+}
+
+.doctor-card__container{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    border-bottom: 1px solid black;
+    padding: 24px 0px;
+}
+
+
+
+.doctor-card{
+    flex: 1;
+}
+
+
+
+.doctor{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+	cursor:pointer;
+
+    .doctor-image{
+       	height: 80px;
+        width: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        
+        
+    }
+
+    .doctor-info{
+        padding:0px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex:1 ;
+        align-items: flex-start;
+
+        .doctor-availability{
+            display: flex;
+            align-items: center;
+            gap: 16px;
+
+            .availability-info{
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+        }
+    }
+    
 }

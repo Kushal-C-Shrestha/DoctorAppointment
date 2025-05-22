@@ -14,6 +14,13 @@ main{
     overflow: hidden;
 }
 
+.modal-container {
+    display: none;
+}
+.modal-container.show {
+    display: flex; /* or block */
+}
+
 .filter{
     width: 300px;
     height: 100vh;
@@ -251,6 +258,94 @@ main{
         background-color: #007065;
         transition: all 0.3s ease-in-out;
     }
-
-
 }
+
+
+@media (max-width: 1115px) {
+
+  /* 1️⃣  Global layout swap  */
+  main {
+    flex-direction: column;      /* sidebar → top  */
+    height: auto;                /* let page grow   */
+  }
+
+  /* 2️⃣  Filter section  */
+  .filter {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #E0E0E0;
+    padding: 16px 24px;
+  }
+
+  /*  ─ Toggle button (appears only at ≤1115px) ─ */
+  .filter-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  .filter-heading::after {
+    content: '▼';
+    font-size: 18px;
+    transition: transform 0.3s ease;
+  }
+  
+  .filter-overlay,
+  .open-filter-button {
+    display: none !important;
+  }
+  
+  /* collapsed state */
+  .filter.collapsed .filter-heading::after {
+    transform: rotate(-90deg);
+  }
+  .filter.collapsed .filter-content {
+    display: none;
+  }
+
+  /* 3️⃣  Main content area  */
+  .main-content {
+    padding: 20px;
+    height: auto;          /* let it grow naturally */
+    overflow: visible;
+  }
+
+  /* 4️⃣  Search bar & sort row (wrap) */
+  .main-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .search-bar {
+    width: 100%;
+  }
+
+  /* 5️⃣  Doctor card adjustments  */
+  .doctor-card__container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .doctor-image {
+    height: 70px;
+    width: 70px;
+  }
+  .action-buttons {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  /* 6️⃣  Typographic & spacing tweaks  */
+  .title,
+  .fieldset-header {
+    font-size: 1.1rem;
+  }
+  .filter-form button {
+    font-size: 0.95rem;
+    padding: 10px 14px;
+  }
+}
+
+
