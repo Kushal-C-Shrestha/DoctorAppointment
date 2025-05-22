@@ -66,13 +66,18 @@
         <p class="doctor-bio">${doctors.user_phone}</p>
         <p class="doctor-bio">${doctors.doctor_specialization}</p>
         <div class="doctor-actions">
-          <button class="edit-btn">
+         <form action="editAdminDoctor">
+          <input type="hidden" value="${doctors.user_id}" name="doctor_id">
+          <button type="submit" class="edit-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pencil-icon">
               <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
             </svg>
             Edit
           </button>
-          <button class="delete-btn">
+         </form>
+         <form>
+         <input type="hidden" value="${doctors.user_id}" name="doctor_id">
+          <button type="submit" class="delete-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="trash-icon">
               <path d="M3 6h18"></path>
               <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
@@ -80,6 +85,7 @@
             </svg>
             Delete
           </button>
+         </form>
         </div>
       </div>
      </c:forEach>
