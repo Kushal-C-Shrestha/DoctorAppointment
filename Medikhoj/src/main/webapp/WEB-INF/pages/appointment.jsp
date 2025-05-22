@@ -200,8 +200,11 @@
                         </div>
 						<p class="error-message"><c:if test="${not empty error['appointmentType']}">${error['appointmentType']}</c:if></p>
                     </div>
-                    <button type="button" onclick="window.location.href='${pageContext.request.contextPath}/doctors'">Cancel</button>
+                    <div class="action-buttons">
+                    <button type="button" onclick="window.location.href='${pageContext.request.contextPath}/doctors'" class="cancel-btn">Cancel</button>
                     <button type="submit" onclick="document.getElementById('form-action').value='book'" class="submit-btn">Submit</button>
+                    </div>
+                    
 				</div>
 			</form>
 		</div>

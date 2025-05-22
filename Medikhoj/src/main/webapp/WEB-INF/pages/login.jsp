@@ -34,7 +34,7 @@
             <!-- Password -->
              <div class="input-group full-width">
              	 <div class="input-wrapper">
-             	 	 <input type="password" id="password" name="password" placeholder="Password"  value="${param.password}"/>
+             	 	 <input type="password" id="password" name="password" placeholder="Password"  value="${param.password}" />
 		             <i class="fas fa-lock"></i>
 		             <i class="fas fa-eye-slash toggle-password" onclick="togglePassword(this, 'password')"></i>
              	 </div>
@@ -57,7 +57,7 @@
 
         <!-- RIGHT: Illustration / Background -->
          <div class="image-container">
-           <img src="image-6.png" alt="Medical professionals illustration" />
+           <img src="${pageContext.request.contextPath}/resources/images/assets/login.jpg" alt="Medical professionals illustration" />
          </div>
   </div>
     <script>

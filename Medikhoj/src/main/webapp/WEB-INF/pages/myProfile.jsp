@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/popup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
 </head>
 <body>
 <%@ include file="header.jsp" %>
@@ -19,11 +21,6 @@
 <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
-            <div class="sidebar-logo">
-                <div class="logo">M</div>
-                <div class="logo-text">MedCare</div>
-            </div>
-            
             <div class="menu-section">
                 <div class="menu-header">Overview</div>
                 <a href="profile?section=appointments" class="menu-item ${section == 'appointments' ? 'active' : ''}">
@@ -88,14 +85,6 @@
                     </div>
                     Logout
                 </a>
-            </div>
-            
-            <div class="user-section">
-                <div class="user-avatar">RP</div>
-                <div class="user-info">
-                    <div class="user-name">Raj Patel</div>
-                    <div class="user-role">Patient</div>
-                </div>
             </div>
         </div>
         
@@ -478,6 +467,7 @@
 				            
 				            <div class="profile-form" id="editProfileSection" style="display: ${subSection=='editProfileSection' ? 'block' : 'none'}">
 				                <form action="updateProfile" method="post" enctype="multipart/form-data">
+				                	<input name="action" value="edit" type="hidden"/>
 				                    <div class="form-row">
 				                        <div class="form-group">
 				                            <label for="userName">Full Name</label>
@@ -570,7 +560,45 @@
 				            	<c:if test="${not empty success}">
 				            		<p>${success}</p>
 				            	</c:if>
-				                <form action="updateProfile" method="post">
+				            	
+				            	<form action="updateProfile" method="post">
+								    <input type="hidden" name="action" value="pw"/>
+								    <div class="form-row">
+								        <div class="form-group">
+								            <label for="currentPassword">Current Password</label>
+								            <div class="input-wrapper">
+								                <input type="password" id="currentPassword" name="currentPassword" value="${current_password}" class="${not empty errorMap['currentPassword'] ? 'error' : ''}">
+								                <i class="fas fa-eye toggle-password" aria-label="Show current password" onclick="togglePasswordIcons('currentPassword', this)" style="display:none;"></i>
+								                <i class="fas fa-eye-slash toggle-password" aria-label="Hide current password" onclick="togglePasswordIcons('currentPassword', this)"></i>
+								            </div>
+								            <c:if test="${not empty errorMap['currentPassword']}">
+								                <p class="error-message">${errorMap['currentPassword']}</p>
+								            </c:if>
+								        </div>
+								        <div class="form-group">
+								            <label for="newPassword">New Password</label>
+								            <div class="input-wrapper">
+								                <input type="password" id="newPassword" name="newPassword" value="${new_password}" class="${not empty errorMap['newPassword'] ? 'error' : ''}">
+								                <i class="fas fa-eye toggle-password" aria-label="Show new password" onclick="togglePasswordIcons('newPassword', this)" style="display:none;"></i>
+								                <i class="fas fa-eye-slash toggle-password" aria-label="Hide new password" onclick="togglePasswordIcons('newPassword', this)"></i>
+								            </div>
+								            <c:if test="${not empty errorMap['newPassword']}">
+								                <p class="error-message">${errorMap['newPassword']}</p>
+								            </c:if>
+								        </div>
+								    </div>
+								
+								    <div class="form-actions">
+								        <button type="button" class="cancel-button">Cancel</button>
+								        <button type="submit" class="save-button">Save Changes</button>
+								    </div>
+								</form>
+
+
+				            	
+				            	
+				                <%-- <form action="updateProfile" method="post">
+				                	<input type="hidden" name="action" value="pw"/>
 				                    <div class="form-row">
 				                        <div class="form-group">
 				                            <label for="currentPassword">Current Password</label>
@@ -594,7 +622,7 @@
 				                        <button type="button" class="cancel-button">Cancel</button>
 				                        <button type="submit" class="save-button">Save Changes</button>
 				                    </div>
-				                </form>
+				                </form> --%>
 				        </div>
 				   </div>
 				</c:when>
@@ -739,6 +767,27 @@
 		        hideModal();
 		    }
 		});
+		
+		
+		
+		function togglePasswordIcons(inputId, clickedIcon) {
+			  const input = document.getElementById(inputId);
+			  const wrapper = clickedIcon.parentElement;
+			  const eyeIcon = wrapper.querySelector('.fa-eye');
+			  const eyeSlashIcon = wrapper.querySelector('.fa-eye-slash');
+
+			  if (input.type === "password") {
+			    input.type = "text";
+			    eyeIcon.style.display = "inline";
+			    eyeSlashIcon.style.display = "none";
+			  } else {
+			    input.type = "password";
+			    eyeIcon.style.display = "none";
+			    eyeSlashIcon.style.display = "inline";
+			  }
+			}
+
+		
 	</script>
 </body>
 </html>

@@ -92,6 +92,23 @@ public class reviewsController extends HttpServlet {
 			request.getRequestDispatcher("WEB-INF/pages/reviews.jsp").forward(request, response);
 			return;
 		}else {
+			if (reviewService.isReviewExist(user_id, doctor_id)) {
+				session.setAttribute("doctorId", doctor_id);
+				session.setAttribute("showPopup", true); // pass to JSP
+				session.setAttribute("popupTitle", "Information");
+				session.setAttribute("popupMessage", "You have already reviewed this doctor before.");
+				response.sendRedirect("doctorProfile");
+				return;
+			}
+			
+			if (!reviewService.hasBookedAppointment(user_id, doctor_id)) {
+				session.setAttribute("doctorId", doctor_id);
+				session.setAttribute("showPopup", true); // pass to JSP
+				session.setAttribute("popupTitle", "Information");
+				session.setAttribute("popupMessage", "You have never booked an appointment with this doctor.");
+				response.sendRedirect("doctorProfile");
+				return;
+			}
 			request.getRequestDispatcher("WEB-INF/pages/leaveReviews.jsp").forward(request, response);
 		}
 	}

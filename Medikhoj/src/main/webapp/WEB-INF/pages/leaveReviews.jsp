@@ -25,16 +25,6 @@
 	    
 	</div>
 	
-	 <script>
-    console.log("running");
-    	let input= document.getElementById('appointmentDate');
-    	console.log(input);
-    	input.addEventListener('change',()=>{
-    		if (input.value){
-    			document.getElementById('form-action').value="check";
-    			document.getElementById('appointment-form').submit();
-    		}
-    	}) 
-    </script>
+	
 </body>
 </html>

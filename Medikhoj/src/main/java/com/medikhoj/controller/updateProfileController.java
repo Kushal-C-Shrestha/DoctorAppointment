@@ -49,14 +49,12 @@ public class updateProfileController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String currentPassword=request.getParameter("currentPassword");
-		String newPassword=request.getParameter("newPassword");
+		String action=request.getParameter("action");
 		
-		if (currentPassword!=null ||  newPassword!=null) {
+		if (action.equals("pw")) {
 			handlePasswordChange(request, response);
 			return;
 		}
-		
 		handleProfileUpdate(request, response);
 		return;
 	}
@@ -70,6 +68,7 @@ public class updateProfileController extends HttpServlet {
 		Map<String,String> errorMap= updateService.validateUpdatePassword(request);
 		if (!errorMap.isEmpty()) {
 			System.out.println("Error occured");
+			request.setAttribute("user", (UserModel)session.getAttribute("loggedInUser"));
 			request.setAttribute("errorMap", errorMap);
 			request.setAttribute("section", "details");
 			request.setAttribute("current_password", request.getParameter("currentPassword"));
@@ -86,9 +85,13 @@ public class updateProfileController extends HttpServlet {
 			session.setAttribute("subSection", "changePasswordSection");
 			response.sendRedirect("profile");
 		}
-		session.setAttribute("success", "Your password has been successfully changed.");
+		session.setAttribute("showPopup", "true");
+		session.setAttribute("popupTitle","Success");
+        session.setAttribute("popupMessage","Your password has been successfully changed.");
+		
+		
 		session.setAttribute("section", "details");
-		session.setAttribute("subSection", "changePasswordSection");
+		session.setAttribute("subSection", "viewDetailsSection");
 		response.sendRedirect("profile");
 		return;
 	}
@@ -97,10 +100,18 @@ public class updateProfileController extends HttpServlet {
 		HttpSession session=request.getSession(false);
 		UserModel user=(UserModel)session.getAttribute("loggedInUser");
 	    UpdateService updateService = new UpdateService();
-		Map<String,String> errorMap= updateService.validateUpdateForm(request);
+		Map<String,String> errorMap= updateService.validateUpdateForm(user.getUser_id(),request);
 
 		ImageUtil imageUtil = new ImageUtil();
-
+		
+		if (!errorMap.isEmpty()) {
+			request.setAttribute("user", (UserModel)session.getAttribute("loggedInUser"));
+			request.setAttribute("errorMap", errorMap);
+			request.setAttribute("section", "details");
+			request.setAttribute("subSection", "editProfileSection");
+			request.getRequestDispatcher("WEB-INF/pages/myProfile.jsp").forward(request, response);
+			return;
+		}
 	 
 	    // Upload new profile image (optional)
 	    Part userProfile = request.getPart("profile-pic");
@@ -135,7 +146,6 @@ public class updateProfileController extends HttpServlet {
 	    session.setAttribute("showPopup","true");
 		session.setAttribute("popupTitle", "Success");
 		session.setAttribute("popupMessage", "Your profile has been updated successfully.");
-		
 	    session.setAttribute("section", "details");
 	    session.setAttribute("loggedInUser", updatedUser);
 

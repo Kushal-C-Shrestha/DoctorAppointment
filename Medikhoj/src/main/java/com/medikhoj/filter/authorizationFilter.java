@@ -54,7 +54,7 @@ public class authorizationFilter extends HttpFilter implements Filter {
 	        // Public pages
 	        if (uri.endsWith("/login") || uri.endsWith("/register") || uri.endsWith("/home") || uri.equals(req.getContextPath() + "/") ||
 	            uri.endsWith("/aboutus") || uri.endsWith("/contactus") || uri.endsWith("/reviews") ||
-	            uri.endsWith("/doctors") || uri.endsWith("/doctorProfile") || uri.endsWith("/campaigns") || uri.endsWith("/logout")|| 
+	            uri.endsWith("/doctors") || uri.endsWith("/doctorProfile") || uri.endsWith("/campaigns") || uri.endsWith("/logout")|| uri.endsWith("/search") ||
 	            uri.endsWith("/unauthorized.jsp")) {
 	            chain.doFilter(request, response);
 	            return;
