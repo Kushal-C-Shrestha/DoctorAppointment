@@ -292,7 +292,7 @@
                     <c:choose>
 		        	    <c:when test="${fn:length(favoriteList)==0}">
 		        	    	<p>No favorite doctors</p>
-		        	    </c:when>
+		        	    </c:when>s
 		        	    <c:otherwise>
 		        	    	<div class="doctor-list">
 							    <c:forEach var="favoriteList" items="${favoriteList}">
@@ -322,6 +322,7 @@
 		        	    </c:when>
 		        	    <c:otherwise>
 		        	    	
+	                    
 		        	    </c:otherwise>
                     </c:choose>
                     	

@@ -32,6 +32,4 @@ public class HighestAppointments {
 	public void setDoctor_profile(String doctor_profile) {
 		this.doctor_profile = doctor_profile;
 	}
-	
-	
 }

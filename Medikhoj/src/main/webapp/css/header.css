@@ -80,39 +80,45 @@ a {
 	cursor: pointer;
 }
 
+/* --- 840px --- */
+@media (max-width: 840px) {
+	body {
+    padding-top: 60px; /* increase if header grows on wrap */
+  }
+  
+  .header {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 1rem;
+    height: auto;
+  }
 
-/* @media (max-width:1440px){
+  .logo {
+    display: none;
+  }
 
+  .main-nav, .user-nav {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .main-nav a, .user-nav a {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
 }
 
-@media (max-width:1024px){
+@media (max-width: 516px) {
+  .main-nav a,
+  .user-nav a {
+    font-size: 0.8em; /* or 12px depending on preference */
+    padding: 8px 10px;
+  }
 
-} */
-
-@media (max-width:650px){
-	.menu_icon{
-		display:block;
-	}
-	.user-nav, .main-nav{
-		right:-100%;
-		position:fixed;
-		top:0;
-		width: 100%;
-		flex-direction: column;
-		align-items: center;
-		transition:.7s ease;
-	}
-
-	.user-nav{
-		padding-top: 365px;
-	}
-	.user-nav.open{
-		right:0;
-	}
-	.main-nav{
-		padding-top: 180px;
-	}
-	.main-nav.open{
-		right:0;
-	}
+  .btn-login,
+  .btn-signup {
+    font-size: 0.8em;
+    padding: 6px 10px;
+  }
 }

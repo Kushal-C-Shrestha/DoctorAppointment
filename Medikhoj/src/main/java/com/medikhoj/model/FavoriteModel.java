@@ -26,6 +26,4 @@ public class FavoriteModel {
 	public void setDoctor_id(int doctor_id) {
 		this.doctor_id = doctor_id;
 	}
-	
-	
 }

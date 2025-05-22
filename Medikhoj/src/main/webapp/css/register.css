@@ -247,7 +247,7 @@ form {
   }
 
   .image-container {
-    height: 300px;
+    display: none
   }
 
   .input-row {
